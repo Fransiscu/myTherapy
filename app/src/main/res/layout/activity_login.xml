@@ -67,7 +67,7 @@
         <GridLayout
             android:id="@+id/login_button_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100sp"
             android:layout_gravity="center"
             android:paddingTop="15sp"
             android:clipToPadding="false"
@@ -80,15 +80,6 @@
                 android:layout_height="68dp"
                 android:text="@string/login"
                 android:textSize="18sp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_supervisore_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:text="@string/login_supervisore"
-                android:textSize="18sp" />
-
 
         </GridLayout>
 
@@ -104,6 +95,25 @@
         android:paddingRight="24dp"
         android:layout_marginBottom="14sp"
         android:orientation="vertical">
+
+        <GridLayout
+            android:id="@+id/login_supervisore_grid"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:paddingTop="15sp"
+            android:clipToPadding="false"
+            android:columnCount="1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login_supervisore_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:text="@string/login_supervisore"
+                android:textSize="18sp" />
+
+        </GridLayout>
 
         <TextView
             android:layout_width="match_parent"
