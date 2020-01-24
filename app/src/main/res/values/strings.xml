@@ -3,6 +3,7 @@
     <string name="descrizione_logo">myTherapy</string>
     <string name="registrazione">Registrati ora!</string>
     <string name="login">Login</string>
+    <string name="login_supervisore">Login Supervisore</string>
     <string name="suggerimento_password">Password</string>
     <string name="suggerimento_username">Username</string>
     <string name="footer">Developed by: Everybody Hurts</string>
