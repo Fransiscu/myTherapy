@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="Labelfor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="403dp"
+                android:layout_height="107dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/descrizione_logo"
+                android:src="@drawable/logo" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/registrazione_titolo"
+                android:textSize="36sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_nome">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_cognome">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_email">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_username">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_username"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_password"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_conferma_password"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_password_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_data">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/signup_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp"
+                    android:drawableEnd="@drawable/baseline_calendar_today_24"
+                    android:inputType="date" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="40sp" />
+
+            <GridLayout
+                android:id="@+id/login_button_grid"
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:layout_gravity="center"
+                android:clipToPadding="false"
+                android:columnCount="1"
+                android:paddingTop="15sp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/signup_button"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp"
+                    android:text="@string/registrazione"
+                    android:textSize="18sp" />
+
+            </GridLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14sp"
+                android:orientation="vertical"
+                android:paddingLeft="24dp"
+                android:paddingTop="56dp"
+                android:paddingRight="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20sp"
+                    android:text="@string/footer"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

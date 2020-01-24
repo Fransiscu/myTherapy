@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".LoginActivity"
     tools:ignore="Labelfor" >
 
     <LinearLayout
@@ -77,7 +78,7 @@
                 android:id="@+id/login_button"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
+                android:layout_height="68sp"
                 android:text="@string/login"
                 android:textSize="18sp" />
 
