@@ -18,18 +18,19 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40sp" />
+            android:layout_height="47dp" />
 
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
-            android:layout_marginBottom="24dp"
+        <ImageView
+            android:layout_width="403dp"
+            android:layout_height="107dp"
             android:layout_gravity="center_horizontal"
-            android:contentDescription="@string/descrizione_logo" />
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/descrizione_logo"
+            android:src="@drawable/logo" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="60sp" />
+            android:layout_height="40dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -50,6 +51,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:passwordToggleEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/suggerimento_password">
@@ -65,19 +67,20 @@
         <GridLayout
             android:id="@+id/grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100sp"
             android:layout_gravity="center"
-            android:paddingTop="20sp"
+            android:paddingTop="15sp"
             android:clipToPadding="false"
             android:columnCount="1">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/material_button"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/login"/>
+                android:layout_height="68dp"
+                android:text="@string/login"
+                android:textSize="18sp" />
 
-            <Space/>
         </GridLayout>
 
     </LinearLayout>
@@ -87,7 +90,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20sp" >
+        android:layout_marginBottom="15sp" >
 
         <TextView
             android:layout_width="match_parent"

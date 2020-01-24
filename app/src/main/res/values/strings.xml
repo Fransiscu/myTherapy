@@ -2,8 +2,8 @@
     <string name="app_name">myTherapy</string>
     <string name="descrizione_logo">myTherapy</string>
     <string name="registrazione">Registrati ora!</string>
-    <string name="login">Login!</string>
+    <string name="login">Login</string>
     <string name="suggerimento_password">Password</string>
     <string name="suggerimento_username">Username</string>
-    <string name="footer">IUM 19/20</string>
+    <string name="footer">Developed by: Everybody Hurts</string>
 </resources>
