@@ -1,13 +1,9 @@
 package com.ium.mytherapy;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,7 +11,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 
-    EditText emailText;
+    EditText emailInput;
     EditText passwordText;
     Button loginButton;
     TextView signupLink;
@@ -25,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        /*loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -60,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 //        progressDialog.setMessage("Authenticating...");
 //        progressDialog.show();
 
-        String email = emailText.getText().toString();
+        String email = emailInput.getText().toString();
         String password = passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
@@ -110,14 +106,14 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String email = emailText.getText().toString();
+        String email = emailInput.getText().toString();
         String password = passwordText.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailText.setError("enter a valid email address");
+            emailInput.setError("enter a valid email address");
             valid = false;
         } else {
-            emailText.setError(null);
+            emailInput.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
@@ -127,6 +123,6 @@ public class LoginActivity extends AppCompatActivity {
             passwordText.setError(null);
         }
 
-        return valid;
+        return valid;*/
     }
 }
