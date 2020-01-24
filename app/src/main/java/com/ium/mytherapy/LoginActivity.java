@@ -1,6 +1,8 @@
 package com.ium.mytherapy;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,13 +15,23 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText emailInput;
     EditText passwordText;
-    Button loginButton;
+    Button loginButton, supervisorButton;
     TextView signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        supervisorButton = findViewById(R.id.login_supervisore_button);
+
+        supervisorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newActivity = new Intent(getApplicationContext(), SupervisorLoginActivity.class);    // cambio subito activity
+                startActivity(newActivity);
+            }
+        });
 
         /*loginButton.setOnClickListener(new View.OnClickListener() {
 
