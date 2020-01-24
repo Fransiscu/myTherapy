@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SupervisorLoginActivity"></activity>
+        <activity android:name=".SupervisorSignupActivity" />
+        <activity android:name=".SupervisorLoginActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">myTherapy</string>
     <string name="descrizione_logo">myTherapy</string>
-    <string name="registrazione">Registrati ora!</string>
+    <string name="registrazione">Registrati</string>
     <string name="login">Login</string>
     <string name="login_supervisore">Login Supervisore</string>
     <string name="suggerimento_password">Password</string>
+    <string name="suggerimento_conferma_password">Conferma password</string>
     <string name="suggerimento_username">Username</string>
     <string name="footer">Developed by: Everybody Hurts</string>
     <string name="registrati">Non hai un account? Registrati!</string>
+    <string name="suggerimento_nome">Nome</string>
+    <string name="suggerimento_cognome">Cognome</string>
+    <string name="suggerimento_email">Email</string>
+    <string name="suggerimento_data">Data di nascita</string>
+    <string name="registrazione_titolo">Registrazione</string>
 </resources>
