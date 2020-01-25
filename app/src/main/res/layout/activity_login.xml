@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".controller.LoginActivity"
     tools:ignore="Labelfor" >
 
     <LinearLayout
@@ -42,7 +42,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="70sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,6 +52,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/password_input_toggle"
             app:passwordToggleEnabled="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,24 +62,24 @@
                 android:id="@+id/login_password"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="70sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <GridLayout
             android:id="@+id/login_button_grid"
             android:layout_width="match_parent"
-            android:layout_height="100sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingTop="15sp"
             android:clipToPadding="false"
-            android:columnCount="1">
+            android:columnCount="1"
+            android:paddingTop="15sp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login_button"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="68sp"
+                android:layout_height="70sp"
                 android:text="@string/login"
                 android:textSize="18sp" />
 
@@ -110,7 +111,7 @@
                 android:id="@+id/login_supervisore_button"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
-                android:layout_height="68dp"
+                android:layout_height="70dp"
                 android:text="@string/login_supervisore"
                 android:textSize="18sp" />
 

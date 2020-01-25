@@ -1,9 +1,11 @@
-package com.ium.mytherapy;
+package com.ium.mytherapy.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.ium.mytherapy.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 

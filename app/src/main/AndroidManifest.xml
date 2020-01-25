@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SupervisorSignupActivity" />
-        <activity android:name=".SupervisorLoginActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".controller.SupervisorSignupActivity" />
+        <activity android:name=".controller.SupervisorLoginActivity" />
+        <activity android:name=".controller.LoginActivity" />
+        <activity android:name=".controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.ium.mytherapy;
+package com.ium.mytherapy.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
