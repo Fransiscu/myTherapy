@@ -6,7 +6,17 @@ public class User {
     private String email;
     private String password;
     private String dataNascita;
-//    private Terapia terapia;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    //    private Terapia terapia;
 
     public User() {
     }
