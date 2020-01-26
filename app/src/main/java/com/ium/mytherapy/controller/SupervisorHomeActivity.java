@@ -29,17 +29,6 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
         List<User> list = new ArrayList<>();
 
-        User user = new User();
-        user.setNome("John");
-        user.setCognome("Smith");
-
-        User more = new User();
-        more.setNome("Lorenzo");
-        more.setCognome("Piana");
-
-        list.add(user);
-        list.add(more);
-
         cardview = new MaterialCardView(this);
         imageView = new CircleImageView(this);
 
