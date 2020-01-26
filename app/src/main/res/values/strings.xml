@@ -15,4 +15,8 @@
     <string name="suggerimento_data">Data di nascita</string>
     <string name="registrazione_titolo">Registrazione</string>
     <string name="login_dialog_text">Login in corso</string>
+    <string name="avatar">Immagine profilo</string>
+    <string name="esempio_nome">Nome Cognome</string>
+    <string name="titolo_supervisore_home">I tuoi utenti</string>
+    <string name="aggiungi_utenti">Aggiungi utente</string>
 </resources>
