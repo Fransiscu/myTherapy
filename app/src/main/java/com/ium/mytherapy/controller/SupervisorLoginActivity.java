@@ -28,7 +28,6 @@ public class SupervisorLoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
                 startActivity(newActivity);
-                finish();
             }
         });
 
