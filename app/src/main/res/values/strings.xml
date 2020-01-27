@@ -19,4 +19,8 @@
     <string name="esempio_nome">Nome Cognome</string>
     <string name="titolo_supervisore_home">I tuoi utenti</string>
     <string name="aggiungi_utenti">Aggiungi utente</string>
+    <string name="btn_retry">Riprova</string>
+    <string name="empty_screen">Nessun item</string>
+    <string name="colorSecondaryText">aylmao</string>
+
 </resources>

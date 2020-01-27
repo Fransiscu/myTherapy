@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="3sp"
+    android:elevation="3sp"
+    app:cardUseCompatPadding="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16sp" >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="75sp"
+            android:layout_height="75sp"
+            android:id="@+id/imageIv"
+            android:src="@drawable/avatardefault" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/titleIv"
+            android:text="@string/suggerimento_nome"
+            android:textSize="32sp"
+            android:textColor="@color/cardview_dark_background"
+            android:textStyle="bold"
+            android:layout_toRightOf="@id/imageIv"
+            android:layout_toEndOf="@id/imageIv"
+            android:layout_marginLeft="10sp"
+            android:layout_marginStart="10sp"
+            tools:ignore="PrivateResource,RtlHardcoded" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptionIv"
+            android:text="@string/suggerimento_cognome"
+            android:textSize="18sp"
+            android:textColor="@color/cardview_shadow_start_color"
+            android:layout_toRightOf="@id/imageIv"
+            android:layout_toEndOf="@id/imageIv"
+            android:layout_marginLeft="10sp"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="5sp"
+            android:layout_below="@id/titleIv"
+            tools:ignore="PrivateResource,RtlHardcoded" />
+
+    </RelativeLayout>
+
+
+
+</com.google.android.material.card.MaterialCardView>

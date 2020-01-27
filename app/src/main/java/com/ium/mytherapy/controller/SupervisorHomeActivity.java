@@ -6,16 +6,20 @@ import android.widget.TextView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.CardViewAdapter;
 import com.ium.mytherapy.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SupervisorHomeActivity extends AppCompatActivity {
+
+    RecyclerView mRecyclerView;
+    MyAdapter myAdapter;
 
     public MaterialCardView cardview;
     TextView textview;
@@ -27,26 +31,51 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_supervisore);
-        linearLayout = findViewById(R.id.home_supervisore_view);
 
-        recyclerView = findViewById(R.id.recycler_material_card);
-        CardViewAdapter adapter = new CardViewAdapter(this, User.getObjectList());
-        recyclerView.setAdapter(adapter);
+        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
+        myAdapter = new MyAdapter(this, getMyList());
+        mRecyclerView.setAdapter(myAdapter);
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private ArrayList<User> getMyList() {
+        ArrayList<User> users = new ArrayList<>();
+
+        User user = new User();
+        user.setNome("John");
+        user.setCognome("Smith");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
+
+        user.setNome("Lorenzo");
+        user.setCognome("Piana");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
+
+        user.setNome("Francesco");
+        user.setCognome("Soru");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
+
+        user.setNome("Chiara");
+        user.setCognome("Soru");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
+
+        user.setNome("Alberto");
+        user.setCognome("Usala");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
+
+        user.setNome("Michela");
+        user.setCognome("Pinna");
+        user.setAvatar(R.drawable.avatardefault);
+        users.add(user);
 
 
-//        List<User> list = new ArrayList<>();
-//
-//        cardview = new MaterialCardView(this);
-//        imageView = new CircleImageView(this);
-
-
-
+        return users;
     }
 
 }

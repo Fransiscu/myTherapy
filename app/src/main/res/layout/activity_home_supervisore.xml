@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:ignore="Labelfor">
 
     <ScrollView
@@ -37,17 +38,14 @@
 
             <!-- Start material card -->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_material_card"
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
+                android:layout_height="wrap_content"
+                android:id="@+id/recyclerView" />
 
             <!-- End material card -->
 
         </LinearLayout>
-
-
     </ScrollView>
 
     <LinearLayout
@@ -60,6 +58,10 @@
         android:paddingRight="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
 
         <GridLayout
             android:id="@+id/home_supervisore_grid"
@@ -80,6 +82,8 @@
                 android:textSize="18sp" />
 
         </GridLayout>
+
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
