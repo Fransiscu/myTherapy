@@ -33,8 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int position) {
-        myHolder.mTitle.setText(models.get(position).getNome());
-        myHolder.mDes.setText(models.get(position).getCognome());
+        myHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
         myHolder.mImaeView.setImageResource(models.get(position).getAvatar());
     }
 
