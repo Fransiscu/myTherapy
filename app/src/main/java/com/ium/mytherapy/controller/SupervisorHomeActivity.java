@@ -1,7 +1,6 @@
 package com.ium.mytherapy.controller;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,6 +10,8 @@ import com.ium.mytherapy.model.CardViewAdapter;
 import com.ium.mytherapy.model.User;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,13 +34,10 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
 
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
 //        List<User> list = new ArrayList<>();

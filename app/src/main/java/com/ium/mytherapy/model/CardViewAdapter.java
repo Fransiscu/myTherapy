@@ -49,19 +49,19 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.CardVi
         private int position;
         private User currentUser;
 
-        public CardViewHolder(@NonNull View itemView) {
+        CardViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.card_textview);
             avatar = itemView.findViewById(R.id.card_image);
             delete = itemView.findViewById(R.id.card_delete);
         }
 
-        public void setData(User current, int position) {
+        void setData(User currentUser, int position) {
             this.name.setText(String.format("%s %s", currentUser.getNome(), currentUser.getCognome()));
             this.avatar.setImageResource(R.drawable.avatardefault);
             this.delete.setImageResource(android.R.drawable.ic_delete);
             this.position = position;
-            this.currentUser = currentObject;
+            this.currentUser = currentUser;
         }
     }
 }

@@ -11,18 +11,7 @@ public class User {
     private String dataNascita;
     private int avatar;
 
-    public static List<User> getObjectList() {
-        List<User> users = new ArrayList<>();
-        users = getUsers();
-
-        for (int i = 0; i < users.length; i++) {
-            User user = new User();
-            user.setNome(users.get(i).getNome());
-            user.setCognome(users.get(i).getCognome());
-            users.add(user);
-        }
-
-        return users;
+    private User() {
     }
 
     private static List<User> getUsers() {
@@ -45,7 +34,18 @@ public class User {
 
     //    private Terapia terapia;
 
-    public User() {
+    public static List<User> getObjectList() {
+        List<User> users;
+        users = getUsers();
+
+        for (int i = 0; i < users.size(); i++) {
+            User user = new User();
+            user.setNome(users.get(i).getNome());
+            user.setCognome(users.get(i).getCognome());
+            users.add(user);
+        }
+
+        return users;
     }
 
 //    public Terapia getTerapia() {
@@ -64,19 +64,19 @@ public class User {
         this.email = email;
     }
 
-    public String getNome() {
+    String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    private void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getCognome() {
+    String getCognome() {
         return cognome;
     }
 
-    public void setCognome(String cognome) {
+    private void setCognome(String cognome) {
         this.cognome = cognome;
     }
 
