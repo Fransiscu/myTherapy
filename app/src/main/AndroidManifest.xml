@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".controller.UserManagementActivity"
+            android:parentActivityName=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.SupervisorSignupActivity" />
         <activity android:name=".controller.SupervisorLoginActivity" />

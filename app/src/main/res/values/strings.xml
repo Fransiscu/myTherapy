@@ -23,5 +23,6 @@
     <string name="empty_screen">Nessun item</string>
     <string name="colorSecondaryText">aylmao</string>
     <string name="logout_text">Logout</string>
+    <string name="nessun_item">Nessun utente presente</string>
 
 </resources>

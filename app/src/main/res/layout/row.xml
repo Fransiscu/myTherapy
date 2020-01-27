@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:shapeAppearanceOverlay="@color/colorAccent"
+    android:backgroundTint="@color/statusBarColor"
+    android:elevation="20dp"
+    android:foregroundTint="@color/statusBarColor"
     app:cardCornerRadius="4sp"
-    android:elevation="8sp"
-    app:cardUseCompatPadding="true" >
+    app:cardUseCompatPadding="true"
+    app:shapeAppearanceOverlay="@color/colorAccent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:padding="25sp">
 
         <de.hdodenhof.circleimageview.CircleImageView

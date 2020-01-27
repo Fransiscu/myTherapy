@@ -21,15 +21,19 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_supervisore);
+        ArrayList<User> check = getMyList();
+
+        if (check != null) {
+            setContentView(R.layout.activity_home_supervisore);
+            cardRecyclerView = findViewById(R.id.recyclerView);
+            cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            cardAdapter = new CardAdapter(this, getMyList());
+            cardRecyclerView.setAdapter(cardAdapter);
+        } else {
+            setContentView(R.layout.list_empty_view);
+        }
+
         addUser = findViewById(R.id.aggiungi_utenti_button);
-
-        cardRecyclerView = findViewById(R.id.recyclerView);
-        cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        cardAdapter = new CardAdapter(this, getMyList());
-        cardRecyclerView.setAdapter(cardAdapter);
-
         addUser.setOnClickListener(view -> {
 
         });
