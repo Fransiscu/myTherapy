@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="3sp"
-    android:elevation="3sp"
+    app:shapeAppearanceOverlay="@color/colorAccent"
+    app:cardCornerRadius="4sp"
+    android:elevation="8sp"
     app:cardUseCompatPadding="true" >
 
     <RelativeLayout
@@ -28,7 +30,8 @@
             android:text="@string/suggerimento_nome"
             android:paddingTop="14sp"
             android:textSize="32sp"
-            android:textAlignment="center"
+            android:paddingLeft="30sp"
+            android:paddingRight="30sp"
             android:textColor="@color/cardview_dark_background"
             android:textStyle="bold"
             android:layout_toRightOf="@id/imageIv"
