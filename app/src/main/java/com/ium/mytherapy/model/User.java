@@ -1,12 +1,15 @@
 package com.ium.mytherapy.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String nome;
     private String cognome;
     private String email;
     private String password;
     private String dataNascita;
-//    private Terapia terapia;
+    private int avatar;
 
     public User() {
     }
@@ -57,6 +60,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(int avatar) {
+        this.avatar = avatar;
     }
 
 }
