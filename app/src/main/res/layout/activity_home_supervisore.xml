@@ -26,13 +26,38 @@
             android:orientation="vertical"
             tools:ignore="ExtraText">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/titolo_supervisore_home"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
-                android:textSize="48sp" />
+                android:orientation="horizontal"
+                tools:ignore="ExtraText">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titolo_supervisore"
+                    android:text="@string/titolo_supervisore_home"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"
+                    android:textSize="48sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/supervisore_logout_button"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="@id/titolo_supervisore"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="15sp"
+                    android:height="48sp"
+                    android:text="@string/logout_text"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    app:strokeColor="@color/colorAccent"
+                    app:strokeWidth="1sp"
+                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+            </RelativeLayout>
 
             <Space
                 android:layout_width="wrap_content"

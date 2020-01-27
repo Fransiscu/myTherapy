@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16sp" >
+        android:padding="25sp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             app:civ_border_width="1dp"
@@ -29,7 +29,7 @@
             android:id="@+id/titleIv"
             android:text="@string/suggerimento_nome"
             android:paddingTop="14sp"
-            android:textSize="32sp"
+            android:textSize="30sp"
             android:paddingLeft="30sp"
             android:paddingRight="30sp"
             android:textColor="@color/cardview_dark_background"

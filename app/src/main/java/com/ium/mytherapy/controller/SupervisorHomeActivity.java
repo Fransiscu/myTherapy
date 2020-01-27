@@ -1,42 +1,38 @@
 package com.ium.mytherapy.controller;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.button.MaterialButton;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.CardAdapter;
 import com.ium.mytherapy.model.User;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SupervisorHomeActivity extends AppCompatActivity {
-
-    RecyclerView mRecyclerView;
-    MyAdapter myAdapter;
-
-    public MaterialCardView cardview;
-    TextView textview;
-    LinearLayout linearLayout;
-    CircleImageView imageView;
-    RecyclerView recyclerView;
+    RecyclerView cardRecyclerView;
+    CardAdapter cardAdapter;
+    MaterialButton addUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_supervisore);
+        addUser = findViewById(R.id.aggiungi_utenti_button);
 
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        cardRecyclerView = findViewById(R.id.recyclerView);
+        cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        myAdapter = new MyAdapter(this, getMyList());
-        mRecyclerView.setAdapter(myAdapter);
+        cardAdapter = new CardAdapter(this, getMyList());
+        cardRecyclerView.setAdapter(cardAdapter);
+
+        addUser.setOnClickListener(view -> {
+
+        });
 
     }
 
