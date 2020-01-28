@@ -8,7 +8,7 @@
     <string name="suggerimento_conferma_password">Conferma password</string>
     <string name="suggerimento_username">Username</string>
     <string name="footer">Developed by: Everybody Hurts</string>
-    <string name="registrati">Non hai un account? Registrati!</string>
+    <string name="registrati"><u>Non hai un account? Registrati!</u></string>
     <string name="suggerimento_nome">Nome</string>
     <string name="suggerimento_cognome">Cognome</string>
     <string name="suggerimento_email">Email</string>
@@ -24,5 +24,6 @@
     <string name="colorSecondaryText">aylmao</string>
     <string name="logout_text">Logout</string>
     <string name="nessun_item">Nessun utente presente</string>
-
+    <string name="salva_modifiche_utente">Salva le modifiche</string>
+    <string name="terapie_utente">Terapie associate all\'utente</string>
 </resources>
