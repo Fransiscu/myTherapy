@@ -27,4 +27,6 @@
     <string name="salva_modifiche_utente">Salva le modifiche</string>
     <string name="terapie_utente">Terapie associate all\'utente</string>
     <string name="aggiungi_terapia">+</string>
+    <string name="cancella_utente">Cancella utente corrente</string>
+    <string name="timeline_terapia_utente">Timeline della gioranta</string>
 </resources>

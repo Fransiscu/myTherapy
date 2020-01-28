@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <!-- Card profilo e image -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/profile_card"
                     android:layout_width="match_parent"
@@ -67,16 +68,55 @@
                             android:textSize="48sp"
                             android:textStyle="bold"
                             tools:ignore="PrivateResource,RtlHardcoded" />
-
-
                     </RelativeLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Card cancellazione utente -->
+
+                <LinearLayout
+                    android:id="@+id/delete_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_card"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="12sp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/delete_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingTop="56dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cancella_utente"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@string/cancella_utente"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="18sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Card modifica dati -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_card"
+                    android:layout_below="@+id/delete_card_layout"
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical">
 
@@ -213,7 +253,44 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Inizio terapie -->
+                    <!-- Card timeline -->
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="12sp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/timeline_utente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/terapie_giorno_titolo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10sp"
+                                android:text="@string/timeline_terapia_utente"
+                                android:textSize="24sp" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="30sp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Card modifica terapie -->
 
                     <Space
                         android:layout_width="match_parent"
