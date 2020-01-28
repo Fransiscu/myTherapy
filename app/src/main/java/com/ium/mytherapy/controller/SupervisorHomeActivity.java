@@ -1,5 +1,6 @@
 package com.ium.mytherapy.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.button.MaterialButton;
@@ -35,7 +36,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
         addUser = findViewById(R.id.aggiungi_utenti_button);
         addUser.setOnClickListener(view -> {
-
+            Intent newActivity = new Intent(getApplicationContext(), AddUserActivity.class);
+            startActivity(newActivity);
         });
 
     }

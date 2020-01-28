@@ -97,7 +97,7 @@
                         app:cardCornerRadius="8sp">
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/cancella_utente"
+                            android:id="@+id/deleteUser"
                             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
@@ -314,6 +314,7 @@
                         android:orientation="vertical"
                         android:paddingLeft="24dp"
                         android:paddingRight="24dp"
+                        android:elevation="8sp"
                         app:cardCornerRadius="8sp">
 
                         <LinearLayout
@@ -368,12 +369,6 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Recupero spazio button -->
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="12sp" />
-
                 </LinearLayout>
 
             </RelativeLayout>
@@ -408,7 +403,7 @@
             android:paddingTop="5sp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/salva_modifiche_utente"
+                android:id="@+id/saveUserEdits"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

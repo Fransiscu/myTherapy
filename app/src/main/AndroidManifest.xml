@@ -16,6 +16,7 @@
             android:name=".controller.UserManagementActivity"
             android:parentActivityName=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.SupervisorHomeActivity" />
+        <activity android:name=".controller.AddUserActivity" />
         <activity android:name=".controller.SupervisorSignupActivity" />
         <activity android:name=".controller.SupervisorLoginActivity" />
         <activity android:name=".controller.LoginActivity" />

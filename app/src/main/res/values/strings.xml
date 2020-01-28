@@ -29,4 +29,5 @@
     <string name="aggiungi_terapia">+</string>
     <string name="cancella_utente">Cancella utente corrente</string>
     <string name="timeline_terapia_utente">Timeline della gioranta</string>
+    <string name="titolo_aggiunta_utente">Aggiungi utente</string>
 </resources>
