@@ -1,59 +1,422 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:padding="16sp"
-    tools:context=".controller.UserManagementActivity">
+    android:orientation="vertical"
+    tools:ignore="Labelfor">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/profile_card"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/statusBarColor"
-        android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:paddingTop="56dp"
-        android:paddingRight="24dp"
-        app:cardCornerRadius="4sp">
+        android:clipToPadding="false"
+        android:padding="16sp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="20sp">
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageProfile"
-                android:layout_width="130sp"
-                android:layout_height="130sp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30sp"
-                android:src="@drawable/avatardefault"
-                app:civ_border_color="@color/colorAccent"
-                app:civ_border_width="1dp" />
-
-            <TextView
-                android:id="@+id/titleProfile"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imageProfile"
-                android:layout_marginTop="10sp"
-                android:paddingLeft="30sp"
-                android:paddingTop="20sp"
-                android:paddingRight="30sp"
-                android:text="@string/suggerimento_nome"
-                android:textAlignment="center"
-                android:textColor="@color/cardview_dark_background"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                tools:ignore="PrivateResource,RtlHardcoded" />
+                android:layout_height="match_parent">
+
+                <!-- Card profilo e image -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/profile_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/statusBarColor"
+                    android:orientation="vertical"
+                    android:paddingLeft="24dp"
+                    android:paddingTop="56dp"
+                    android:paddingRight="24dp"
+                    app:cardCornerRadius="8sp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="20sp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/imageProfile"
+                            android:layout_width="130sp"
+                            android:layout_height="130sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30sp"
+                            android:src="@drawable/avatardefault"
+                            app:civ_border_color="@color/colorAccent"
+                            app:civ_border_width="1dp" />
+
+                        <TextView
+                            android:id="@+id/titleProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/imageProfile"
+                            android:layout_marginTop="10sp"
+                            android:paddingLeft="30sp"
+                            android:paddingTop="20sp"
+                            android:paddingRight="30sp"
+                            android:text="@string/suggerimento_nome"
+                            android:textAlignment="center"
+                            android:textColor="@color/cardview_dark_background"
+                            android:textSize="48sp"
+                            android:textStyle="bold"
+                            tools:ignore="PrivateResource,RtlHardcoded" />
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Card cancellazione utente -->
+
+                <LinearLayout
+                    android:id="@+id/delete_card_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/profile_card"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="12sp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/delete_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingTop="56dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/cancella_utente"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:text="@string/cancella_utente"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="18sp" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Card modifica dati -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/delete_card_layout"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="12sp" />
+
+                    <!-- Inizio modifica dati -->
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/profile_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <!-- -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingStart="10sp"
+                            android:paddingEnd="10sp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:baselineAligned="false"
+                                android:orientation="horizontal"
+                                android:paddingTop="10sp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:hint="@string/suggerimento_nome"
+                                    android:paddingStart="0sp"
+                                    android:paddingEnd="5sp"
+                                    tools:ignore="TooDeepLayout">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/profile_name"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="70sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:hint="@string/suggerimento_cognome"
+                                    android:paddingStart="5sp"
+                                    android:paddingEnd="0sp">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/profile_surname"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="70sp" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="@string/suggerimento_username">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/profile_username"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="@string/suggerimento_password"
+                                app:passwordToggleEnabled="true">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/profile_password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70sp"
+                                    android:inputType="textPassword" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <Space
+                                android:layout_width="match_parent"
+                                android:layout_height="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginBottom="15sp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:hint="@string/suggerimento_data">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/profile_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="70sp"
+                                    android:drawableEnd="@drawable/baseline_calendar_today_24" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Card timeline -->
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="12sp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/timeline_utente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/terapie_giorno_titolo"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10sp"
+                                android:text="@string/timeline_terapia_utente"
+                                android:textSize="24sp" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="12sp" />
+
+                            <!-- TODO: Per futura timeline -->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/timelineRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="300sp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Card modifica terapie -->
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="12sp" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/terapie_dettagli"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/statusBarColor"
+                        android:orientation="vertical"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        app:cardCornerRadius="8sp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/terapie_titolo"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="10sp"
+                                    android:text="@string/terapie_utente"
+                                    android:textSize="24sp" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1" />
+
+                                <com.google.android.material.button.MaterialButton
+                                    android:id="@+id/aggiungi_terapia_button"
+                                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_marginEnd="10sp"
+                                    android:text="@string/aggiungi_terapia"
+                                    android:textAlignment="center"
+                                    android:textSize="24sp"
+                                    app:strokeColor="@color/colorAccent"
+                                    app:strokeWidth="1sp"
+                                    tools:ignore="RelativeOverlap,RtlHardcoded" />
+
+                            </LinearLayout>
+
+                            <!-- TODO: Per futura lista terapie -->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/terapieRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="300sp" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- Recupero spazio button -->
+
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="12sp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+        </LinearLayout>
 
 
-        </RelativeLayout>
+    </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    </com.google.android.material.card.MaterialCardView>
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1sp"
+            android:clipToPadding="false"
+            android:columnCount="1"
+            android:paddingTop="5sp">
 
-</RelativeLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/salva_modifiche_utente"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/salva_modifiche_utente"
+                android:textSize="18sp" />
+
+        </GridLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

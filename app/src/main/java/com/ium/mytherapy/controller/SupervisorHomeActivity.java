@@ -25,7 +25,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
         if (check != null) {
             setContentView(R.layout.activity_home_supervisore);
-            cardRecyclerView = findViewById(R.id.recyclerView);
+            cardRecyclerView = findViewById(R.id.usersListRecyclerView);
             cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             cardAdapter = new CardAdapter(this, getMyList());
             cardRecyclerView.setAdapter(cardAdapter);
