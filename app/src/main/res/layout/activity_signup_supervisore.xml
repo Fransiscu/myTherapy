@@ -23,6 +23,10 @@
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="12sp" />
+
             <ImageView
                 android:layout_width="403dp"
                 android:layout_height="107dp"
@@ -33,7 +37,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="12dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -170,48 +174,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="40sp" />
 
-            <GridLayout
-                android:id="@+id/login_button_grid"
-                android:layout_width="match_parent"
-                android:layout_height="100sp"
-                android:layout_gravity="center"
-                android:clipToPadding="false"
-                android:columnCount="1"
-                android:paddingTop="15sp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/signup_button"
-                    style="@style/Widget.MaterialComponents.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="70sp"
-                    android:text="@string/registrazione"
-                    android:textSize="18sp" />
-
-            </GridLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14sp"
-                android:orientation="vertical"
-                android:paddingLeft="24dp"
-                android:paddingTop="56dp"
-                android:paddingRight="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="20sp"
-                    android:text="@string/footer"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
         </LinearLayout>
-
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:id="@+id/login_button_grid"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1sp"
+            android:clipToPadding="false"
+            android:columnCount="1"
+            android:paddingLeft="24dp"
+            android:paddingTop="5sp"
+            android:paddingRight="24dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/signup_button"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/registrazione"
+                android:textSize="18sp" />
+
+        </GridLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

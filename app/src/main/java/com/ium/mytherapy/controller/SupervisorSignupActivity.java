@@ -1,32 +1,28 @@
 package com.ium.mytherapy.controller;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.DatePickerFragment;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
 public class SupervisorSignupActivity extends AppCompatActivity {
 
     TextInputEditText nameInput, surnameInput, emailInput, usernameInput, passwordInput, passwordConfirmationInput, birthdateInput;
     MaterialButton signup;
-    DatePickerFragment datePickerFragment;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_supervisore);
-
-        datePickerFragment = new DatePickerFragment();
 
         nameInput = findViewById(R.id.signup_name);
         surnameInput = findViewById(R.id.signup_surname);
@@ -37,33 +33,21 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         birthdateInput = findViewById(R.id.signup_birthdate);
         signup = findViewById(R.id.signup_button);
 
+        /* Calendario al tocco del campo data */
+        birthdateInput.setShowSoftInputOnFocus(false);
+        birthdateInput.setInputType(InputType.TYPE_NULL);
+        birthdateInput.setFocusable(false);
 
-        /* Parte per l'input della data */
-        birthdateInput.setOnClickListener(v -> datePickerFragment.show(getSupportFragmentManager(), "date picker"));
+        birthdateInput.setOnClickListener(v -> {
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        birthdateInput.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                birthdateInput.setShowSoftInputOnFocus(false);
-                birthdateInput.setInputType(InputType.TYPE_NULL);
-                birthdateInput.setFocusable(false);
-                datePickerFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_MaterialComponents_MaterialCalendar);
-                datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-            }
+            @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year, monthOfYear, dayOfMonth) -> birthdateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+            datePickerDialog.show();
         });
-
-        datePickerFragment.setOnDatePickerFragmentChanged(new DatePickerFragment.DatePickerFragmentListener() {
-            @Override
-            public void onDatePickerFragmentOkButton(DialogFragment dialog, Calendar date) {
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                birthdateInput.setText(format.format(date.getTime()));
-            }
-
-            @Override
-            public void onDatePickerFragmentCancelButton(DialogFragment dialog) {
-
-            }
-        });
-
 
     }
 }
