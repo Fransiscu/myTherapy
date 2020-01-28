@@ -26,4 +26,5 @@
     <string name="nessun_item">Nessun utente presente</string>
     <string name="salva_modifiche_utente">Salva le modifiche</string>
     <string name="terapie_utente">Terapie associate all\'utente</string>
+    <string name="aggiungi_terapia">+</string>
 </resources>
