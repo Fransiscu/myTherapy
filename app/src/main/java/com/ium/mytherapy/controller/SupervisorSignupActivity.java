@@ -41,11 +41,12 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         /* Parte per l'input della data */
         birthdateInput.setOnClickListener(v -> datePickerFragment.show(getSupportFragmentManager(), "date picker"));
 
-        birthdateInput.setOnFocusChangeListener((v, hasFocus) -> { // cambia la view
+        birthdateInput.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 birthdateInput.setShowSoftInputOnFocus(false);
                 birthdateInput.setInputType(InputType.TYPE_NULL);
                 birthdateInput.setFocusable(false);
+                datePickerFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.ThemeOverlay_MaterialComponents_MaterialCalendar);
                 datePickerFragment.show(getSupportFragmentManager(), "datePicker");
             }
         });

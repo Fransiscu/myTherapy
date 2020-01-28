@@ -64,7 +64,6 @@ public class DatePickerFragment extends DialogFragment {
 
     public interface DatePickerFragmentListener {
         void onDatePickerFragmentOkButton(DialogFragment dialog, Calendar date);
-
         void onDatePickerFragmentCancelButton(DialogFragment dialog);
     }
 }
