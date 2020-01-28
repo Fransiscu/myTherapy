@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
 
     private Context context;
     private ArrayList<User> models;
+    public static String USER_INTENT = "user";
+    public static String USER_AVATAR = "avatar";
+    private User user;
 
     public CardAdapter(Context context, ArrayList<User> models) {
         this.context = context;
@@ -52,9 +56,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
 
             byte[] bytes = stream.toByteArray();
 
+            user = models.get(position);
             Intent intent = new Intent(context, UserManagementActivity.class);
-            intent.putExtra("nome", name);
-            intent.putExtra("avatar", bytes);
+            Bundle bundle = new Bundle();
+            bundle.putByteArray(USER_AVATAR, bytes);
+            bundle.putParcelable(USER_INTENT, user);
+            intent.putExtras(bundle);
             context.startActivity(intent);
 
         });

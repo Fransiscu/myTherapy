@@ -5,7 +5,9 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +16,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.CardAdapter;
+import com.ium.mytherapy.model.User;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -24,31 +29,41 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class UserManagementActivity extends AppCompatActivity {
 
     TextView nome;
-    CircleImageView image;
+    CircleImageView profileImage, editPicture;
     MaterialButton deleteUser, save;
     TextInputEditText birthdateInput;
     private int mYear, mMonth, mDay;
-
+    User user;
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_utente);
 
-        nome = findViewById(R.id.titleProfile);
-        image = findViewById(R.id.imageProfile);
+        nome = findViewById(R.id.profileTitle);
+        profileImage = findViewById(R.id.profileImage);
+        editPicture = findViewById(R.id.editProfileImage);
         deleteUser = findViewById(R.id.deleteUser);
         save = findViewById(R.id.saveUserEdits);
         birthdateInput = findViewById(R.id.profile_date);
 
-        Intent intent = getIntent();
-        String nomeString = intent.getStringExtra("nome");
+        Intent usersIntent = getIntent();
 
-        byte[] nBytes = getIntent().getByteArrayExtra("avatar");
+        if (usersIntent != null) {
+            Bundle bundle = usersIntent.getExtras();
+            if (bundle != null) {
+                user = bundle.getParcelable(CardAdapter.USER_INTENT);
+            }
+        }
+
+
+        nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
+
+        /* Immagine profilo */
+        byte[] nBytes = usersIntent.getByteArrayExtra("avatar");
         Bitmap bitmap = BitmapFactory.decodeByteArray(nBytes, 0, Objects.requireNonNull(nBytes).length);
-
-        nome.setText(nomeString);
-        image.setImageBitmap(bitmap);
+        profileImage.setImageBitmap(bitmap);
 
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
@@ -86,5 +101,32 @@ public class UserManagementActivity extends AppCompatActivity {
                     (view, year, monthOfYear, dayOfMonth) -> birthdateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
             datePickerDialog.show();
         });
+
+        /* Listener tasto edit immagine */
+        editPicture.setOnClickListener(v -> pickImage());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1000 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                profileImage.setImageBitmap(bitmap);
+//                user.setAvatar(ImagesUtility.bitmapToByteArray(bitmap));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @SuppressLint("IntentReset")
+    public void pickImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
     }
 }

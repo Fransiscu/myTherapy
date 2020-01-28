@@ -1,9 +1,9 @@
 package com.ium.mytherapy.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class User {
+public class User implements Parcelable {
     private String nome;
     private String cognome;
     private String email;
@@ -21,6 +21,27 @@ public class User {
 //    public void setTerapia(Terapia terapia) {
 //        this.terapia = terapia;
 //    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    protected User(Parcel in) {
+        nome = in.readString();
+        cognome = in.readString();
+        email = in.readString();
+        password = in.readString();
+        dataNascita = in.readString();
+        avatar = in.readInt();
+    }
 
     public String getEmail() {
         return email;
@@ -70,4 +91,18 @@ public class User {
         this.avatar = avatar;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(nome);
+        parcel.writeString(cognome);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(dataNascita);
+        parcel.writeInt(avatar);
+    }
 }
