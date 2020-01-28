@@ -284,7 +284,17 @@
 
                             <Space
                                 android:layout_width="wrap_content"
-                                android:layout_height="30sp" />
+                                android:layout_height="12sp" />
+
+                            <!-- TODO: Per futura timeline -->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/timelineRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <Space
+                                android:layout_width="wrap_content"
+                                android:layout_height="300sp" />
 
                         </LinearLayout>
 
@@ -343,6 +353,12 @@
                                     tools:ignore="RelativeOverlap,RtlHardcoded" />
 
                             </LinearLayout>
+
+                            <!-- TODO: Per futura lista terapie -->
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/terapieRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                             <Space
                                 android:layout_width="wrap_content"
