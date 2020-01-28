@@ -45,8 +45,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profileImage"
-                            android:layout_width="200sp"
-                            android:layout_height="200sp"
+                            android:layout_width="180sp"
+                            android:layout_height="180sp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30sp"
                             android:src="@drawable/avatardefault"
@@ -55,8 +55,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/editProfileImage"
-                            android:layout_width="30sp"
-                            android:layout_height="30sp"
+                            android:layout_width="40sp"
+                            android:layout_height="40sp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30sp"
                             android:layout_toEndOf="@id/profileImage"
@@ -71,7 +71,7 @@
                             android:layout_below="@id/profileImage"
                             android:layout_marginTop="5sp"
                             android:paddingLeft="30sp"
-                            android:paddingTop="20sp"
+                            android:paddingTop="10sp"
                             android:paddingRight="30sp"
                             android:text="@string/suggerimento_nome"
                             android:textAlignment="center"
