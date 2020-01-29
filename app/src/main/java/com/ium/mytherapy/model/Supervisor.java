@@ -3,7 +3,15 @@ package com.ium.mytherapy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class Supervisor implements Parcelable {
+    private String nome;
+    private String cognome;
+    private String email;
+    private String username;
+    private String password;
+    private String dataNascita;
     public static final Creator<Supervisor> CREATOR = new Creator<Supervisor>() {
         @Override
         public Supervisor createFromParcel(Parcel in) {
@@ -15,12 +23,15 @@ public class Supervisor implements Parcelable {
             return new Supervisor[size];
         }
     };
-    private String nome;
-    private String cognome;
-    private String email;
-    private String username;
-    private String password;
-    private String dataNascita;
+    private ArrayList<User> pazienti;
+
+    public ArrayList<User> getPazienti() {
+        return pazienti;
+    }
+
+    public void setPazienti(ArrayList<User> pazienti) {
+        this.pazienti = pazienti;
+    }
 
     private Supervisor(Parcel in) {
     }

@@ -11,6 +11,7 @@ public class User implements Parcelable {
     private String password;
     private String dataNascita;
     private String avatar;
+//    private Terapia terapia;
 
     public User() {
     }
@@ -18,7 +19,7 @@ public class User implements Parcelable {
 //    public Terapia getTerapia() {
 //        return terapia;
 //    }
-
+//
 //    public void setTerapia(Terapia terapia) {
 //        this.terapia = terapia;
 //    }
