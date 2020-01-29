@@ -63,10 +63,9 @@ public class MainActivity extends AppCompatActivity {
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             try {
-                boolean wasSuccessful = baseDir.mkdirs();   // per evitare i warning zzz
-                if (!wasSuccessful) {
-                    System.out.println("was not successful.");
-                }
+                boolean wasSuccessful;
+                //noinspection ResultOfMethodCallIgnored
+                baseDir.mkdirs();   // per evitare i warning zzz
                 wasSuccessful = usersDir.mkdirs();
                 if (!wasSuccessful) {
                     System.out.println("was not successful.");
