@@ -65,19 +65,11 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         }
 
-        try {
-//            Toast.makeText(getBaseContext(), user.getId().toString(), Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), "nope " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-//        Toast.makeText(getBaseContext(), user.getAvatar(), Toast.LENGTH_LONG).show();
-
-
+        Toast.makeText(getBaseContext(), user.getAvatar(), Toast.LENGTH_LONG).show();
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
         profileImage.setImageURI(Uri.parse(user.getAvatar()));
-//        profileImage.setImageBitmap(bitmap);
 
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
@@ -152,8 +144,6 @@ public class UserManagementActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();
                 }
-
-//                user.setAvatar(ImagesUtility.bitmapToByteArray(bitmap));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -102,16 +102,19 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         users.add(user);
 
         for (User item : users) {
-            item.setId(users.indexOf(item));
             try {
-                item.setAvatar(dir + "/avatar_" + item.getId() + ".jpeg");
-//                Toast.makeText(getBaseContext(), item.getAvatar(), Toast.LENGTH_LONG).show();
-
+                item.setId(users.indexOf(item));
+                File file = new File(dir + "/avatar_" + item.getId() + ".jpeg");
+                File defaultAvatar = new File(dir + "/default.jpg");
+                if (file.exists()) {
+                    item.setAvatar(file.toString());
+                } else {
+                    item.setAvatar(defaultAvatar.toString());
+                }
             } catch (Exception e) {
-                item.setAvatar(null);
+                item.setAvatar(dir + "/default.jpg");
             }
         }
-
         return users;
     }
 

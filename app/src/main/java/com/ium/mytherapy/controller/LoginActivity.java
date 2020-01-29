@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         passwordInputLayout = findViewById(R.id.password_input_toggle);
         usernameInput = findViewById(R.id.login_username);
         passwordText = findViewById(R.id.login_password);
@@ -135,4 +136,6 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+
 }

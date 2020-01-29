@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int position) {
         cardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
-//        cardHolder.avatar.setImageResource(models.get(position).getAvatar());
+        cardHolder.avatar.setImageURI(Uri.parse(models.get(position).getAvatar()));
 
         cardHolder.setItemClickListener((v, position1) -> {
             String name = models.get(position1).getNome() + " " + models.get(position1).getCognome();
