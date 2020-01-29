@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -27,27 +26,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         passwordInputLayout = findViewById(R.id.password_input_toggle);
         usernameInput = findViewById(R.id.login_username);
         passwordText = findViewById(R.id.login_password);
         supervisorButton = findViewById(R.id.login_supervisore_button);
         loginButton = findViewById(R.id.login_button);
 
-        supervisorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newActivity = new Intent(getApplicationContext(), SupervisorLoginActivity.class);    // cambio subito activity
-                startActivity(newActivity);
-            }
+        supervisorButton.setOnClickListener(view -> {
+            Intent newActivity = new Intent(getApplicationContext(), SupervisorLoginActivity.class);
+            startActivity(newActivity);
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                login();
-            }
-        });
+        loginButton.setOnClickListener(view -> login());
 
         passwordText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -56,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             /* Per ricambiare il simbolo di errore a occhio per mostrare la password una volta che si riprende a scrivere */
+            @SuppressWarnings("deprecation")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 passwordInputLayout.setPasswordVisibilityToggleEnabled(true);
@@ -88,12 +79,10 @@ public class LoginActivity extends AppCompatActivity {
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        onLoginSuccess();
+                () -> {
+                    onLoginSuccess();
 //                         onLoginFailed();
-                        progressDialog.dismiss();
-                    }
+                    progressDialog.dismiss();
                 }, 2000);
     }
 
@@ -113,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setEnabled(true);
     }
 
+    @SuppressWarnings("deprecation")
     public boolean validate() {
         boolean valid = true;
 
