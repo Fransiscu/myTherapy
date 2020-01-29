@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.User;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -21,6 +23,8 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
 
     final static int PERMISSION_REQUEST_CODE = 123;
+    final static String USER_LIST = "main user list";
+    ArrayList<User> userList = SupervisorHomeActivity.getMyList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         Intent newActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(USER_LIST, userList);
+        newActivity.putExtras(bundle);
         startActivity(newActivity);
         finish();
     }

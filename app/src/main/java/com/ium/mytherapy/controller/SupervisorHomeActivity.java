@@ -21,6 +21,84 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MaterialButton addUser;
 
+    public static ArrayList<User> getMyList() {
+        ArrayList<User> users = new ArrayList<>();
+        File path = Environment.getExternalStorageDirectory();
+        File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+
+        User user = new User();
+        user.setNome("John");
+        user.setCognome("Smith");
+        user.setUserId(0);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Lorenzo");
+        user.setCognome("Piana");
+        user.setUserId(1);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Francesco");
+        user.setCognome("Soru");
+        user.setUserId(2);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Chiara");
+        user.setCognome("Soru");
+        user.setUserId(3);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Alberto");
+        user.setCognome("Usala");
+        user.setUserId(4);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Michela");
+        user.setCognome("Pinna");
+        user.setUserId(5);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Laura");
+        user.setCognome("Soru");
+        user.setUserId(6);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Federico");
+        user.setCognome("Carcangiu");
+        user.setUserId(7);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Luca");
+        user.setCognome("piddia");
+        user.setUserId(8);
+        users.add(user);
+
+        user = new User();
+        user.setNome("Gianluca");
+        user.setCognome("Mei");
+        user.setUserId(9);
+        users.add(user);
+
+        for (int i = 0; i < users.size(); i++) {
+            File file = new File(dir + "/avatar_" + users.get(i).getUserId() + ".jpeg");
+            File defaultAvatar = new File(dir + "/default.jpg");
+            if (file.exists()) {
+                users.get(i).setAvatar(file.toString());
+            } else {
+                users.get(i).setAvatar(defaultAvatar.toString());
+            }
+        }
+
+        return users;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,79 +121,17 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         });
 
         cardAdapter.notifyDataSetChanged();
-
     }
 
-    private ArrayList<User> getMyList() {
-        ArrayList<User> users = new ArrayList<>();
-        File path = Environment.getExternalStorageDirectory();
-        File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        cardAdapter.notifyDataSetChanged();
+    }
 
-        User user = new User();
-        user.setNome("John");
-        user.setCognome("Smith");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Lorenzo");
-        user.setCognome("Piana");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Francesco");
-        user.setCognome("Soru");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Chiara");
-        user.setCognome("Soru");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Alberto");
-        user.setCognome("Usala");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Michela");
-        user.setCognome("Pinna");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Laura");
-        user.setCognome("Soru");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Federico");
-        user.setCognome("Carcangiu");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Luca");
-        user.setCognome("piddia");
-        users.add(user);
-
-        user = new User();
-        user.setNome("Gianluca");
-        user.setCognome("Mei");
-        users.add(user);
-
-        for (User item : users) {
-            try {
-                item.setId(users.indexOf(item));
-                File file = new File(dir + "/avatar_" + item.getId() + ".jpeg");
-                File defaultAvatar = new File(dir + "/default.jpg");
-                if (file.exists()) {
-                    item.setAvatar(file.toString());
-                } else {
-                    item.setAvatar(defaultAvatar.toString());
-                }
-            } catch (Exception e) {
-                item.setAvatar(dir + "/default.jpg");
-            }
-        }
-        return users;
+    @Override
+    public void onResume() {
+        super.onResume();
+        cardAdapter.notifyDataSetChanged();
     }
 
 }

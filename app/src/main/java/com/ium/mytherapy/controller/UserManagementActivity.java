@@ -24,6 +24,7 @@ import com.ium.mytherapy.model.User;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -39,10 +40,9 @@ public class UserManagementActivity extends AppCompatActivity {
     MaterialButton deleteUser, save;
     TextInputEditText birthdateInput;
     private int mYear, mMonth, mDay;
+    int userKey;
+    private ArrayList<User> userList;
     User user;
-    private Bitmap bitmap;
-    File path = Environment.getExternalStorageDirectory();
-    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -62,17 +62,15 @@ public class UserManagementActivity extends AppCompatActivity {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
                 user = bundle.getParcelable(CardAdapter.USER_INTENT);
+                userList = bundle.getParcelableArrayList(CardAdapter.USERS_INTENT);
+                userKey = bundle.getInt(CardAdapter.USER_KEY);
             }
         }
 
-        Toast.makeText(getBaseContext(), user.getAvatar(), Toast.LENGTH_LONG).show();
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
-
         /* Immagine profilo */
-        loadProfileImage();
-
-
+        profileImage.setImageURI(Uri.parse(user.getAvatar()));
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> {
@@ -80,7 +78,6 @@ public class UserManagementActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
             finish();
         });
-
 
         /* Calendario al tocco del campo data */
         birthdateInput.setShowSoftInputOnFocus(false);
@@ -108,24 +105,18 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void loadProfileImage() {
-        profileImage.setImageURI(Uri.parse(user.getAvatar()));
-
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Conferma")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    //TODO: implementazione cancellazione
+                    userList.remove(userKey);
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
                     finish();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                 .show());
-
     }
 
     @Override
@@ -136,7 +127,7 @@ public class UserManagementActivity extends AppCompatActivity {
             Uri filePath = data.getData();
             try {
                 boolean success = true;
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profileImage.setImageBitmap(bitmap);
                 File path = Environment.getExternalStorageDirectory();
                 File dir = new File(path.getAbsolutePath() + "/myTherapy/");
@@ -145,7 +136,8 @@ public class UserManagementActivity extends AppCompatActivity {
                     success = dir.mkdir();
                 }
                 if (success) {
-                    File file = new File(dir, "avatar_" + user.getId() + ".jpeg");
+                    /* Salva nella cartella */
+                    File file = new File(dir, "avatar_" + userKey + ".jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
@@ -179,4 +171,5 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         }
     }
+
 }
