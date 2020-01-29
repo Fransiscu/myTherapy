@@ -56,6 +56,8 @@
                 android:hint="@string/suggerimento_nome">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@"
+                    android:inputType="textFilter"
                     android:id="@+id/signup_name"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
@@ -73,6 +75,8 @@
                 android:hint="@string/suggerimento_cognome">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@"
+                    android:inputType="textFilter"
                     android:id="@+id/signup_surname"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
@@ -90,6 +94,8 @@
                 android:hint="@string/suggerimento_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                    android:inputType="textFilter"
                     android:id="@+id/signup_email"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
@@ -107,6 +113,8 @@
                 android:hint="@string/suggerimento_username">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                    android:inputType="textFilter"
                     android:id="@+id/signup_username"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
@@ -119,16 +127,17 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/signup_password_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_password"
-                app:passwordToggleEnabled="true">
+                android:hint="@string/suggerimento_password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                     android:id="@+id/signup_password"
                     android:layout_width="match_parent"
                     android:layout_height="70sp"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword|textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,16 +147,17 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/signup_password_confirm_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_conferma_password"
-                app:passwordToggleEnabled="true">
+                android:hint="@string/suggerimento_conferma_password">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                     android:id="@+id/signup_password_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="70sp"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword|textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

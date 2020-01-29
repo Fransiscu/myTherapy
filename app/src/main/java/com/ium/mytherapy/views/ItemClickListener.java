@@ -1,4 +1,4 @@
-package com.ium.mytherapy.model;
+package com.ium.mytherapy.views;
 
 import android.view.View;
 
