@@ -68,21 +68,11 @@ public class UserManagementActivity extends AppCompatActivity {
         Toast.makeText(getBaseContext(), user.getAvatar(), Toast.LENGTH_LONG).show();
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
-        /* Immagine profilo */
-        profileImage.setImageURI(Uri.parse(user.getAvatar()));
 
-        /* Listener tasto cancellazione utente */
-        deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Conferma")
-                .setMessage("Sei sicuro di voler cancellare l'utente?")
-                .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    //TODO: implementazione cancellazione
-                    Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
-                    finish();
-                })
-                .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                })
-                .show());
+        /* Immagine profilo */
+        loadProfileImage();
+
+
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> {
@@ -117,6 +107,24 @@ public class UserManagementActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
             }
         });
+
+    }
+
+    private void loadProfileImage() {
+        profileImage.setImageURI(Uri.parse(user.getAvatar()));
+
+        /* Listener tasto cancellazione utente */
+        deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Conferma")
+                .setMessage("Sei sicuro di voler cancellare l'utente?")
+                .setPositiveButton("Procedi", (dialogInterface, i) -> {
+                    //TODO: implementazione cancellazione
+                    Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
+                    finish();
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
 
     }
 
