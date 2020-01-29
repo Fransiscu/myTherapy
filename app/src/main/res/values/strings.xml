@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">myTherapy</string>
     <string name="descrizione_logo">myTherapy</string>
     <string name="registrazione">Registrati</string>
@@ -30,4 +30,6 @@
     <string name="cancella_utente">Cancella utente corrente</string>
     <string name="timeline_terapia_utente">Timeline della giornata</string>
     <string name="titolo_aggiunta_utente">Aggiungi utente</string>
+    <string name="consigli_aggiunta_utente"> Ricordati di fare questo quest altro testo testo testo
+    asda sad sad dsaas \n dasdsa asds asd sasad sda </string>
 </resources>
