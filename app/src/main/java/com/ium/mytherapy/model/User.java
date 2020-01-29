@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
+    private int id;
     private String nome;
     private String cognome;
     private String email;
@@ -21,6 +22,14 @@ public class User implements Parcelable {
 //    public void setTerapia(Terapia terapia) {
 //        this.terapia = terapia;
 //    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override

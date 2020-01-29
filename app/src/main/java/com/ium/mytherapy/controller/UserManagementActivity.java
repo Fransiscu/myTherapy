@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,10 +25,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Objects;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -44,6 +41,8 @@ public class UserManagementActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay;
     User user;
     private Bitmap bitmap;
+    File path = Environment.getExternalStorageDirectory();
+    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -66,13 +65,19 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         }
 
+        try {
+//            Toast.makeText(getBaseContext(), user.getId().toString(), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), "nope " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+//        Toast.makeText(getBaseContext(), user.getAvatar(), Toast.LENGTH_LONG).show();
+
 
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
-        byte[] nBytes = usersIntent.getByteArrayExtra("avatar");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(nBytes, 0, Objects.requireNonNull(nBytes).length);
-        profileImage.setImageBitmap(bitmap);
+        profileImage.setImageURI(Uri.parse(user.getAvatar()));
+//        profileImage.setImageBitmap(bitmap);
 
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
@@ -113,12 +118,11 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Listener tasto edit immagine */
         editPicture.setOnClickListener(v -> {
-            if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
-                    (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-                setPermissions();
+            if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
                 pickImage();
             } else {
-                pickImage();
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
             }
         });
 
@@ -141,9 +145,9 @@ public class UserManagementActivity extends AppCompatActivity {
                     success = dir.mkdir();
                 }
                 if (success) {
-                    File file = new File(dir, System.currentTimeMillis() + ".png");
+                    File file = new File(dir, "avatar_" + user.getId() + ".jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();
@@ -175,41 +179,6 @@ public class UserManagementActivity extends AppCompatActivity {
             } else {
                 System.out.println(("Permssions not granted"));
             }
-        }
-    }
-
-    private void setPermissions() {
-        if ((ContextCompat.checkSelfPermission(UserManagementActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) +
-                ContextCompat.checkSelfPermission(UserManagementActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) !=
-                PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(UserManagementActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(UserManagementActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
-                builder.setTitle("Accettare i permessi");
-                builder.setMessage("I permessi seguenti servono per la modifica dell'immagine del profilo");
-                builder.setPositiveButton("Ok", (dialogInterface, i) -> ActivityCompat.requestPermissions(
-                        UserManagementActivity.this,
-                        new String[]{
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                        },
-                        MainActivity.PERMISSION_REQUEST_CODE
-                ));
-                builder.setNegativeButton("Cancella", null);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-            } else {
-                ActivityCompat.requestPermissions(
-                        UserManagementActivity.this,
-                        new String[]{
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                        },
-                        MainActivity.PERMISSION_REQUEST_CODE
-                );
-            }
-        } else {
-            System.out.println("placeholder");
         }
     }
 }
