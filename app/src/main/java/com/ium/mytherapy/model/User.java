@@ -4,12 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class User implements Parcelable {
+    private int userId;
     private String nome;
     private String cognome;
     private String email;
     private String password;
     private String dataNascita;
-    private int avatar;
+    private String avatar;
+//    private Terapia terapia;
 
     public User() {
     }
@@ -17,10 +19,18 @@ public class User implements Parcelable {
 //    public Terapia getTerapia() {
 //        return terapia;
 //    }
-
+//
 //    public void setTerapia(Terapia terapia) {
 //        this.terapia = terapia;
 //    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int id) {
+        this.userId = id;
+    }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -34,13 +44,13 @@ public class User implements Parcelable {
         }
     };
 
-    protected User(Parcel in) {
+    private User(Parcel in) {
         nome = in.readString();
         cognome = in.readString();
         email = in.readString();
         password = in.readString();
         dataNascita = in.readString();
-        avatar = in.readInt();
+        avatar = in.readString();
     }
 
     public String getEmail() {
@@ -83,11 +93,11 @@ public class User implements Parcelable {
         this.password = password;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
@@ -103,6 +113,6 @@ public class User implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(password);
         parcel.writeString(dataNascita);
-        parcel.writeInt(avatar);
+        parcel.writeString(avatar);
     }
 }

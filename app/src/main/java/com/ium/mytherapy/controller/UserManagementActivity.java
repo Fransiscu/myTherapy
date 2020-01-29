@@ -1,12 +1,14 @@
 package com.ium.mytherapy.controller;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.widget.TextView;
@@ -19,11 +21,16 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.CardAdapter;
 import com.ium.mytherapy.model.User;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserManagementActivity extends AppCompatActivity {
@@ -33,8 +40,9 @@ public class UserManagementActivity extends AppCompatActivity {
     MaterialButton deleteUser, save;
     TextInputEditText birthdateInput;
     private int mYear, mMonth, mDay;
+    int userKey;
+    private ArrayList<User> userList;
     User user;
-    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -54,29 +62,15 @@ public class UserManagementActivity extends AppCompatActivity {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
                 user = bundle.getParcelable(CardAdapter.USER_INTENT);
+                userList = bundle.getParcelableArrayList(CardAdapter.USERS_INTENT);
+                userKey = bundle.getInt(CardAdapter.USER_KEY);
             }
         }
-
 
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
-        byte[] nBytes = usersIntent.getByteArrayExtra("avatar");
-        Bitmap bitmap = BitmapFactory.decodeByteArray(nBytes, 0, Objects.requireNonNull(nBytes).length);
-        profileImage.setImageBitmap(bitmap);
-
-        /* Listener tasto cancellazione utente */
-        deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Conferma")
-                .setMessage("Sei sicuro di voler cancellare l'utente?")
-                .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    //TODO: implementazione cancellazione
-                    Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
-                    finish();
-                })
-                .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                })
-                .show());
+        profileImage.setImageURI(Uri.parse(user.getAvatar()));
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> {
@@ -84,7 +78,6 @@ public class UserManagementActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
             finish();
         });
-
 
         /* Calendario al tocco del campo data */
         birthdateInput.setShowSoftInputOnFocus(false);
@@ -103,7 +96,27 @@ public class UserManagementActivity extends AppCompatActivity {
         });
 
         /* Listener tasto edit immagine */
-        editPicture.setOnClickListener(v -> pickImage());
+        editPicture.setOnClickListener(v -> {
+            if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+                pickImage();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
+            }
+        });
+
+        /* Listener tasto cancellazione utente */
+        deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Conferma")
+                .setMessage("Sei sicuro di voler cancellare l'utente?")
+                .setPositiveButton("Procedi", (dialogInterface, i) -> {
+                    userList.remove(userKey);
+                    Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
+                    finish();
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
     }
 
     @Override
@@ -113,9 +126,24 @@ public class UserManagementActivity extends AppCompatActivity {
         if (requestCode == 1000 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                boolean success = true;
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profileImage.setImageBitmap(bitmap);
-//                user.setAvatar(ImagesUtility.bitmapToByteArray(bitmap));
+                File path = Environment.getExternalStorageDirectory();
+                File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+
+                if (!dir.exists()) {
+                    success = dir.mkdir();
+                }
+                if (success) {
+                    /* Salva nella cartella */
+                    File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                    FileOutputStream outputStream = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -129,4 +157,19 @@ public class UserManagementActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
+            if ((grantResults.length > 0)
+                    && (grantResults[0] +
+                    grantResults[1]
+                    == PackageManager.PERMISSION_GRANTED)) {
+                System.out.println(("Permssions granted"));
+            } else {
+                System.out.println(("Permssions not granted"));
+            }
+        }
+    }
+
 }
