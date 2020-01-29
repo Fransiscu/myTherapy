@@ -12,6 +12,12 @@ public class Supervisor implements Parcelable {
     private String username;
     private String password;
     private String dataNascita;
+    private int supervisorId;
+    private ArrayList<User> pazienti;
+
+    public Supervisor() {
+    }
+
     public static final Creator<Supervisor> CREATOR = new Creator<Supervisor>() {
         @Override
         public Supervisor createFromParcel(Parcel in) {
@@ -23,7 +29,21 @@ public class Supervisor implements Parcelable {
             return new Supervisor[size];
         }
     };
-    private ArrayList<User> pazienti;
+
+    private Supervisor(Parcel in) {
+        nome = in.readString();
+        cognome = in.readString();
+        email = in.readString();
+        username = in.readString();
+        password = in.readString();
+        dataNascita = in.readString();
+        supervisorId = in.readInt();
+        pazienti = in.createTypedArrayList(User.CREATOR);
+    }
+
+    int getSupervisorId() {
+        return supervisorId;
+    }
 
     public ArrayList<User> getPazienti() {
         return pazienti;
@@ -33,14 +53,11 @@ public class Supervisor implements Parcelable {
         this.pazienti = pazienti;
     }
 
-    private Supervisor(Parcel in) {
+    public void setSupervisorId(int supervisorId) {
+        this.supervisorId = supervisorId;
     }
 
-    public static Creator<Supervisor> getCREATOR() {
-        return CREATOR;
-    }
-
-    public String getNome() {
+    String getNome() {
         return nome;
     }
 
@@ -48,7 +65,7 @@ public class Supervisor implements Parcelable {
         this.nome = nome;
     }
 
-    public String getCognome() {
+    String getCognome() {
         return cognome;
     }
 
@@ -56,7 +73,7 @@ public class Supervisor implements Parcelable {
         this.cognome = cognome;
     }
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
@@ -64,7 +81,7 @@ public class Supervisor implements Parcelable {
         this.email = email;
     }
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
@@ -72,7 +89,7 @@ public class Supervisor implements Parcelable {
         this.username = username;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
@@ -80,7 +97,7 @@ public class Supervisor implements Parcelable {
         this.password = password;
     }
 
-    public String getDataNascita() {
+    String getDataNascita() {
         return dataNascita;
     }
 
@@ -90,6 +107,14 @@ public class Supervisor implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nome);
+        dest.writeString(cognome);
+        dest.writeString(email);
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(dataNascita);
+        dest.writeInt(supervisorId);
+        dest.writeTypedList(pazienti);
     }
 
     @Override

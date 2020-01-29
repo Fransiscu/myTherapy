@@ -119,10 +119,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/signup_password_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_password"
-                app:passwordToggleEnabled="true">
+                android:hint="@string/suggerimento_password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/signup_password"
@@ -138,10 +138,10 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/signup_password_confirm_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_conferma_password"
-                app:passwordToggleEnabled="true">
+                android:hint="@string/suggerimento_conferma_password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/signup_password_confirm"

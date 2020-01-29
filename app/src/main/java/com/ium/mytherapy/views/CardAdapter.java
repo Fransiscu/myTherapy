@@ -1,4 +1,4 @@
-package com.ium.mytherapy.model;
+package com.ium.mytherapy.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.UserManagementActivity;
+import com.ium.mytherapy.model.User;
 
 import java.util.ArrayList;
 

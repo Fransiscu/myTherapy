@@ -18,8 +18,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.CardAdapter;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
