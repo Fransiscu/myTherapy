@@ -1,12 +1,15 @@
 package com.ium.mytherapy.controller;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.widget.TextView;
@@ -19,11 +22,17 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.CardAdapter;
 import com.ium.mytherapy.model.User;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserManagementActivity extends AppCompatActivity {
@@ -103,7 +112,16 @@ public class UserManagementActivity extends AppCompatActivity {
         });
 
         /* Listener tasto edit immagine */
-        editPicture.setOnClickListener(v -> pickImage());
+        editPicture.setOnClickListener(v -> {
+            if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+                    (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+                setPermissions();
+                pickImage();
+            } else {
+                pickImage();
+            }
+        });
+
     }
 
     @Override
@@ -113,8 +131,24 @@ public class UserManagementActivity extends AppCompatActivity {
         if (requestCode == 1000 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
+                boolean success = true;
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profileImage.setImageBitmap(bitmap);
+                File path = Environment.getExternalStorageDirectory();
+                File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+
+                if (!dir.exists()) {
+                    success = dir.mkdir();
+                }
+                if (success) {
+                    File file = new File(dir, System.currentTimeMillis() + ".png");
+                    FileOutputStream outputStream = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();
+                }
+
 //                user.setAvatar(ImagesUtility.bitmapToByteArray(bitmap));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -128,5 +162,54 @@ public class UserManagementActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
+            if ((grantResults.length > 0)
+                    && (grantResults[0] +
+                    grantResults[1]
+                    == PackageManager.PERMISSION_GRANTED)) {
+                System.out.println(("Permssions granted"));
+            } else {
+                System.out.println(("Permssions not granted"));
+            }
+        }
+    }
+
+    private void setPermissions() {
+        if ((ContextCompat.checkSelfPermission(UserManagementActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) +
+                ContextCompat.checkSelfPermission(UserManagementActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) !=
+                PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(UserManagementActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(UserManagementActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(UserManagementActivity.this);
+                builder.setTitle("Accettare i permessi");
+                builder.setMessage("I permessi seguenti servono per la modifica dell'immagine del profilo");
+                builder.setPositiveButton("Ok", (dialogInterface, i) -> ActivityCompat.requestPermissions(
+                        UserManagementActivity.this,
+                        new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                        },
+                        MainActivity.PERMISSION_REQUEST_CODE
+                ));
+                builder.setNegativeButton("Cancella", null);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else {
+                ActivityCompat.requestPermissions(
+                        UserManagementActivity.this,
+                        new String[]{
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                        },
+                        MainActivity.PERMISSION_REQUEST_CODE
+                );
+            }
+        } else {
+            System.out.println("placeholder");
+        }
     }
 }

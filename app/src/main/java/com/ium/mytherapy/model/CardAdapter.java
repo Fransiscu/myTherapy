@@ -24,7 +24,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
     private Context context;
     private ArrayList<User> models;
     public static String USER_INTENT = "user";
-    public static String USER_AVATAR = "avatar";
+    private static String USER_AVATAR = "avatar";
     private User user;
 
     public CardAdapter(Context context, ArrayList<User> models) {
@@ -42,7 +42,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int position) {
         cardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
-        cardHolder.avatar.setImageResource(models.get(position).getAvatar());
+//        cardHolder.avatar.setImageResource(models.get(position).getAvatar());
 
         cardHolder.setItemClickListener((v, position1) -> {
             String name = models.get(position1).getNome() + " " + models.get(position1).getCognome();
