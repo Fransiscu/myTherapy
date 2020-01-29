@@ -78,6 +78,24 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/suggerimento_data">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="70sp"
+                    android:drawableEnd="@drawable/baseline_calendar_today_24" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/suggerimento_username">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -95,6 +113,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
                 android:hint="@string/suggerimento_password">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -108,8 +127,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="20sp" />
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                android:padding="10sp"
+                app:cardCornerRadius="4sp"
+                app:cardUseCompatPadding="true"
+                app:shapeAppearanceOverlay="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10sp"
+                        android:text="@string/consigli_aggiunta_utente_titolo"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15sp"
+                        android:text="@string/consigli_aggiunta_utente_testo"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:id="@+id/aggiunta_utente_grid"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1sp"
+            android:clipToPadding="false"
+            android:columnCount="1"
+            android:paddingTop="5sp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/conferma_aggiunta_utente_button"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/aggiungi_utenti"
+                android:textSize="18sp" />
+
+        </GridLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

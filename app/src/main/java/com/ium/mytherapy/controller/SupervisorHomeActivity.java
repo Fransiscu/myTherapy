@@ -128,10 +128,10 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         cardAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        cardAdapter.notifyDataSetChanged();
-    }
+//    @Override     // non serve tornando indietro ma solo confermando
+//    public void onResume() {
+//        super.onResume();
+//        cardAdapter.notifyDataSetChanged();
+//    }
 
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="Typos">
     <string name="app_name">myTherapy</string>
     <string name="descrizione_logo">myTherapy</string>
     <string name="registrazione">Registrati</string>
@@ -30,4 +30,7 @@
     <string name="cancella_utente">Cancella utente corrente</string>
     <string name="timeline_terapia_utente">Timeline della giornata</string>
     <string name="titolo_aggiunta_utente">Aggiungi utente</string>
+    <string name="consigli_aggiunta_utente_titolo"> ATTENZIONE</string>
+    <string name="consigli_aggiunta_utente_testo">Le informazioni qui inserite verranno utilizzate per la creazione di un account utente che potrà essere assegnato
+    ad un paziente.\nPotrai comunque modificare i dati in un qualsiasi momento dalla schermata principale.</string>
 </resources>
