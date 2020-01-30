@@ -53,9 +53,29 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         birthdateInput.setInputType(InputType.TYPE_NULL);
         birthdateInput.setFocusable(false);
 
-
         /* Resetto il punto esclamativo rosso qunado riprende a scrivere */
         passwordConfirmationInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            /* Per ricambiare il simbolo di errore a occhio per mostrare la password una volta che si riprende a scrivere */
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                passwordInputLayout.setPasswordVisibilityToggleEnabled(true);
+                passwordInputConfirmationLayout.setPasswordVisibilityToggleEnabled(true);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        /* Resetto il punto esclamativo rosso qunado riprende a scrivere */
+        passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -93,28 +113,19 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
         });
 
-        /* Resetto il punto esclamativo rosso qunado riprende a scrivere */
-        passwordInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        /* Popup calendario al tocco del campo */
+        birthdateInput.setOnClickListener(v -> {
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
-            }
-
-            /* Per ricambiare il simbolo di errore a occhio per mostrare la password una volta che si riprende a scrivere */
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                passwordInputLayout.setPasswordVisibilityToggleEnabled(true);
-                passwordInputConfirmationLayout.setPasswordVisibilityToggleEnabled(true);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
+            @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year, monthOfYear, dayOfMonth) -> birthdateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+            datePickerDialog.show();
         });
 
-
+        /* Aggiunta Supervisore */
         signupButton.setOnClickListener(view -> {
             boolean valid = true;
 
@@ -172,17 +183,6 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
         });
 
-
-        birthdateInput.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-
-            @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                    (view, year, monthOfYear, dayOfMonth) -> birthdateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
-            datePickerDialog.show();
-        });
     }
 
     public void addSupervisor() {
@@ -221,10 +221,6 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
             finish();
         };
-
         signUp.run();
-
     }
-
-
 }

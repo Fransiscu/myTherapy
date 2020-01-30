@@ -1,7 +1,12 @@
 package com.ium.mytherapy.controller;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -14,6 +19,7 @@ import com.ium.mytherapy.model.UserFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +29,7 @@ public class AddUserActivity extends AppCompatActivity {
     TextInputEditText nameInput, surnameInput, dateInput, emailInput, usernameInput, passwordInput;
     TextInputLayout passwordInputLayout;
     MaterialButton addUserButton;
+    private int mYear, mMonth, mDay;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -40,6 +47,42 @@ public class AddUserActivity extends AppCompatActivity {
 
         passwordInputLayout = findViewById(R.id.user_password_toggle);
 
+        /* Calendario al tocco del campo data */
+        dateInput.setShowSoftInputOnFocus(false);
+        dateInput.setInputType(InputType.TYPE_NULL);
+        dateInput.setFocusable(false);
+
+        /* Resetto errore per birthdate*/
+        dateInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                dateInput.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        /* Popup calendario al tocco del campo */
+        dateInput.setOnClickListener(v -> {
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+            @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, year, monthOfYear, dayOfMonth) -> dateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
+            datePickerDialog.show();
+        });
+
+        /* Aggiunta utente */
         addUserButton.setOnClickListener(view -> {
             boolean valid = true;
             String name = Objects.requireNonNull(nameInput.getText()).toString();
@@ -93,6 +136,7 @@ public class AddUserActivity extends AppCompatActivity {
 
         });
 
+
     }
 
     private void addUser() {
@@ -133,9 +177,6 @@ public class AddUserActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
             finish();
         };
-
         signUp.run();
-
     }
-
 }
