@@ -7,6 +7,7 @@ public class User implements Parcelable {
     private int userId;
     private String nome;
     private String cognome;
+    private String username;
     private String email;
     private String password;
     private String dataNascita;
@@ -23,6 +24,15 @@ public class User implements Parcelable {
 //    public void setTerapia(Terapia terapia) {
 //        this.terapia = terapia;
 //    }
+
+
+    String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getUserId() {
         return userId;
@@ -53,7 +63,7 @@ public class User implements Parcelable {
         avatar = in.readString();
     }
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
@@ -77,7 +87,7 @@ public class User implements Parcelable {
         this.cognome = cognome;
     }
 
-    public String getDataNascita() {
+    String getDataNascita() {
         return dataNascita;
     }
 
@@ -85,7 +95,7 @@ public class User implements Parcelable {
         this.dataNascita = dataNascita;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
