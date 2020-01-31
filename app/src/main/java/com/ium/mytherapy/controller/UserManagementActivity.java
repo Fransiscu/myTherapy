@@ -2,6 +2,7 @@ package com.ium.mytherapy.controller;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,12 +20,12 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -33,16 +34,19 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
 
     TextView nome;
     CircleImageView profileImage, editPicture;
+    TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
     MaterialButton deleteUser, save;
-    TextInputEditText birthdateInput;
     private int mYear, mMonth, mDay;
     int userKey;
-    private ArrayList<User> userList;
     User user;
+    File path = Environment.getExternalStorageDirectory();
+    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
@@ -55,27 +59,56 @@ public class UserManagementActivity extends AppCompatActivity {
         deleteUser = findViewById(R.id.deleteUser);
         save = findViewById(R.id.saveUserEdits);
         birthdateInput = findViewById(R.id.profile_date);
+        profileName = findViewById(R.id.profile_name);
+        profileSurname = findViewById(R.id.profile_surname);
+        profileUsername = findViewById(R.id.profile_username);
+        profilePassword = findViewById(R.id.profile_password);
 
         Intent usersIntent = getIntent();
 
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
-                user = bundle.getParcelable(CardAdapter.USER_INTENT);
-                userList = bundle.getParcelableArrayList(CardAdapter.USERS_INTENT);
                 userKey = bundle.getInt(CardAdapter.USER_KEY);
             }
         }
 
+        try {
+            user = UserFactory.getInstance().getUser(userKey);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /* Riempio i campi */
+        profileName.setText(user.getNome());
+        profileSurname.setText(user.getCognome());
+        profileUsername.setText(user.getUsername());
+        birthdateInput.setText(user.getDataNascita());
+        profilePassword.setText(user.getPassword());
+
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
-        profileImage.setImageURI(Uri.parse(user.getAvatar()));
+        File profilePicture = new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
+        File defaultAvatar = new File(dir + "/default.jpg");
+        if (profilePicture.exists()) {
+            profileImage.setImageURI(Uri.fromFile(profilePicture));
+        } else {
+            profileImage.setImageURI(Uri.fromFile(defaultAvatar));
+
+        }
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> {
             //TODO: implementazione salvataggio
             Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
+            File file = new File(dir, "avatar_" + userKey + ".jpeg");
+            file.delete();
+            File from = new File(dir, "avatar_" + userKey + "t.jpeg");
+            File to = new File(dir, "avatar_" + userKey + ".jpeg");
+            from.renameTo(to);
+            Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+            startActivity(newActivity);
             finish();
         });
 
@@ -110,13 +143,25 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setTitle("Conferma")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    userList.remove(userKey);   //TODO: risolvere con utenti veri
+//                    userList.remove(userKey);   //TODO: risolvere con utenti veri
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
                     finish();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                 .show());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        File file = new File(dir, "avatar_" + userKey + "t.jpeg");
+        file.delete();
+        Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+        startActivity(newActivity);
+        finish();
+        super.onBackPressed();
     }
 
     @Override
@@ -129,15 +174,13 @@ public class UserManagementActivity extends AppCompatActivity {
                 boolean success = true;
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profileImage.setImageBitmap(bitmap);
-                File path = Environment.getExternalStorageDirectory();
-                File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
                 if (!dir.exists()) {
                     success = dir.mkdir();
                 }
                 if (success) {
                     /* Salva nella cartella */
-                    File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                    File file = new File(dir, "avatar_" + userKey + "t.jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();

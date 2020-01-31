@@ -26,7 +26,7 @@ public class User implements Parcelable, Comparable<User> {
 //    }
 
 
-    String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -87,7 +87,7 @@ public class User implements Parcelable, Comparable<User> {
         this.cognome = cognome;
     }
 
-    String getDataNascita() {
+    public String getDataNascita() {
         return dataNascita;
     }
 
@@ -95,7 +95,7 @@ public class User implements Parcelable, Comparable<User> {
         this.dataNascita = dataNascita;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 

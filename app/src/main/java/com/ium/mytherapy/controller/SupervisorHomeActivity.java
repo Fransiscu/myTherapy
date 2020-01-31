@@ -1,5 +1,6 @@
 package com.ium.mytherapy.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -7,9 +8,11 @@ import android.os.Environment;
 import com.google.android.material.button.MaterialButton;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -22,11 +25,13 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     CardAdapter cardAdapter;
     MaterialButton addUser;
 
-    public static ArrayList<User> getMyList() {
-        ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<User> getMyList() throws IOException {
+        ArrayList<User> users;
         File path = Environment.getExternalStorageDirectory();
         File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
+        /* Valori d'esempio */
+/*
         User user = new User();
         user.setNome("John");
         user.setCognome("Smith");
@@ -101,24 +106,43 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             } else {
                 users.get(i).setAvatar(defaultAvatar.toString());
             }
+        }*/
+
+        users = UserFactory.getInstance().getUsers();
+        Collections.sort(users);
+
+        for (int i = 0; i < users.size(); i++) {
+            File file = new File(dir + "/avatar_" + users.get(i).getUserId() + ".jpeg");
+            File defaultAvatar = new File(dir + "/default.jpg");
+            if (file.exists()) {
+                users.get(i).setAvatar(file.toString());
+            } else {
+                users.get(i).setAvatar(defaultAvatar.toString());
+            }
         }
 
-//        return UserFactory.getInstance().getUsers();
-        Collections.sort(users);
         return users;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<User> check;
-        check = getMyList();
+        ArrayList<User> check = null;
+        try {
+            check = getMyList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (check != null) {
             setContentView(R.layout.activity_home_supervisore);
             cardRecyclerView = findViewById(R.id.usersListRecyclerView);
             cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            cardAdapter = new CardAdapter(this, getMyList());
+            try {
+                cardAdapter = new CardAdapter(this, getMyList());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             cardRecyclerView.setAdapter(cardAdapter);
         } else {
             setContentView(R.layout.list_empty_view);
@@ -127,21 +151,24 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         addUser = findViewById(R.id.aggiungi_utenti_button);
         addUser.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), AddUserActivity.class);
-            startActivity(newActivity);
+            startActivityForResult(newActivity, 11);
+            finish();
         });
 
         cardAdapter.notifyDataSetChanged();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        cardAdapter.notifyDataSetChanged();
+        if (requestCode == 11 && resultCode == Activity.RESULT_OK) {
+            cardAdapter.notifyDataSetChanged();
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
-//    @Override     // non serve tornando indietro ma solo confermando
-//    public void onResume() {
-//        super.onResume();
-//        cardAdapter.notifyDataSetChanged();
-//    }
+    @Override     // non serve tornando indietro ma solo confermando
+    public void onResume() {
+        cardAdapter.notifyDataSetChanged();
+        super.onResume();
+    }
 
 }

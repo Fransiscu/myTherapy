@@ -2,6 +2,7 @@ package com.ium.mytherapy.controller;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Editable;
@@ -30,6 +31,8 @@ public class AddUserActivity extends AppCompatActivity {
     TextInputLayout passwordInputLayout;
     MaterialButton addUserButton;
     private int mYear, mMonth, mDay;
+    File path = Environment.getExternalStorageDirectory();
+    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
     @SuppressWarnings("deprecation")
     @Override
@@ -132,6 +135,9 @@ public class AddUserActivity extends AppCompatActivity {
 
             if (valid) {
                 addUser();
+                Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+                startActivity(newActivity);
+                finish();
             }
 
         });
@@ -169,14 +175,26 @@ public class AddUserActivity extends AppCompatActivity {
             user.setEmail(Objects.requireNonNull(emailInput.getText()).toString());
             user.setUsername(Objects.requireNonNull(usernameInput.getText()).toString());
             user.setPassword(Objects.requireNonNull(passwordInput.getText()).toString());
+
+            File file = new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
+            File defaultAvatar = new File(dir + "/default.jpg");
+
             try {
                 UserFactory.getInstance().addUser(user, test);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
-            finish();
         };
         signUp.run();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+        startActivity(newActivity);
+        finish();
+        super.onBackPressed();
+    }
+
 }

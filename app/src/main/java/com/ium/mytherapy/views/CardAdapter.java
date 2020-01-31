@@ -1,10 +1,13 @@
 package com.ium.mytherapy.views;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.UserManagementActivity;
 import com.ium.mytherapy.model.User;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
@@ -22,7 +26,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
 
     private Context context;
     private ArrayList<User> models;
-    public static String USER_INTENT = "user";
+    private static String USER_INTENT = "user";
     public static String USERS_INTENT = "userList";
     public static String USER_KEY = "userKey";
     private User user;
@@ -35,14 +39,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
     @NonNull
     @Override
     public CardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisor_users_card, null);
         return new CardHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CardHolder cardHolder, int position) {
+        File path = Environment.getExternalStorageDirectory();
+        File dir = new File(path.getAbsolutePath() + "/myTherapy/");
+        File file = new File(dir + "/avatar_" + models.get(position).getUserId() + ".jpeg");
         cardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
-        cardHolder.avatar.setImageDrawable(Drawable.createFromPath(models.get(position).getAvatar()));
+
+        /* Aggiorno l'immagine in caso sia cambiata dalla default */
+        if (!file.exists()) {
+            cardHolder.avatar.setImageDrawable(Drawable.createFromPath(models.get(position).getAvatar()));
+        } else {
+            cardHolder.avatar.setImageURI(Uri.fromFile(file));
+        }
 
         cardHolder.setItemClickListener((v, position1) -> {
             /* Mando a UserManagementActivity */
@@ -50,10 +63,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
             Intent intent = new Intent(context, UserManagementActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt(USER_KEY, user.getUserId());
-            bundle.putParcelableArrayList(USERS_INTENT, models);
             bundle.putParcelable(USER_INTENT, user);
             intent.putExtras(bundle);
             context.startActivity(intent);
+            ((Activity) context).finish();
         });
     }
 

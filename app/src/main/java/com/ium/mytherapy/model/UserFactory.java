@@ -31,8 +31,8 @@ public class UserFactory {
         return dummy;
     }
 
-    public User getUser(String userId) throws IOException {
-        return getUserFromFile(usersDir + "/" + userId);
+    public User getUser(int userId) throws IOException {
+        return getUserFromFile(usersDir + "/" + userId + "/profile.txt");
     }
 
     public User verifyUser(String username, String password) throws IOException {
@@ -88,8 +88,7 @@ public class UserFactory {
     }
 
     public void addUser(User user, Supervisor supervisor) throws IOException {
-        File newUser = new File(usersDir.toString() + user.getUserId() + "/");
-
+        File newUser = new File(usersDir.toString() + "/" + user.getUserId() + "/");
         boolean wasSuccessful = newUser.mkdirs();
 
         if (!wasSuccessful) {
