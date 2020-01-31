@@ -11,6 +11,7 @@ import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -86,6 +87,12 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         user.setUserId(9);
         users.add(user);
 
+        user = new User();
+        user.setNome("Francesco");
+        user.setCognome("Piredda");
+        user.setUserId(10);
+        users.add(user);
+
         for (int i = 0; i < users.size(); i++) {
             File file = new File(dir + "/avatar_" + users.get(i).getUserId() + ".jpeg");
             File defaultAvatar = new File(dir + "/default.jpg");
@@ -97,6 +104,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         }
 
 //        return UserFactory.getInstance().getUsers();
+        Collections.sort(users);
         return users;
     }
 

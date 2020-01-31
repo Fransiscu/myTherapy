@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,7 @@ import androidx.core.content.ContextCompat;
 public class MainActivity extends AppCompatActivity {
 
     final static int PERMISSION_REQUEST_CODE = 123;
-    final static String USER_LIST = "main user list";
-    //    ArrayList<User> userList = SupervisorHomeActivity.getMyList();
+    final static String USER_LIST = "DEFAULT_USER_LIST";
     ArrayList<User> userList = new ArrayList<>();
     File path = Environment.getExternalStorageDirectory();
     File baseDir = new File(path.getAbsolutePath() + "/myTherapy/");
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         Runnable getUsers = () -> {
             try {
                 userList = UserFactory.getInstance().getUsers();
+                Collections.sort(userList);
             } catch (IOException e) {
                 e.printStackTrace();
             }

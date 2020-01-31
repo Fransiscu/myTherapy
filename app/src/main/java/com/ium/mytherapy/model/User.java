@@ -3,7 +3,7 @@ package com.ium.mytherapy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class User implements Parcelable {
+public class User implements Parcelable, Comparable<User> {
     private int userId;
     private String nome;
     private String cognome;
@@ -124,5 +124,10 @@ public class User implements Parcelable {
         parcel.writeString(password);
         parcel.writeString(dataNascita);
         parcel.writeString(avatar);
+    }
+
+    @Override
+    public int compareTo(User user) {
+        return this.getNome().equals(user.getNome()) ? this.getCognome().compareTo(user.getCognome()) : this.getNome().compareTo(user.getNome());
     }
 }
