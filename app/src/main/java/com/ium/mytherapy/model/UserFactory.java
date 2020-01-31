@@ -51,7 +51,7 @@ public class UserFactory {
         return null;
     }
 
-    private ArrayList<User> getUsers() throws IOException {
+    public ArrayList<User> getUsers() throws IOException {
         File f = new File(usersDir.toString());
         ArrayList<User> users = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class UserFactory {
         if (files != null) {
             for (File inFile : files) {
                 if (inFile.isDirectory()) {
-                    users.add(getUserFromFile(inFile.toString()));
+                    users.add(getUserFromFile(inFile.toString() + "/profile.txt"));
                 }
             }
         } else {

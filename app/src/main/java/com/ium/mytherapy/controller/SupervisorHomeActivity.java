@@ -96,13 +96,15 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             }
         }
 
+//        return UserFactory.getInstance().getUsers();
         return users;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<User> check = getMyList();
+        ArrayList<User> check;
+        check = getMyList();
 
         if (check != null) {
             setContentView(R.layout.activity_home_supervisore);

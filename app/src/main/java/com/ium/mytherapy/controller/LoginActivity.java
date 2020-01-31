@@ -11,7 +11,10 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 
+import java.io.IOException;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +40,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(newActivity);
         });
 
-        loginButton.setOnClickListener(view -> login());
+        loginButton.setOnClickListener(view -> {
+            try {
+                login();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         passwordText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -59,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login() {
+    public void login() throws IOException {
         if (!validate()) {
             onLoginFailed();
             return;
@@ -71,19 +80,34 @@ public class LoginActivity extends AppCompatActivity {
                 R.style.AppCompatAlertDialogStyle);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Login in corso");
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-//        String password = Objects.requireNonNull(passwordText.getText()).toString();
-//        String email = Objects.requireNonNull(usernameInput.getText()).toString();
+        String password = Objects.requireNonNull(passwordText.getText()).toString();
+        String username = Objects.requireNonNull(usernameInput.getText()).toString();
 
-        // TODO: Implement your own authentication logic here.
+        User validation = UserFactory.getInstance().verifyUser(username, password);
+
+        if (validation == null) {
+            Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+        } else {
+            Toast.makeText(getBaseContext(), "OK!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+        }
 
         new android.os.Handler().postDelayed(
                 () -> {
                     onLoginSuccess();
-//                         onLoginFailed();
+//                    onLoginFailed();
                     progressDialog.dismiss();
                 }, 2000);
+
+//        Intent userLogin = new Intent();
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("USER", validation);
+//        userLogin.putExtras(bundle);
+//        startActivity(userLogin);
+
     }
 
     @Override

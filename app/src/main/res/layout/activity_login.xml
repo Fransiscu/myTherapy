@@ -41,6 +41,8 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_username"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                android:inputType="textFilter"
                 android:layout_width="match_parent"
                 android:layout_height="70sp" />
 
@@ -60,6 +62,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="70sp" />

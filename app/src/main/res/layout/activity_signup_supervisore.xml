@@ -128,6 +128,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/signup_password_toggle"
+                app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/suggerimento_password">
@@ -137,7 +138,7 @@
                     android:id="@+id/signup_password"
                     android:layout_width="match_parent"
                     android:layout_height="70sp"
-                    android:inputType="textPassword|textFilter" />
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,6 +149,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/signup_password_confirm_toggle"
+                app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/suggerimento_conferma_password">
@@ -157,7 +159,7 @@
                     android:id="@+id/signup_password_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="70sp"
-                    android:inputType="textPassword|textFilter" />
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -23,11 +23,20 @@
         <activity android:name=".controller.SupervisorSignupActivity" />
         <activity android:name=".controller.SupervisorLoginActivity" />
         <activity android:name=".controller.LoginActivity" />
-        <activity android:name=".controller.MainActivity">
+        <activity
+            android:name=".views.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".controller.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

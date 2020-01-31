@@ -99,7 +99,9 @@
                 android:hint="@string/suggerimento_email">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                     android:id="@+id/user_email"
+                    android:inputType="textFilter"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
 
@@ -117,6 +119,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_username"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                    android:inputType="textFilter"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
 
@@ -136,6 +140,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/user_password"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                    android:inputType="textPassword"
                     android:layout_width="match_parent"
                     android:layout_height="70sp" />
 

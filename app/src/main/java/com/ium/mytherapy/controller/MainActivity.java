@@ -10,6 +10,7 @@ import android.os.Environment;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     final static int PERMISSION_REQUEST_CODE = 123;
     final static String USER_LIST = "main user list";
-    ArrayList<User> userList = SupervisorHomeActivity.getMyList();
+    //    ArrayList<User> userList = SupervisorHomeActivity.getMyList();
+    ArrayList<User> userList = new ArrayList<>();
     File path = Environment.getExternalStorageDirectory();
     File baseDir = new File(path.getAbsolutePath() + "/myTherapy/");
     File usersDir = new File(path.getAbsolutePath() + "/myTherapy/users/");
@@ -38,11 +40,20 @@ public class MainActivity extends AppCompatActivity {
         Runnable permissionsThread = this::permissions;
         permissionsThread.run();
 
-        Intent newActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
+        Runnable getUsers = () -> {
+            try {
+                userList = UserFactory.getInstance().getUsers();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+        getUsers.run();
+
+        Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(USER_LIST, userList);
-        newActivity.putExtras(bundle);
-        startActivity(newActivity);
+        loginActivity.putExtras(bundle);
+        startActivity(loginActivity);
         finish();
     }
 

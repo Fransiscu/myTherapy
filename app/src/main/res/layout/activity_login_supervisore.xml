@@ -61,6 +61,7 @@
                 android:id="@+id/supervisore_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="70sp"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
