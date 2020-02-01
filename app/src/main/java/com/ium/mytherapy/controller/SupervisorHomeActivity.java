@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Environment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
@@ -23,8 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SupervisorHomeActivity extends AppCompatActivity {
     RecyclerView cardRecyclerView;
     CardAdapter cardAdapter;
-    MaterialButton addUser;
+    MaterialButton addUser, logout;
     ArrayList<User> list;
+    ArrayList<User> check;
 
     public static ArrayList<User> getMyList() throws IOException {
         ArrayList<User> users;
@@ -128,7 +130,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<User> check = null;
+        check = null;
         try {
             check = getMyList();
         } catch (IOException e) {
@@ -157,7 +159,22 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 //            finish();
         });
 
-        cardAdapter.notifyDataSetChanged();
+//        cardAdapter.notifyDataSetChanged();
+
+        logout = findViewById(R.id.supervisore_logout_button);
+        logout.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("LOGOUT")
+                .setMessage("Sei sicuro di voler fare il logout?")
+                .setCancelable(false)
+                .setPositiveButton("Logout", (dialogInterface, i) -> {
+                    Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(backToHome);
+                    finish();
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -172,9 +189,11 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override     // non serve tornando indietro ma solo confermando
     public void onResume() {
         super.onResume();
-        cardAdapter = new CardAdapter(this, list);
-        cardRecyclerView.setAdapter(cardAdapter);
-        cardAdapter.notifyDataSetChanged();
+        if (check != null) {
+            cardAdapter = new CardAdapter(this, list);
+            cardRecyclerView.setAdapter(cardAdapter);
+            cardAdapter.notifyDataSetChanged();
+        }
     }
 
 }

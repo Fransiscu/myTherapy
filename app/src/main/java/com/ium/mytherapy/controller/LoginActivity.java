@@ -102,11 +102,8 @@ public class LoginActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                 }, 2000);
 
-//        Intent userLogin = new Intent();
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("USER", validation);
-//        userLogin.putExtras(bundle);
-//        startActivity(userLogin);
+        Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
+        startActivity(userLogin);
 
     }
 

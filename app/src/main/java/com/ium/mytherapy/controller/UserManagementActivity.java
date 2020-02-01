@@ -100,7 +100,7 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Conferma")
+                .setTitle("SALVATAGGIO")
                 .setMessage("Salvare i cambiamenti?")
                 .setCancelable(false)
                 .setPositiveButton("Salva", (dialogInterface, i) -> {
@@ -144,7 +144,7 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Conferma")
+                .setTitle("CANCELLAZIONE")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {

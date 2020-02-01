@@ -136,7 +136,7 @@ public class AddUserActivity extends AppCompatActivity {
 
             if (valid) {
                 new MaterialAlertDialogBuilder(this)
-                        .setTitle("Conferma")
+                        .setTitle("AGGIUNTA UTENTE")
                         .setMessage("Aggiungere il nuovo account?")
                         .setCancelable(false)
                         .setPositiveButton("Ok", (dialogInterface, i) -> {
