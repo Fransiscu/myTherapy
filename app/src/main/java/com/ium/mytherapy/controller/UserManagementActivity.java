@@ -102,6 +102,7 @@ public class UserManagementActivity extends AppCompatActivity {
         save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Conferma")
                 .setMessage("Salvare i cambiamenti?")
+                .setCancelable(false)
                 .setPositiveButton("Salva", (dialogInterface, i) -> {
                     File file = new File(dir, "avatar_" + userKey + ".jpeg");
                     file.delete();
@@ -145,6 +146,7 @@ public class UserManagementActivity extends AppCompatActivity {
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Conferma")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
+                .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
 //                    userList.remove(userKey);   //TODO: risolvere con utenti veri
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();

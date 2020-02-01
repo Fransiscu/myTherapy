@@ -56,6 +56,10 @@
 
             </RelativeLayout>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
+
             <!-- Start material card -->
 
             <androidx.recyclerview.widget.RecyclerView
