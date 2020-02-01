@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
@@ -134,10 +135,18 @@ public class AddUserActivity extends AppCompatActivity {
             }
 
             if (valid) {
-                addUser();
-                Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-                startActivity(newActivity);
-                finish();
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle("Conferma")
+                        .setMessage("Aggiungere il nuovo account?")
+                        .setPositiveButton("Ok", (dialogInterface, i) -> {
+                            addUser();
+                            Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+                            startActivity(newActivity);
+                            finish();
+                        })
+                        .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                        })
+                        .show();
             }
 
         });

@@ -99,16 +99,21 @@ public class UserManagementActivity extends AppCompatActivity {
         }
 
         /* Listener tasto salvataggio dati utente */
-        save.setOnClickListener(view -> {
-            //TODO: implementazione salvataggio
-            Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
-            File file = new File(dir, "avatar_" + userKey + ".jpeg");
-            file.delete();
-            File from = new File(dir, "avatar_" + userKey + "t.jpeg");
-            File to = new File(dir, "avatar_" + userKey + ".jpeg");
-            from.renameTo(to);
-            finish();
-        });
+        save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Conferma")
+                .setMessage("Salvare i cambiamenti?")
+                .setPositiveButton("Salva", (dialogInterface, i) -> {
+                    File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                    file.delete();
+                    File from = new File(dir, "avatar_" + userKey + "t.jpeg");
+                    File to = new File(dir, "avatar_" + userKey + ".jpeg");
+                    from.renameTo(to);
+                    Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
+                    finish();
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
 
         /* Calendario al tocco del campo data */
         birthdateInput.setShowSoftInputOnFocus(false);
