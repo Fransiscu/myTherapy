@@ -24,6 +24,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     RecyclerView cardRecyclerView;
     CardAdapter cardAdapter;
     MaterialButton addUser;
+    ArrayList<User> list;
 
     public static ArrayList<User> getMyList() throws IOException {
         ArrayList<User> users;
@@ -139,7 +140,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             cardRecyclerView = findViewById(R.id.usersListRecyclerView);
             cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             try {
-                cardAdapter = new CardAdapter(this, getMyList());
+                list = getMyList();
+                cardAdapter = new CardAdapter(this, list);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -152,7 +154,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         addUser.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), AddUserActivity.class);
             startActivityForResult(newActivity, 11);
-            finish();
+//            finish();
         });
 
         cardAdapter.notifyDataSetChanged();
@@ -160,15 +162,19 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 11 && resultCode == Activity.RESULT_OK) {
-            cardAdapter.notifyDataSetChanged();
             super.onActivityResult(requestCode, resultCode, data);
+            cardAdapter = new CardAdapter(this, list);
+            cardRecyclerView.setAdapter(cardAdapter);
+            cardAdapter.notifyDataSetChanged();
         }
     }
 
     @Override     // non serve tornando indietro ma solo confermando
     public void onResume() {
-        cardAdapter.notifyDataSetChanged();
         super.onResume();
+        cardAdapter = new CardAdapter(this, list);
+        cardRecyclerView.setAdapter(cardAdapter);
+        cardAdapter.notifyDataSetChanged();
     }
 
 }

@@ -107,8 +107,6 @@ public class UserManagementActivity extends AppCompatActivity {
             File from = new File(dir, "avatar_" + userKey + "t.jpeg");
             File to = new File(dir, "avatar_" + userKey + ".jpeg");
             from.renameTo(to);
-            Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-            startActivity(newActivity);
             finish();
         });
 
@@ -158,9 +156,6 @@ public class UserManagementActivity extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED, returnIntent);
         File file = new File(dir, "avatar_" + userKey + "t.jpeg");
         file.delete();
-        Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-        startActivity(newActivity);
-        finish();
         super.onBackPressed();
     }
 

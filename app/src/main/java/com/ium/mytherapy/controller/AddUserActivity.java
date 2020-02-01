@@ -189,12 +189,4 @@ public class AddUserActivity extends AppCompatActivity {
         signUp.run();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-        startActivity(newActivity);
-        finish();
-        super.onBackPressed();
-    }
-
 }

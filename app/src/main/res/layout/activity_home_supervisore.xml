@@ -35,7 +35,7 @@
                     android:id="@+id/titolo_supervisore"
                     android:text="@string/titolo_supervisore_home"
                     android:paddingTop="10sp"
-                    android:paddingBottom="10sp"
+                    android:paddingBottom="0sp"
                     android:textSize="48sp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -55,10 +55,6 @@
                     tools:ignore="RelativeOverlap,RtlHardcoded" />
 
             </RelativeLayout>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="25sp" />
 
             <!-- Start material card -->
 
