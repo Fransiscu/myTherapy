@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SupervisorHomeActivity extends AppCompatActivity {
     RecyclerView cardRecyclerView;
     CardAdapter cardAdapter;
+    TextView noUser;
     MaterialButton addUser, logout;
     ArrayList<User> list;
     ArrayList<User> check;
@@ -149,7 +152,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             }
             cardRecyclerView.setAdapter(cardAdapter);
         } else {
-            setContentView(R.layout.list_empty_view);
+            noUser = findViewById(R.id.no_user_found);
+            noUser.setVisibility(View.VISIBLE);
         }
 
         addUser = findViewById(R.id.aggiungi_utenti_button);

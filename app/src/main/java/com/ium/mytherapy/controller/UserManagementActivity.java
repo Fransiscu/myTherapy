@@ -42,6 +42,7 @@ public class UserManagementActivity extends AppCompatActivity {
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
     MaterialButton deleteUser, save;
     private int mYear, mMonth, mDay;
+    boolean avatarChanged;
     int userKey;
     User user;
     File path = Environment.getExternalStorageDirectory();
@@ -104,11 +105,13 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setMessage("Salvare i cambiamenti?")
                 .setCancelable(false)
                 .setPositiveButton("Salva", (dialogInterface, i) -> {
-                    File file = new File(dir, "avatar_" + userKey + ".jpeg");
-                    file.delete();
-                    File from = new File(dir, "avatar_" + userKey + "t.jpeg");
-                    File to = new File(dir, "avatar_" + userKey + ".jpeg");
-                    from.renameTo(to);
+                    if (avatarChanged) {
+                        File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                        file.delete();
+                        File from = new File(dir, "avatar_" + userKey + "t.jpeg");
+                        File to = new File(dir, "avatar_" + userKey + ".jpeg");
+                        from.renameTo(to);
+                    }
                     Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
                     finish();
                 })
@@ -185,6 +188,7 @@ public class UserManagementActivity extends AppCompatActivity {
                     File file = new File(dir, "avatar_" + userKey + "t.jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    avatarChanged = true;
                     Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();

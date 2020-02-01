@@ -43,6 +43,7 @@ public class UserFactory {
         }
 
         for (User user : Objects.requireNonNull(users)) {
+
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 return user;
             }

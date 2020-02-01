@@ -62,10 +62,20 @@
 
             <!-- Start material card -->
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/usersListRecyclerView" />
+
+            <TextView
+                android:id="@+id/no_user_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nessun_item"
+                android:textSize="24sp"
+                android:visibility="gone" />
 
             <!-- End material card -->
 

@@ -39,7 +39,7 @@
                     android:textSize="48sp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/supervisore_logout_button"
+                    android:id="@+id/user_logout_button"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -58,18 +58,35 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="12sp" />
+                android:layout_height="35sp" />
 
-            <!-- Start material card -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Lunedì 25 Dicembre"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="35sp" />
+
+            <!-- Start timeline -->
+
+            <include layout="@layout/user_timeline_item" />
+
+            <include layout="@layout/user_timeline_item" />
+
+            <include layout="@layout/user_timeline_item" />
+
+            <include layout="@layout/user_timeline_item" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userTimelineRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <!-- End material card -->
-
-            <!-- Spazio per evitare che il bottone copra l'ultimo item -->
+            <!-- End timeline -->
 
             <Space
                 android:layout_width="match_parent"
