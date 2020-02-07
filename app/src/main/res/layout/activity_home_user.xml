@@ -58,7 +58,8 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="25sp" />
+                android:layout_height="20sp"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,8 +82,8 @@
                 tools:ignore="RtlSymmetry" />
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="20sp"
                 tools:ignore="SmallSp" />
 
             <include layout="@layout/user_horizontal_ok_line" />

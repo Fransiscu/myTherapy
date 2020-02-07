@@ -58,10 +58,9 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="12sp" />
+                android:layout_height="20sp" />
 
             <!-- Start material card -->
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"

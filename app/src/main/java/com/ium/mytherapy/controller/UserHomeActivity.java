@@ -31,6 +31,10 @@ public class UserHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_user);
+        primo = findViewById(R.id.primo_item);
+        secondo = findViewById(R.id.secondo_item);
+        terzo = findViewById(R.id.terzo_item);
+
 
         /* Setto la data di oggi */
         todaysDate = findViewById(R.id.data_oggi);
@@ -64,16 +68,19 @@ public class UserHomeActivity extends AppCompatActivity {
                 .show());
 
         /* listeners per medicine di esmepio */
-        primo = findViewById(R.id.primo_item);
         primo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 primo.setSelected(true);    // coloro di grigio al tocco
+                Intent therapy = new Intent(getApplicationContext(), MedicineDetailActivity.class);
+                startActivity(therapy);
+                overridePendingTransition(R.anim.anim_slide_in_right,
+                        R.anim.anim_slide_out_left);
+                finish();
                 Toast.makeText(getBaseContext(), "Primo item", Toast.LENGTH_LONG).show();
             }
         });
 
-        secondo = findViewById(R.id.secondo_item);
         secondo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +89,6 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
-        terzo = findViewById(R.id.terzo_item);
         terzo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

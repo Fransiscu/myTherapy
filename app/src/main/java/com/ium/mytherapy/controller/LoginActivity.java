@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setEnabled(true);
             return;
         } else {
-            Toast.makeText(getBaseContext(), "OK!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+            Toast.makeText(getBaseContext(), "Benvenuto!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
         }
 
         new android.os.Handler().postDelayed(
@@ -113,11 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                     onLoginSuccess();
 //                    onLoginFailed();
                     progressDialog.dismiss();
+                    finish();
                 }, 2000);
 
         Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
         startActivity(userLogin);
-
     }
 
     @Override

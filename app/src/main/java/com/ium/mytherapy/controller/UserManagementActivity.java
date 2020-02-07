@@ -7,11 +7,15 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +43,14 @@ public class UserManagementActivity extends AppCompatActivity {
 
     TextView nome;
     CircleImageView profileImage, editPicture;
+    ImageView notif1, notif2, notif3, completed1, completed2, completed3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
     MaterialButton deleteUser, save;
     private int mYear, mMonth, mDay;
     boolean avatarChanged;
     int userKey;
     User user;
+    Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
     File path = Environment.getExternalStorageDirectory();
     File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
@@ -64,6 +70,16 @@ public class UserManagementActivity extends AppCompatActivity {
         profileSurname = findViewById(R.id.profile_surname);
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
+
+        notif1 = findViewById(R.id.notifica_uno);
+        notif2 = findViewById(R.id.notifica_due);
+        notif3 = findViewById(R.id.notifica_tre);
+
+        notif1.setOnClickListener(view -> {
+            notif1.setImageDrawable(transparentDrawable);
+            notif1.setImageDrawable(getDrawable(R.drawable.notification_inactive)); // TODO implementa swtich
+            Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+        });
 
         Intent usersIntent = getIntent();
 
@@ -114,6 +130,8 @@ public class UserManagementActivity extends AppCompatActivity {
                     }
                     Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
                     finish();
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
@@ -162,11 +180,13 @@ public class UserManagementActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         File file = new File(dir, "avatar_" + userKey + "t.jpeg");
         file.delete();
-        super.onBackPressed();
+        overridePendingTransition(R.anim.anim_slide_in_left,
+                R.anim.anim_slide_out_right);
     }
 
     @Override

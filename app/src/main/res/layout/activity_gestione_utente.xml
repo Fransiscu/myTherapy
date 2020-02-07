@@ -297,20 +297,225 @@
                                 android:text="@string/timeline_terapia_utente"
                                 android:textSize="24sp" />
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="12sp" />
-
                             <!-- TODO: Per futura timeline -->
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/timelineRecyclerView"
+                            <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:padding="10sp">
 
-                            <Space
-                                android:layout_width="wrap_content"
-                                android:layout_height="300sp" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    tools:ignore="UselessParent">
 
+                                    <!-- Uno -->
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:id="@+id/prima_carta"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:padding="10dp"
+                                        app:strokeColor="@color/BorderGrey"
+                                        app:strokeWidth="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="50dp"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/timeline_ora_uno"
+                                                android:textSize="20sp" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/nome_medicina_uno"
+                                                android:textSize="20sp" />
+
+                                            <View
+                                                android:layout_width="0dp"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1" />
+
+                                            <ImageView
+                                                android:id="@+id/notifica_uno"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_margin="10dp"
+                                                android:background="@drawable/notification_active"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                            <ImageView
+                                                android:id="@+id/status_terapia_uno"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginEnd="10dp"
+                                                android:background="@drawable/timeline_done"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                        </LinearLayout>
+
+                                    </com.google.android.material.card.MaterialCardView>
+
+                                    <!-- Due -->
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:id="@+id/seconda_carta"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:padding="10dp"
+                                        app:strokeColor="@color/BorderGrey"
+                                        app:strokeWidth="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="50dp"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/timeline_ora_due"
+                                                android:textSize="20sp" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/nome_medicina_due"
+                                                android:textSize="20sp" />
+
+                                            <View
+                                                android:layout_width="0dp"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1" />
+
+                                            <ImageView
+                                                android:id="@+id/notifica_due"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_margin="10dp"
+                                                android:background="@drawable/notification_active"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                            <ImageView
+                                                android:id="@+id/status_terapia_due"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginEnd="10dp"
+                                                android:background="@drawable/timeline_not_done"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                        </LinearLayout>
+
+                                    </com.google.android.material.card.MaterialCardView>
+
+                                    <!-- Tre -->
+
+                                    <com.google.android.material.card.MaterialCardView
+                                        android:id="@+id/terza_carta"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="50dp"
+                                        android:layout_marginBottom="10dp"
+                                        android:padding="10dp"
+                                        app:strokeColor="@color/BorderGrey"
+                                        app:strokeWidth="1dp">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="50dp"
+                                            android:orientation="horizontal">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/timeline_ora_uno"
+                                                android:textSize="20sp" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="match_parent"
+                                                android:layout_gravity="center_vertical"
+                                                android:padding="20sp"
+                                                android:text="@string/nome_medicina_uno"
+                                                android:textSize="20sp" />
+
+                                            <View
+                                                android:layout_width="0dp"
+                                                android:layout_height="0dp"
+                                                android:layout_weight="1" />
+
+                                            <ImageView
+                                                android:id="@+id/notifica_tre"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_margin="10dp"
+                                                android:background="@drawable/notification_inactive"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                            <ImageView
+                                                android:id="@+id/status_terapia_tre"
+                                                android:layout_width="30dp"
+                                                android:layout_height="30dp"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginEnd="10dp"
+                                                android:background="@drawable/timeline_not_done"
+                                                android:textAlignment="center"
+                                                android:textSize="20sp"
+                                                app:strokeColor="@color/colorAccent"
+                                                app:strokeWidth="1sp"
+                                                tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+                                        </LinearLayout>
+
+                                    </com.google.android.material.card.MaterialCardView>
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
                         </LinearLayout>
 
                     </com.google.android.material.card.MaterialCardView>
