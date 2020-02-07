@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -22,6 +24,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
     MaterialButton logout;
     TextView todaysDate;
+    View primo;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -60,6 +63,14 @@ public class UserHomeActivity extends AppCompatActivity {
                 })
                 .show());
 
+
+        primo = findViewById(R.id.primo_item);
+        primo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getBaseContext(), "Primo item", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

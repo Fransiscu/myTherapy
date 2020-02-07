@@ -58,7 +58,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="35sp" />
+                android:layout_height="25sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -69,15 +69,49 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="35sp" />
+                android:layout_height="25sp" />
 
             <!-- Start timeline -->
 
-            <include layout="@layout/user_timeline_item_one" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:text="@string/inizio_giornata"
+                tools:ignore="RtlSymmetry" />
 
-            <include layout="@layout/user_timeline_item_two" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="12sp"
+                tools:ignore="SmallSp" />
 
-            <include layout="@layout/user_timeline_item_three" />
+            <include layout="@layout/user_horizontal_ok_line" />
+
+            <include
+                android:id="@+id/primo_item"
+                layout="@layout/user_timeline_item_one" />
+
+            <include
+                android:id="@+id/secondo_item"
+                layout="@layout/user_timeline_item_two" />
+
+            <include
+                android:id="@+id/terzo_item"
+                layout="@layout/user_timeline_item_three" />
+
+            <include layout="@layout/user_horizontal_todo_line" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="12sp"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:text="@string/inizio_giornata"
+                tools:ignore="RtlSymmetry" />
 
             <!-- End timeline -->
 
@@ -88,5 +122,38 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1sp"
+            android:clipToPadding="false"
+            android:columnCount="1"
+            android:paddingTop="5sp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Userhelp"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/richiedi_assistenza"
+                android:textSize="18sp" />
+
+        </GridLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

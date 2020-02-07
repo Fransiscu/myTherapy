@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:clipToPadding="false">
@@ -47,6 +48,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/confirmed"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
@@ -54,7 +56,6 @@
         android:layout_toEndOf="@id/timeline_nome_medicina"
         android:contentDescription="@string/visto_timeline"
         android:src="@drawable/timeline_done" />
-
 
 </RelativeLayout>
 

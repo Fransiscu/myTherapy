@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="30sp"
+    android:layout_height="3sp"
+    android:clipToPadding="false"
+    tools:ignore="SmallSp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:background="@color/colorAccent" />
+
+</RelativeLayout>

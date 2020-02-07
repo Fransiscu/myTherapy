@@ -41,4 +41,6 @@
     <string name="timeline_ora_due">12:30</string>
     <string name="timeline_ora_tre">20:30</string>
     <string name="visto_timeline">visto presa medicina</string>
+    <string name="inizio_giornata">00:00</string>
+    <string name="richiedi_assistenza">Richiedi aiuto</string>
 </resources>
