@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
+    android:background="@drawable/bg_key"
     android:clipToPadding="false">
 
     <View
@@ -55,16 +56,6 @@
         android:layout_toEndOf="@id/timeline_nome_medicina"
         android:contentDescription="@string/visto_timeline"
         android:src="@drawable/timeline_not_done" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignBottom="@id/denied"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
-        android:layout_marginBottom="-20dp"
-        android:background="@color/BorderGrey" />
-
 
 </RelativeLayout>
 

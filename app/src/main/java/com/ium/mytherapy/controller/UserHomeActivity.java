@@ -24,7 +24,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
     MaterialButton logout;
     TextView todaysDate;
-    View primo;
+    View primo, secondo, terzo;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -63,12 +63,31 @@ public class UserHomeActivity extends AppCompatActivity {
                 })
                 .show());
 
-
+        /* listeners per medicine di esmepio */
         primo = findViewById(R.id.primo_item);
         primo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                primo.setSelected(true);    // coloro di grigio al tocco
                 Toast.makeText(getBaseContext(), "Primo item", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        secondo = findViewById(R.id.secondo_item);
+        secondo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                secondo.setSelected(true);  // coloro di grigio al tocco
+                Toast.makeText(getBaseContext(), "Secondo item", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        terzo = findViewById(R.id.terzo_item);
+        terzo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                terzo.setSelected(true);    // coloro di grigio al tocco
+                Toast.makeText(getBaseContext(), "Terzo item", Toast.LENGTH_LONG).show();
             }
         });
 
