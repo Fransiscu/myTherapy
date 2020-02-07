@@ -63,8 +63,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Lunedì 25 Dicembre"
+                android:id="@+id/data_oggi"
+                android:gravity="start"
                 android:textSize="24sp" />
 
             <Space
@@ -73,18 +73,11 @@
 
             <!-- Start timeline -->
 
-            <include layout="@layout/user_timeline_item" />
+            <include layout="@layout/user_timeline_item_one" />
 
-            <include layout="@layout/user_timeline_item" />
+            <include layout="@layout/user_timeline_item_two" />
 
-            <include layout="@layout/user_timeline_item" />
-
-            <include layout="@layout/user_timeline_item" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/userTimelineRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <include layout="@layout/user_timeline_item_three" />
 
             <!-- End timeline -->
 

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="200dp"
     android:clipToPadding="false">
 
     <View
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:paddingLeft="10sp"
         android:paddingRight="10sp"
-        android:text="@string/timeline_ora" />
+        android:text="@string/timeline_ora_due" />
 
     <TextView
         android:id="@+id/timeline_nome_medicina"
@@ -38,7 +38,7 @@
         android:gravity="center"
         android:paddingLeft="15sp"
         android:paddingRight="10sp"
-        android:text="@string/nome_medicina"
+        android:text="@string/nome_medicina_due"
         android:textColor="@color/cardview_dark_background"
         android:textSize="28sp"
         android:textStyle="bold"
