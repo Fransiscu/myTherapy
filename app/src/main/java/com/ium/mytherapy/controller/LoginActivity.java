@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
@@ -91,8 +92,20 @@ public class LoginActivity extends AppCompatActivity {
 
         if (validation == null) {
             Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+            new android.os.Handler().postDelayed(
+                    progressDialog::dismiss, 1000);
+
+            new MaterialAlertDialogBuilder(this)
+                    .setTitle("LOGIN ERROR")
+                    .setMessage("Username o password errati")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialogInterface, i) -> {
+                    })
+                    .show();
+            loginButton.setEnabled(true);
+            return;
         } else {
-            Toast.makeText(getBaseContext(), "OK!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+            Toast.makeText(getBaseContext(), "Benvenuto!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
         }
 
         new android.os.Handler().postDelayed(
@@ -100,14 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                     onLoginSuccess();
 //                    onLoginFailed();
                     progressDialog.dismiss();
+                    finish();
                 }, 2000);
 
-//        Intent userLogin = new Intent();
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelable("USER", validation);
-//        userLogin.putExtras(bundle);
-//        startActivity(userLogin);
-
+        Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
+        startActivity(userLogin);
     }
 
     @Override

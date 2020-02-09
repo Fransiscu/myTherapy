@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +41,16 @@ public class UserManagementActivity extends AppCompatActivity {
 
     TextView nome;
     CircleImageView profileImage, editPicture;
+    ImageView notif1, notif2, notif3, completed1, completed2, completed3;
+    ImageView deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-    MaterialButton deleteUser, save;
+    MaterialButton deleteUser, save, addTherapy;
     private int mYear, mMonth, mDay;
+    boolean avatarChanged;
     int userKey;
+    boolean notifEnabled1 = true, completedEnabled1 = true;
+    boolean notifEnabled2 = true, completedEnabled2 = false;
+    boolean notifEnabled3 = false, completedEnabled3 = false;
     User user;
     File path = Environment.getExternalStorageDirectory();
     File dir = new File(path.getAbsolutePath() + "/myTherapy/");
@@ -58,26 +66,150 @@ public class UserManagementActivity extends AppCompatActivity {
         editPicture = findViewById(R.id.editProfileImage);
         deleteUser = findViewById(R.id.deleteUser);
         save = findViewById(R.id.saveUserEdits);
+        addTherapy = findViewById(R.id.aggiungi_terapia_button);
         birthdateInput = findViewById(R.id.profile_date);
         profileName = findViewById(R.id.profile_name);
         profileSurname = findViewById(R.id.profile_surname);
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        Intent usersIntent = getIntent();
+        /* Elementi della mini timeline */
+        notif1 = findViewById(R.id.notifica_uno);
+        notif2 = findViewById(R.id.notifica_due);
+        notif3 = findViewById(R.id.notifica_tre);
 
+        completed1 = findViewById(R.id.status_terapia_uno);
+        completed2 = findViewById(R.id.status_terapia_due);
+        completed3 = findViewById(R.id.status_terapia_tre);
+
+        /* Elementi terapie associate all'utente */
+
+        deleteTherapy1 = findViewById(R.id.cancella_terapia_uno);
+        deleteTherapy2 = findViewById(R.id.cancella_terapia_due);
+        deleteTherapy3 = findViewById(R.id.cancella_terapia_tre);
+
+        editTherapy1 = findViewById(R.id.modifica_medicina_uno);
+        editTherapy2 = findViewById(R.id.modifica_medicina_due);
+        editTherapy3 = findViewById(R.id.modifica_medicina_tre);
+
+        /* Intent per user */
+        Intent usersIntent = getIntent();
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
                 userKey = bundle.getInt(CardAdapter.USER_KEY);
             }
         }
-
         try {
             user = UserFactory.getInstance().getUser(userKey);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /* Primo item timeline */
+        notif1.setOnClickListener(view -> {
+            if (notifEnabled1) {
+                notif1.setBackgroundResource(0);
+                notif1.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled1 = !notifEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif1.setBackgroundResource(0);
+                notif1.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled1 = !notifEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed1.setOnClickListener(view -> {
+            if (completedEnabled1) {
+                completed1.setBackgroundResource(0);
+                completed1.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled1 = !completedEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed1.setBackgroundResource(0);
+                completed1.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled1 = !completedEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /* Secondo item timeline */
+        notif2.setOnClickListener(view -> {
+            if (notifEnabled2) {
+                notif2.setBackgroundResource(0);
+                notif2.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled2 = !notifEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif2.setBackgroundResource(0);
+                notif2.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled2 = !notifEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed2.setOnClickListener(view -> {
+            if (completedEnabled2) {
+                completed2.setBackgroundResource(0);
+                completed2.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled2 = !completedEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed2.setBackgroundResource(0);
+                completed2.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled2 = !completedEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /* Terzo item timeline */
+        notif3.setOnClickListener(view -> {
+            if (notifEnabled3) {
+                notif3.setBackgroundResource(0);
+                notif3.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled3 = !notifEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif3.setBackgroundResource(0);
+                notif3.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled3 = !notifEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed3.setOnClickListener(view -> {
+            if (completedEnabled3) {
+                completed3.setBackgroundResource(0);
+                completed3.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled3 = !completedEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed3.setBackgroundResource(0);
+                completed3.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled3 = !completedEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /* Fine elementi della mini timeline */
+
+        /* Listeners terapie associate all'utente */
+
+        View.OnClickListener onClickListener = view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Rimozione terapia")
+                .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
+                .setCancelable(false)
+                .setPositiveButton("Rimuovi", (dialogInterface, i) -> Toast.makeText(getBaseContext(), "Terapia rimossa", Toast.LENGTH_LONG).show())
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show();
+
+        deleteTherapy1.setOnClickListener(onClickListener);
+
+        deleteTherapy2.setOnClickListener(onClickListener);
+
+        deleteTherapy3.setOnClickListener(onClickListener);
+
+        /* Fine listeners terapie associate all'utente */
 
         /* Riempio i campi */
         profileName.setText(user.getNome());
@@ -99,14 +231,32 @@ public class UserManagementActivity extends AppCompatActivity {
         }
 
         /* Listener tasto salvataggio dati utente */
-        save.setOnClickListener(view -> {
-            //TODO: implementazione salvataggio
-            Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
-            File file = new File(dir, "avatar_" + userKey + ".jpeg");
-            file.delete();
-            File from = new File(dir, "avatar_" + userKey + "t.jpeg");
-            File to = new File(dir, "avatar_" + userKey + ".jpeg");
-            from.renameTo(to);
+        save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("SALVATAGGIO")
+                .setMessage("Salvare i cambiamenti?")
+                .setCancelable(false)
+                .setPositiveButton("Salva", (dialogInterface, i) -> {
+                    if (avatarChanged) {
+                        File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                        file.delete();
+                        File from = new File(dir, "avatar_" + userKey + "t.jpeg");
+                        File to = new File(dir, "avatar_" + userKey + ".jpeg");
+                        from.renameTo(to);
+                    }
+                    Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
+                    finish();
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
+
+        addTherapy.setOnClickListener(view -> {
+            Intent addTherapyIntent = new Intent(getApplicationContext(), AddTherapyActivity.class);
+            startActivity(addTherapyIntent);
+            overridePendingTransition(R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_left);
             finish();
         });
 
@@ -138,8 +288,9 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Listener tasto cancellazione utente */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Conferma")
+                .setTitle("CANCELLAZIONE")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
+                .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
 //                    userList.remove(userKey);   //TODO: risolvere con utenti veri
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
@@ -152,13 +303,16 @@ public class UserManagementActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         File file = new File(dir, "avatar_" + userKey + "t.jpeg");
-        file.delete();
-        super.onBackPressed();
+        file.delete();  // annullo eventuale cambiamento avatar non salvato
+        overridePendingTransition(R.anim.anim_slide_in_left,
+                R.anim.anim_slide_out_right);
     }
 
+    /* Uso per ottenere l'immagine selezionata dall'utente */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -178,6 +332,7 @@ public class UserManagementActivity extends AppCompatActivity {
                     File file = new File(dir, "avatar_" + userKey + "t.jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+                    avatarChanged = true;
                     Toast.makeText(getBaseContext(), "Immagine salvata", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getBaseContext(), "Qualcosa è andato storto", Toast.LENGTH_LONG).show();
@@ -196,6 +351,7 @@ public class UserManagementActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
     }
 
+    /* Controllo permessi prima di aprire selector dell'immagine */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {

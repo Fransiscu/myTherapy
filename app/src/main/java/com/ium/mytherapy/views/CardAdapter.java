@@ -1,6 +1,7 @@
 package com.ium.mytherapy.views;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -65,6 +66,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
             bundle.putParcelable(USER_INTENT, user);
             intent.putExtras(bundle);
             context.startActivity(intent);
+            ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_left);
 //            ((Activity) context).finish();
         });
     }
