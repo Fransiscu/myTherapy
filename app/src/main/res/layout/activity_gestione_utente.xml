@@ -329,7 +329,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/timeline_ora_uno"
                                                 android:textSize="20sp" />
 
@@ -337,7 +337,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_uno"
                                                 android:textSize="20sp" />
 
@@ -397,7 +397,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/timeline_ora_due"
                                                 android:textSize="20sp" />
 
@@ -405,7 +405,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_due"
                                                 android:textSize="20sp" />
 
@@ -465,15 +465,15 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
-                                                android:text="@string/timeline_ora_uno"
+                                                android:padding="@dimen/padding_therapy_cards"
+                                                android:text="@string/timeline_ora_tre"
                                                 android:textSize="20sp" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_tre"
                                                 android:textSize="20sp" />
 
@@ -563,10 +563,11 @@
                                 <com.google.android.material.button.MaterialButton
                                     android:id="@+id/aggiungi_terapia_button"
                                     style="@style/Widget.MaterialComponents.Button.TextButton"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="40dp"
                                     android:layout_marginEnd="10sp"
-                                    android:text="@string/aggiungi_terapia"
+                                    android:background="@drawable/add"
+                                    android:foreground="@drawable/add"
                                     android:textAlignment="center"
                                     android:textSize="24sp"
                                     app:strokeColor="@color/colorAccent"
@@ -591,7 +592,7 @@
                                     <!-- Uno -->
                                     <com.google.android.material.card.MaterialCardView
                                         android:id="@+id/prima_medicina"
-                                android:layout_width="match_parent"
+                                        android:layout_width="match_parent"
                                         android:layout_height="50dp"
                                         android:layout_marginBottom="10dp"
                                         android:padding="10dp"
@@ -607,7 +608,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_uno"
                                                 android:textSize="20sp" />
 
@@ -667,7 +668,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_due"
                                                 android:textSize="20sp" />
 
@@ -727,7 +728,7 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
                                                 android:layout_gravity="center_vertical"
-                                                android:padding="20sp"
+                                                android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_tre"
                                                 android:textSize="20sp" />
 

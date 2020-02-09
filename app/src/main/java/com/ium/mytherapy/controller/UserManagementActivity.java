@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ public class UserManagementActivity extends AppCompatActivity {
     TextView nome;
     CircleImageView profileImage, editPicture;
     ImageView notif1, notif2, notif3, completed1, completed2, completed3;
+    ImageView deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
     MaterialButton deleteUser, save, addTherapy;
     private int mYear, mMonth, mDay;
@@ -80,7 +82,31 @@ public class UserManagementActivity extends AppCompatActivity {
         completed2 = findViewById(R.id.status_terapia_due);
         completed3 = findViewById(R.id.status_terapia_tre);
 
-        /* Primo item */
+        /* Elementi terapie associate all'utente */
+
+        deleteTherapy1 = findViewById(R.id.cancella_terapia_uno);
+        deleteTherapy2 = findViewById(R.id.cancella_terapia_due);
+        deleteTherapy3 = findViewById(R.id.cancella_terapia_tre);
+
+        editTherapy1 = findViewById(R.id.modifica_medicina_uno);
+        editTherapy2 = findViewById(R.id.modifica_medicina_due);
+        editTherapy3 = findViewById(R.id.modifica_medicina_tre);
+
+        /* Intent per user */
+        Intent usersIntent = getIntent();
+        if (usersIntent != null) {
+            Bundle bundle = usersIntent.getExtras();
+            if (bundle != null) {
+                userKey = bundle.getInt(CardAdapter.USER_KEY);
+            }
+        }
+        try {
+            user = UserFactory.getInstance().getUser(userKey);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /* Primo item timeline */
         notif1.setOnClickListener(view -> {
             if (notifEnabled1) {
                 notif1.setBackgroundResource(0);
@@ -108,7 +134,7 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         });
 
-        /* Secondo item */
+        /* Secondo item timeline */
         notif2.setOnClickListener(view -> {
             if (notifEnabled2) {
                 notif2.setBackgroundResource(0);
@@ -136,7 +162,7 @@ public class UserManagementActivity extends AppCompatActivity {
             }
         });
 
-        /* Terzo item */
+        /* Terzo item timeline */
         notif3.setOnClickListener(view -> {
             if (notifEnabled3) {
                 notif3.setBackgroundResource(0);
@@ -166,19 +192,24 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Fine elementi della mini timeline */
 
-        /* Intent per user */
-        Intent usersIntent = getIntent();
-        if (usersIntent != null) {
-            Bundle bundle = usersIntent.getExtras();
-            if (bundle != null) {
-                userKey = bundle.getInt(CardAdapter.USER_KEY);
-            }
-        }
-        try {
-            user = UserFactory.getInstance().getUser(userKey);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        /* Listeners terapie associate all'utente */
+
+        View.OnClickListener onClickListener = view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Rimozione terapia")
+                .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
+                .setCancelable(false)
+                .setPositiveButton("Rimuovi", (dialogInterface, i) -> Toast.makeText(getBaseContext(), "Terapia rimossa", Toast.LENGTH_LONG).show())
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show();
+
+        deleteTherapy1.setOnClickListener(onClickListener);
+
+        deleteTherapy2.setOnClickListener(onClickListener);
+
+        deleteTherapy3.setOnClickListener(onClickListener);
+
+        /* Fine listeners terapie associate all'utente */
 
         /* Riempio i campi */
         profileName.setText(user.getNome());
