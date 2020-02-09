@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -67,7 +66,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 })
                 .show());
 
-        /* listeners per medicine di esmepio */
+        /* Listeners per medicine di esmepio */
         primo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,7 +76,6 @@ public class UserHomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
                 finish();
-                Toast.makeText(getBaseContext(), "Primo item", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -85,7 +83,6 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 secondo.setSelected(true);  // coloro di grigio al tocco
-                Toast.makeText(getBaseContext(), "Secondo item", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -93,7 +90,6 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 terzo.setSelected(true);    // coloro di grigio al tocco
-                Toast.makeText(getBaseContext(), "Terzo item", Toast.LENGTH_LONG).show();
             }
         });
 
