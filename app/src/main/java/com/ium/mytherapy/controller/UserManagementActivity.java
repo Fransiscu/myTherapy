@@ -7,9 +7,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -49,8 +46,10 @@ public class UserManagementActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay;
     boolean avatarChanged;
     int userKey;
+    boolean notifEnabled1 = true, completedEnabled1 = true;
+    boolean notifEnabled2 = true, completedEnabled2 = false;
+    boolean notifEnabled3 = false, completedEnabled3 = false;
     User user;
-    Drawable transparentDrawable = new ColorDrawable(Color.TRANSPARENT);
     File path = Environment.getExternalStorageDirectory();
     File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
@@ -71,18 +70,103 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
+        /* Elementi della mini timeline */
         notif1 = findViewById(R.id.notifica_uno);
         notif2 = findViewById(R.id.notifica_due);
         notif3 = findViewById(R.id.notifica_tre);
 
+        completed1 = findViewById(R.id.status_terapia_uno);
+        completed2 = findViewById(R.id.status_terapia_due);
+        completed3 = findViewById(R.id.status_terapia_tre);
+
+        /* Primo item */
         notif1.setOnClickListener(view -> {
-            notif1.setImageDrawable(transparentDrawable);
-            notif1.setImageDrawable(getDrawable(R.drawable.notification_inactive)); // TODO implementa swtich
-            Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            if (notifEnabled1) {
+                notif1.setBackgroundResource(0);
+                notif1.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled1 = !notifEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif1.setBackgroundResource(0);
+                notif1.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled1 = !notifEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed1.setOnClickListener(view -> {
+            if (completedEnabled1) {
+                completed1.setBackgroundResource(0);
+                completed1.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled1 = !completedEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed1.setBackgroundResource(0);
+                completed1.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled1 = !completedEnabled1;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
         });
 
-        Intent usersIntent = getIntent();
+        /* Secondo item */
+        notif2.setOnClickListener(view -> {
+            if (notifEnabled2) {
+                notif2.setBackgroundResource(0);
+                notif2.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled2 = !notifEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif2.setBackgroundResource(0);
+                notif2.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled2 = !notifEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed2.setOnClickListener(view -> {
+            if (completedEnabled2) {
+                completed2.setBackgroundResource(0);
+                completed2.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled2 = !completedEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed2.setBackgroundResource(0);
+                completed2.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled2 = !completedEnabled2;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
+        });
 
+        /* Terzo item */
+        notif3.setOnClickListener(view -> {
+            if (notifEnabled3) {
+                notif3.setBackgroundResource(0);
+                notif3.setImageDrawable(getDrawable(R.drawable.notification_inactive));
+                notifEnabled3 = !notifEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
+            } else {
+                notif3.setBackgroundResource(0);
+                notif3.setImageDrawable(getDrawable(R.drawable.notification_active));
+                notifEnabled3 = !notifEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
+            }
+        });
+        completed3.setOnClickListener(view -> {
+            if (completedEnabled3) {
+                completed3.setBackgroundResource(0);
+                completed3.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
+                completedEnabled3 = !completedEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            } else {
+                completed3.setBackgroundResource(0);
+                completed3.setImageDrawable(getDrawable(R.drawable.timeline_done));
+                completedEnabled3 = !completedEnabled3;   // toggle
+                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        /* Fine elementi della mini timeline */
+
+        /* Intent per user */
+        Intent usersIntent = getIntent();
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
@@ -184,11 +268,12 @@ public class UserManagementActivity extends AppCompatActivity {
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         File file = new File(dir, "avatar_" + userKey + "t.jpeg");
-        file.delete();
+        file.delete();  // annullo eventuale cambiamento avatar non salvato
         overridePendingTransition(R.anim.anim_slide_in_left,
                 R.anim.anim_slide_out_right);
     }
 
+    /* Uso per ottenere l'immagine selezionata dall'utente */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -227,6 +312,7 @@ public class UserManagementActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
     }
 
+    /* Controllo permessi prima di aprire selector dell'immagine */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
