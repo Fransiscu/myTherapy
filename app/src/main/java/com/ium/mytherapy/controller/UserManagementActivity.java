@@ -42,7 +42,7 @@ public class UserManagementActivity extends AppCompatActivity {
     CircleImageView profileImage, editPicture;
     ImageView notif1, notif2, notif3, completed1, completed2, completed3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-    MaterialButton deleteUser, save;
+    MaterialButton deleteUser, save, addTherapy;
     private int mYear, mMonth, mDay;
     boolean avatarChanged;
     int userKey;
@@ -64,6 +64,7 @@ public class UserManagementActivity extends AppCompatActivity {
         editPicture = findViewById(R.id.editProfileImage);
         deleteUser = findViewById(R.id.deleteUser);
         save = findViewById(R.id.saveUserEdits);
+        addTherapy = findViewById(R.id.aggiungi_terapia_button);
         birthdateInput = findViewById(R.id.profile_date);
         profileName = findViewById(R.id.profile_name);
         profileSurname = findViewById(R.id.profile_surname);
@@ -173,7 +174,6 @@ public class UserManagementActivity extends AppCompatActivity {
                 userKey = bundle.getInt(CardAdapter.USER_KEY);
             }
         }
-
         try {
             user = UserFactory.getInstance().getUser(userKey);
         } catch (IOException e) {
@@ -220,6 +220,14 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                 .show());
+
+        addTherapy.setOnClickListener(view -> {
+            Intent addTherapyIntent = new Intent(getApplicationContext(), AddTherapyActivity.class);
+            startActivity(addTherapyIntent);
+            overridePendingTransition(R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_left);
+            finish();
+        });
 
         /* Calendario al tocco del campo data */
         birthdateInput.setShowSoftInputOnFocus(false);
