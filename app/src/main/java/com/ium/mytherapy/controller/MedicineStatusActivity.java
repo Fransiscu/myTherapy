@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 
@@ -50,24 +52,20 @@ public class MedicineStatusActivity extends AppCompatActivity {
         }
 
 
-        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
+        confirm.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("Conferma")
+                .setMessage("Sicuro di voler segnare la medicina come \"presa\"?")
+                .setCancelable(false)
+                .setPositiveButton("Continua", (dialogInterface, i) -> {
+                    setPresa();
+                    Toast.makeText(getBaseContext(), "Salvato", Toast.LENGTH_LONG).show();
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
+
         if (medicine.isPresa()) {
-            confirm.setClickable(false);
-            confirm.setFocusable(false);
-            confirm.setFocusableInTouchMode(false);
-            confirm.setForeground(greyDrawable);
-            confirm.setBackgroundColor(getResources().getColor(R.color.white));
-            doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));
-
-            remindLater.setClickable(false);
-            remindLater.setFocusable(false);
-            remindLater.setFocusableInTouchMode(false);
-            remindLater.setForeground(greyDrawable);
-            remindLater.setBackgroundColor(getResources().getColor(R.color.white));
-            remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
-
-            confirmText.setVisibility(View.VISIBLE);
-
+            setPresa();
         }
 
 
@@ -81,5 +79,22 @@ public class MedicineStatusActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left,
                 R.anim.anim_slide_out_right);
+    }
+
+    public void setPresa() {
+        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
+        confirm.setClickable(false);
+        confirm.setFocusable(false);
+        confirm.setForeground(greyDrawable);
+        confirm.setBackgroundColor(getResources().getColor(R.color.white));
+        doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));
+
+        remindLater.setClickable(false);
+        remindLater.setFocusable(false);
+        remindLater.setForeground(greyDrawable);
+        remindLater.setBackgroundColor(getResources().getColor(R.color.white));
+        remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
+
+        confirmText.setVisibility(View.VISIBLE);
     }
 }
