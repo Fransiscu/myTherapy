@@ -204,9 +204,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 .show();
 
         deleteTherapy1.setOnClickListener(onClickListener);
-
         deleteTherapy2.setOnClickListener(onClickListener);
-
         deleteTherapy3.setOnClickListener(onClickListener);
 
         /* Fine listeners terapie associate all'utente */

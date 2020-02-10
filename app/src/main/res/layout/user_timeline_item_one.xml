@@ -22,7 +22,7 @@
         android:background="@drawable/dot_ok" />
 
     <TextView
-        android:id="@+id/timeline_ora_medicina"
+        android:id="@+id/timeline_ora_medicina_uno"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toEndOf="@id/timeline_dot"
@@ -32,11 +32,11 @@
         android:text="@string/timeline_ora_uno" />
 
     <TextView
-        android:id="@+id/timeline_nome_medicina"
+        android:id="@+id/timeline_nome_medicina_uno"
         android:layout_width="245dp"
         android:layout_height="match_parent"
         android:layout_marginStart="3dp"
-        android:layout_toEndOf="@id/timeline_ora_medicina"
+        android:layout_toEndOf="@id/timeline_ora_medicina_uno"
         android:gravity="center"
         android:paddingLeft="15sp"
         android:paddingRight="10sp"
@@ -54,7 +54,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="25sp"
-        android:layout_toEndOf="@id/timeline_nome_medicina"
+        android:layout_toEndOf="@id/timeline_nome_medicina_uno"
         android:contentDescription="@string/visto_timeline"
         android:src="@drawable/timeline_done" />
 

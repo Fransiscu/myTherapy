@@ -4,17 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.Medicina;
+
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MedicineDetailActivity extends AppCompatActivity {
+public class MedicineStatusActivity extends AppCompatActivity {
+
+    Medicina medicine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettaglio_terapia);
-//        overridePendingTransition(R.anim.right_to_left,
-//                R.anim.left_to_right);
+        setContentView(R.layout.activity_stato_terapia);
+
+        Intent medicineIntent = getIntent();
+        if (medicineIntent != null) {
+            medicine = Objects.requireNonNull(medicineIntent.getExtras()).getParcelable("medicine");
+        }
+
+
     }
 
     @Override
