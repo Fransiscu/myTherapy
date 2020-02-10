@@ -3,7 +3,6 @@ package com.ium.mytherapy.controller;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -29,6 +28,7 @@ public class UserHomeActivity extends AppCompatActivity {
     TextView todaysDate, medName1, medName2, medName3, medTime1, medTime2, medTime3;
     View primo, secondo, terzo;
     List<Medicina> therapy;
+    public static final String MEDICINA = "MEDICINE_INTENT";
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -65,7 +65,6 @@ public class UserHomeActivity extends AppCompatActivity {
             Calendar c = Calendar.getInstance();
             c.setTime(date);
             int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-            Log.d("data", dayOfWeek + " " + year + " " + month + " " + day);
             todaysDate.setText(String.format("%s %d %s %d", Giorni.values()[dayOfWeek - 1], day, Mesi.values()[month - 1].toString(), year));
         }
 
@@ -90,10 +89,9 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 primo.setSelected(true);    // coloro di grigio al tocco
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("medicine", therapy.get(0));
+                bundle.putParcelable(MEDICINA, therapy.get(0));
                 Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy1.putExtras(bundle);
-                Log.d("presa before", String.valueOf(therapy.get(0).isPresa()));
                 startActivity(therapy1);
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
@@ -105,7 +103,7 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 secondo.setSelected(true);  // coloro di grigio al tocco
                 Intent therapy2 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy2.putExtra("medicine", therapy.get(1));
+                therapy2.putExtra(MEDICINA, therapy.get(1));
                 startActivity(therapy2);
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
@@ -117,7 +115,7 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 terzo.setSelected(true);    // coloro di grigio al tocco
                 Intent therapy3 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy3.putExtra("medicine", therapy.get(2));
+                therapy3.putExtra(MEDICINA, therapy.get(2));
                 startActivity(therapy3);
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);

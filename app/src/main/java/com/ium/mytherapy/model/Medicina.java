@@ -11,12 +11,13 @@ public class Medicina implements Parcelable {
     private int dosaggio;
     private boolean presa;
 
-    public boolean isPresa() {
-        return presa;
-    }
-
-    void setPresa(boolean presa) {
-        this.presa = presa;
+    private Medicina(Parcel in) {
+        nome = in.readString();
+        descrizione = in.readString();
+        frequenza = in.readString();
+        ora = in.readString();
+        dosaggio = in.readInt();
+        presa = in.readByte() != 0;
     }
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -31,16 +32,24 @@ public class Medicina implements Parcelable {
         }
     };
 
-    private Medicina(Parcel in) {
-        nome = in.readString();
-        descrizione = in.readString();
-        frequenza = in.readString();
-        ora = in.readString();
-        dosaggio = in.readInt();
-    }
-
     Medicina() {
 
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
     }
 
     public String getFrequenza() {
@@ -67,20 +76,12 @@ public class Medicina implements Parcelable {
         this.dosaggio = dosaggio;
     }
 
-    public String getNome() {
-        return nome;
+    public boolean isPresa() {
+        return presa;
     }
 
-    void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
+    void setPresa(boolean presa) {
+        this.presa = presa;
     }
 
     @Override
@@ -95,5 +96,6 @@ public class Medicina implements Parcelable {
         parcel.writeString(frequenza);
         parcel.writeString(ora);
         parcel.writeInt(dosaggio);
+        parcel.writeByte((byte) (presa ? 1 : 0));
     }
 }

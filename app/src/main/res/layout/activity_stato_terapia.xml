@@ -58,8 +58,34 @@
                 android:textSize="25sp" />
 
             <Space
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="70sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="10sp"
+                app:cardCornerRadius="4sp"
+                app:cardUseCompatPadding="true"
+                app:shapeAppearanceOverlay="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15sp"
+                    android:text="@string/appunti_medicina"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="20sp"
+                    android:visibility="visible" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30sp" />
 
             <!-- Prima carta -->
             <com.google.android.material.card.MaterialCardView
@@ -70,6 +96,7 @@
                 android:clickable="true"
                 android:elevation="20dp"
                 android:focusable="true"
+                android:layout_marginBottom="10dp"
                 android:focusableInTouchMode="true"
                 android:foregroundTint="@color/light_green_background"
                 app:cardCornerRadius="4sp"
@@ -101,6 +128,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:id="@+id/stato_terapia_done"
                         android:background="@drawable/timeline_done"
                         tools:ignore="ContentDescription,HardcodedText" />
 
@@ -150,6 +178,7 @@
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:id="@+id/stato_terapia_notifica"
                         android:background="@drawable/notification"
                         tools:ignore="ContentDescription,HardcodedText" />
 
@@ -172,6 +201,10 @@
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="48sp"
                 android:visibility="gone" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
 
 
         </LinearLayout>

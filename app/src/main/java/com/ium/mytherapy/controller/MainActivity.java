@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
@@ -112,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     grantResults[1]
                     == PackageManager.PERMISSION_GRANTED)) {
                 addDefaultItems();
-            } else {
-                Log.d("Permessi", "not granted");
             }
         }
     }

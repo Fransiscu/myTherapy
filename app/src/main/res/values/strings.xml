@@ -49,4 +49,5 @@
     <string name="segna_preso">Segna come preso</string>
     <string name="segna_rimanda">Rimanda</string>
     <string name="presa">Presa</string>
+    <string name="appunti_medicina">Dettagli aggiunti dal supervisore per la medicina</string>
 </resources>
