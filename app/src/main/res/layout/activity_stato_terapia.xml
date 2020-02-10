@@ -1,8 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.MedicineStatusActivity">
+    android:orientation="vertical"
+    tools:ignore="Labelfor">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16sp"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/home_user_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="ExtraText">
+
+
+            <TextView
+                android:id="@+id/titolo_home_utente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10sp"
+                android:paddingBottom="0sp"
+                android:text="@string/titolo_stato_terapia"
+                android:textSize="48sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:id="@+id/dettagli_nome_medicina"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dettagli_nome_medicina_test"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12sp" />
+
+            <TextView
+                android:id="@+id/orario_sotto_titolo_dettagli"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/timeline_ora_uno"
+                android:textAlignment="center"
+                android:textSize="25sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="70sp" />
+
+            <!-- Prima carta -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carta_conferma_pagina_dettagli"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:backgroundTint="@color/light_green_background"
+                android:clickable="true"
+                android:elevation="20dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foregroundTint="@color/light_green_background"
+                app:cardCornerRadius="4sp"
+                app:cardUseCompatPadding="true"
+                app:shapeAppearanceOverlay="@color/colorAccent"
+                app:strokeColor="@android:color/holo_green_dark"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/titolo_carta_preso"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="30sp"
+                        android:text="@string/segna_preso"
+                        android:textAlignment="center"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        tools:ignore="PrivateResource,RtlHardcoded,RtlSymmetry" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/timeline_done"
+                        tools:ignore="ContentDescription,HardcodedText" />
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Seconda carta -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/carta_rimanda_pagina_dettagli"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:backgroundTint="@color/light_red_background"
+                android:clickable="true"
+                android:elevation="20dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:foregroundTint="@color/light_red_background"
+                app:cardCornerRadius="4sp"
+                app:cardUseCompatPadding="true"
+                app:shapeAppearanceOverlay="@color/colorAccent"
+                app:strokeColor="@android:color/holo_red_dark"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <TextView
+                        android:id="@+id/titolo_carta_non_preso"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="30sp"
+                        android:text="@string/segna_rimanda"
+                        android:textAlignment="center"
+                        android:textColor="@color/cardview_dark_background"
+                        android:textSize="30sp"
+                        android:textStyle="bold"
+                        tools:ignore="PrivateResource,RtlHardcoded,RtlSymmetry" />
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/notification"
+                        tools:ignore="ContentDescription,HardcodedText" />
+
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/scritta_presa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/presa"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="48sp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:backgroundTint="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="1sp"
+            android:clipToPadding="false"
+            android:columnCount="1"
+            android:paddingTop="5sp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/Userhelp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/dettagli_medicina"
+                android:textSize="18sp" />
+
+        </GridLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

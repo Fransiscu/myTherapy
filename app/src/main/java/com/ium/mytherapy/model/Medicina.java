@@ -6,6 +6,19 @@ import android.os.Parcelable;
 public class Medicina implements Parcelable {
     private String nome;
     private String descrizione;
+    private String frequenza;
+    private String ora;
+    private int dosaggio;
+    private boolean presa;
+
+    public boolean isPresa() {
+        return presa;
+    }
+
+    void setPresa(boolean presa) {
+        this.presa = presa;
+    }
+
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
         @Override
         public Medicina createFromParcel(Parcel in) {
@@ -17,9 +30,6 @@ public class Medicina implements Parcelable {
             return new Medicina[size];
         }
     };
-    private String frequenza;
-    private String ora;
-    private int dosaggio;
 
     private Medicina(Parcel in) {
         nome = in.readString();

@@ -42,4 +42,11 @@
     <string name="visto_timeline">visto presa medicina</string>
     <string name="inizio_giornata">00:00</string>
     <string name="richiedi_assistenza">Richiedi aiuto</string>
+    <string name="titolo_stato_terapia">Stato terapia</string>
+    <string name="nome_medicina">Medicina test</string>
+    <string name="dettagli_nome_medicina_test">Nome medicina test</string>
+    <string name="dettagli_medicina">Dettagli medicina</string>
+    <string name="segna_preso">Segna come preso</string>
+    <string name="segna_rimanda">Rimanda</string>
+    <string name="presa">Presa</string>
 </resources>

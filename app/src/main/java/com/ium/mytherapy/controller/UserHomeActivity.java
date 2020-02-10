@@ -89,8 +89,11 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 primo.setSelected(true);    // coloro di grigio al tocco
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("medicine", therapy.get(0));
                 Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy1.putExtra("medicine", therapy.get(0));
+                therapy1.putExtras(bundle);
+                Log.d("presa before", String.valueOf(therapy.get(0).isPresa()));
                 startActivity(therapy1);
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);

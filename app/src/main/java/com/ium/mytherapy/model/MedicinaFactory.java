@@ -27,6 +27,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("week");
         temp.setOra("08:30");
+        temp.setPresa(true);
         list.add(temp);
 
         temp = new Medicina();
@@ -35,6 +36,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("day");
         temp.setOra("12:30");
+        temp.setPresa(false);
         list.add(temp);
 
         temp = new Medicina();
@@ -43,6 +45,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("day");
         temp.setOra("20:30");
+        temp.setPresa(false);
         list.add(temp);
 
         return list;

@@ -7,5 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="BorderGrey">#a4a4a4</color>
+    <color name="light_green_background">#32E7FFDA</color>
+    <color name="light_red_background">#22F7D4D4</color>
 
 </resources>
