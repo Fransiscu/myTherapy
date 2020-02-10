@@ -50,22 +50,20 @@ public class MedicineStatusActivity extends AppCompatActivity {
         }
 
 
-        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.statusBarColor));
+        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
         if (medicine.isPresa()) {
             confirm.setClickable(false);
             confirm.setFocusable(false);
             confirm.setFocusableInTouchMode(false);
-            confirm.setBackgroundColor(getResources().getColor(R.color.statusBarColor));
             confirm.setForeground(greyDrawable);
-            confirm.setBackgroundColor(R.color.statusBarColor);
+            confirm.setBackgroundColor(getResources().getColor(R.color.white));
             doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));
 
             remindLater.setClickable(false);
             remindLater.setFocusable(false);
             remindLater.setFocusableInTouchMode(false);
             remindLater.setForeground(greyDrawable);
-            remindLater.setBackgroundColor(getResources().getColor(R.color.statusBarColor));
-            remindLater.setBackgroundColor(R.color.statusBarColor);
+            remindLater.setBackgroundColor(getResources().getColor(R.color.white));
             remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
 
             confirmText.setVisibility(View.VISIBLE);
