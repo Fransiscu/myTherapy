@@ -1,9 +1,13 @@
 package com.ium.mytherapy.controller;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,15 +25,19 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 @SuppressWarnings("ALL")
 public class UserHomeActivity extends AppCompatActivity {
 
     MaterialButton logout;
-    TextView todaysDate, medName1, medName2, medName3, medTime1, medTime2, medTime3;
+    public final String CHANNEL_ID = "myThrapy";
     View primo, secondo, terzo;
     List<Medicina> therapy;
     public static final String MEDICINA = "MEDICINE_INTENT";
+    public final int NOTIFICATION_ID = 001;
+    TextView todaysDate, medName1, medName2, medName3, medTime1, medTime2, medTime3, notifTitolo;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -49,6 +57,7 @@ public class UserHomeActivity extends AppCompatActivity {
         medTime2 = findViewById(R.id.timeline_ora_medicina_due);
         medTime3 = findViewById(R.id.timeline_ora_medicina_tre);
 
+        notifTitolo = findViewById(R.id.titolo_home_utente);
 
         /* Prendo valori terapie e setto valori nella schermata */
         Runnable getTherapiesThread = this::setMedsValues;
@@ -128,6 +137,45 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
+        /* Listener per notifica test */
+
+        notifTitolo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Runnable notificationExample = new Runnable() {
+                    @Override
+                    public void run() {
+                        createNotificationChannel();
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+                        builder.setSmallIcon(R.drawable.robot);
+                        builder.setContentTitle(therapy.get(1).getNome());
+                        builder.setContentText("Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
+                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+
+                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+
+                        Log.d("Notif", "test");
+
+                    }
+                };
+                notificationExample.run();
+            }
+        });
+
+
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "myTherapy";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            notificationChannel.setDescription("Notifiche dell'app myTherapy");
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(notificationChannel);
+
+        }
     }
 
     /* In un thread separato in quanto in teoria potrebbe richiedere tempo facendo un feth dal server */
