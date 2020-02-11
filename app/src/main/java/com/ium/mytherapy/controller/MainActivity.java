@@ -69,14 +69,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDefaultItems() {
-        File path = Environment.getExternalStorageDirectory();
         File defaultAvatarPath = new File(path.getAbsolutePath() + "/myTherapy/default.jpg");
 
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             try {
                 boolean wasSuccessful;
-                //noinspection ResultOfMethodCallIgnored
+//                noinspection ResultOfMethodCallIgnored
                 baseDir.mkdirs();   // per evitare i warning zzz
                 wasSuccessful = usersDir.mkdirs();
                 if (!wasSuccessful) {
@@ -112,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
                     grantResults[1]
                     == PackageManager.PERMISSION_GRANTED)) {
                 addDefaultItems();
-            } else {
-                System.out.println(("Permssions not granted"));
             }
         }
     }
