@@ -3,11 +3,11 @@ package com.ium.mytherapy.controller;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -145,18 +145,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 Runnable notificationExample = new Runnable() {
                     @Override
                     public void run() {
-                        createNotificationChannel();
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-                        builder.setSmallIcon(R.drawable.robot);
-                        builder.setContentTitle(therapy.get(1).getNome());
-                        builder.setContentText("Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
-                        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-
-                        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
-
-                        Log.d("Notif", "test");
-
+                        showNotificationExample();
                     }
                 };
                 notificationExample.run();
@@ -176,6 +165,31 @@ public class UserHomeActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(notificationChannel);
 
         }
+    }
+
+    private void showNotificationExample() {
+        createNotificationChannel();
+
+        Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
+        landingIntent.putExtra(MEDICINA, therapy.get(1));
+        landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.robot);
+        builder.setContentTitle(therapy.get(1).getNome());
+        builder.setContentText("Hey! Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
+        builder.addAction(R.drawable.notification, "Rimanda di 10 minuti",
+                null);
+        builder.addAction(R.drawable.notification, "Segna come presa",
+                null);
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+
+        builder.setContentIntent(landingPendingIntent);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
     }
 
     /* In un thread separato in quanto in teoria potrebbe richiedere tempo facendo un feth dal server */
