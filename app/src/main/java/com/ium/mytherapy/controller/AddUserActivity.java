@@ -141,8 +141,11 @@ public class AddUserActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("Ok", (dialogInterface, i) -> {
                             addUser();
-                            Intent newActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-                            startActivity(newActivity);
+                            Intent backToSupervisorHome = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+                            backToSupervisorHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                    Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(backToSupervisorHome);
                             finish();
                         })
                         .setNegativeButton("Annulla", (dialogInterface, i) -> {
@@ -186,8 +189,8 @@ public class AddUserActivity extends AppCompatActivity {
             user.setUsername(Objects.requireNonNull(usernameInput.getText()).toString());
             user.setPassword(Objects.requireNonNull(passwordInput.getText()).toString());
 
-            File file = new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
-            File defaultAvatar = new File(dir + "/default.jpg");
+            new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
+            new File(dir + "/default.jpg");
 
             try {
                 UserFactory.getInstance().addUser(user, test);

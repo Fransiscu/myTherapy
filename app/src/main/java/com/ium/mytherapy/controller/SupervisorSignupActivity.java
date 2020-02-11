@@ -220,6 +220,8 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
             Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
             finish();
+            overridePendingTransition(R.anim.anim_slide_in_left,
+                    R.anim.anim_slide_out_right);
         };
         signUp.run();
     }

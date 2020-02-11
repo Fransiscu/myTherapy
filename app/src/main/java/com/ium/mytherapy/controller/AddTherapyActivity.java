@@ -19,6 +19,7 @@ public class AddTherapyActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent userManagementHome = new Intent(getApplicationContext(), UserManagementActivity.class);
+        userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(userManagementHome);
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left,

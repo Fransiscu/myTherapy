@@ -83,7 +83,6 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         addUser.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), AddUserActivity.class);
             startActivityForResult(newActivity, 11);
-            finish();
         });
 
         logout = findViewById(R.id.supervisore_logout_button);
