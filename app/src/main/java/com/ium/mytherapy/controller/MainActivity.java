@@ -2,6 +2,7 @@ package com.ium.mytherapy.controller;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,9 +34,22 @@ public class MainActivity extends AppCompatActivity {
     File usersDir = new File(path.getAbsolutePath() + "/myTherapy/users/");
     File supervisorDir = new File(path.getAbsolutePath() + "/myTherapy/supervisors/");
 
+    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
+    public final static String USER_TYPE = "user_type";
+    public static SharedPreferences mPreferences;
+    public static String sharedPrefFile = SHARED_PREFS;
+    String userType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
+        /* Riprendo stato passato dell'utente nell'app */
+
+        Runnable loadData = this::loadData;
+        loadData.run();
 
         Runnable permissionsThread = this::permissions;
         permissionsThread.run();
@@ -50,12 +64,31 @@ public class MainActivity extends AppCompatActivity {
         };
         getUsers.run();
 
-        Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(USER_LIST, userList);
-        loginActivity.putExtras(bundle);
-        startActivity(loginActivity);
-        finish();
+        /* Reimposto utente al riavvio dell'app */
+        if (userType.equals("user")) {
+            Intent userIntent = new Intent(this, UserHomeActivity.class);
+            startActivity(userIntent);
+            finish();
+        } else if (userType.equals("supervisor")) {
+            Intent supervisorIntent = new Intent(this, SupervisorHomeActivity.class);
+            startActivity(supervisorIntent);
+            finish();
+        } else {
+            Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(USER_LIST, userList);
+            loginActivity.putExtras(bundle);
+            startActivity(loginActivity);
+            finish();
+        }
+
+
+    }
+
+    private void loadData() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        userType = sharedPreferences.getString(USER_TYPE, "");
     }
 
     private void permissions() {
