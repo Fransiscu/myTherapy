@@ -80,7 +80,8 @@ public class UserHomeActivity extends AppCompatActivity {
 
         /* Setto listener per pulsante di logout */
         logout = findViewById(R.id.user_logout_button);
-        logout.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+        logout.setOnClickListener(view -> {
+            new MaterialAlertDialogBuilder(this)
                 .setTitle("LOGOUT")
                 .setMessage("Sei sicuro di voler fare il logout?")
                 .setCancelable(false)
@@ -95,12 +96,11 @@ public class UserHomeActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
-                .show());
+                    .show();
+        });
 
         /* Listeners per medicine di esmepio */
-        primo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        primo.setOnClickListener(view -> {
                 primo.setSelected(true);    // coloro di grigio al tocco
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(MEDICINA, therapy.get(0));
@@ -110,11 +110,8 @@ public class UserHomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
                 finish();
-            }
         });
-        secondo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        secondo.setOnClickListener(view -> {
                 secondo.setSelected(true);  // coloro di grigio al tocco
                 Intent therapy2 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy2.putExtra(MEDICINA, therapy.get(1));
@@ -122,11 +119,8 @@ public class UserHomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
                 finish();
-            }
         });
-        terzo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        terzo.setOnClickListener(view -> {
                 terzo.setSelected(true);    // coloro di grigio al tocco
                 Intent therapy3 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy3.putExtra(MEDICINA, therapy.get(2));
@@ -134,24 +128,18 @@ public class UserHomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_right,
                         R.anim.anim_slide_out_left);
                 finish();
-            }
         });
 
         /* Listener per notifica test */
-
-        notifTitolo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Runnable notificationExample = new Runnable() {
-                    @Override
-                    public void run() {
-                        showNotificationExample();
-                    }
-                };
+        notifTitolo.setOnClickListener(view -> {
+            Runnable task2 = () -> {
+                System.out.println("Task #2 is running");
+            };
+            Runnable notificationExample = () -> {
+                showNotificationExample();
+            };
                 notificationExample.run();
-            }
         });
-
 
     }
 
@@ -163,7 +151,6 @@ public class UserHomeActivity extends AppCompatActivity {
             notificationChannel.setDescription("Notifiche dell'app myTherapy");
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);
-
         }
     }
 
@@ -185,7 +172,6 @@ public class UserHomeActivity extends AppCompatActivity {
         builder.addAction(R.drawable.notification, "Segna come presa",
                 null);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-
         builder.setContentIntent(landingPendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
