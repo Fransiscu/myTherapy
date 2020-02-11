@@ -2,6 +2,7 @@ package com.ium.mytherapy.controller;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -77,6 +78,10 @@ public class UserHomeActivity extends AppCompatActivity {
                 .setPositiveButton("Logout", (dialogInterface, i) -> {
                     Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(backToHome);
+                    SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+                    SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
+                    preferencesEditor.clear();
+                    preferencesEditor.apply();
                     finish();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {

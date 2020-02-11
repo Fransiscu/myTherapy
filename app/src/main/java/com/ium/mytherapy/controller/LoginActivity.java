@@ -2,6 +2,7 @@ package com.ium.mytherapy.controller;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         supervisorButton.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), SupervisorLoginActivity.class);
             startActivity(newActivity);
+            overridePendingTransition(R.anim.anim_slide_in_right,
+                    R.anim.anim_slide_out_left);
+            finish();
         });
 
         loginButton.setOnClickListener(view -> {
@@ -104,8 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                     .show();
             loginButton.setEnabled(true);
             return;
-        } else {
-            Toast.makeText(getBaseContext(), "Benvenuto!", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
         }
 
         new android.os.Handler().postDelayed(
@@ -113,11 +115,15 @@ public class LoginActivity extends AppCompatActivity {
                     onLoginSuccess();
 //                    onLoginFailed();
                     progressDialog.dismiss();
+                    Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(MainActivity.USER_TYPE, "user");
+                    editor.apply();
                     finish();
-                }, 2000);
+                    startActivity(userLogin);
+                }, 1000);   // simulo un mini delay
 
-        Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
-        startActivity(userLogin);
     }
 
     @Override
