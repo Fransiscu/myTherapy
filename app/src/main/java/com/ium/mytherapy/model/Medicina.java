@@ -8,6 +8,7 @@ public class Medicina implements Parcelable {
     private String descrizione;
     private String frequenza;
     private String ora;
+    private String consigliSupervisore;
     private int dosaggio;
     private boolean presa;
 
@@ -16,8 +17,21 @@ public class Medicina implements Parcelable {
         descrizione = in.readString();
         frequenza = in.readString();
         ora = in.readString();
+        consigliSupervisore = in.readString();
         dosaggio = in.readInt();
         presa = in.readByte() != 0;
+    }
+
+    public static Creator<Medicina> getCREATOR() {
+        return CREATOR;
+    }
+
+    public String getConsigliSupervisore() {
+        return consigliSupervisore;
+    }
+
+    void setConsigliSupervisore(String consigliSupervisore) {
+        this.consigliSupervisore = consigliSupervisore;
     }
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -95,6 +109,7 @@ public class Medicina implements Parcelable {
         parcel.writeString(descrizione);
         parcel.writeString(frequenza);
         parcel.writeString(ora);
+        parcel.writeString(consigliSupervisore);
         parcel.writeInt(dosaggio);
         parcel.writeByte((byte) (presa ? 1 : 0));
     }

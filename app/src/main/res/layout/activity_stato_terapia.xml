@@ -75,6 +75,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:id="@+id/appunti_medicina_da_supervisore"
                     android:layout_margin="15sp"
                     android:text="@string/appunti_medicina"
                     android:textColor="@android:color/holo_red_dark"

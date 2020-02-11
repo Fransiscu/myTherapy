@@ -27,6 +27,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("week");
         temp.setOra("08:30");
+        temp.setConsigliSupervisore("Da prendere la mattina presto a stomaco vuoto");
         temp.setPresa(true);
         list.add(temp);
 
@@ -36,6 +37,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("day");
         temp.setOra("12:30");
+        temp.setConsigliSupervisore("Da prendere necessariamente a stomaco pieno");
         temp.setPresa(false);
         list.add(temp);
 
@@ -45,6 +47,7 @@ public class MedicinaFactory {
         temp.setDosaggio(1);
         temp.setFrequenza("day");
         temp.setOra("20:30");
+        temp.setConsigliSupervisore("Da prendere non prima di 45 minuti dopo la fine del pasto");
         temp.setPresa(false);
         list.add(temp);
 
