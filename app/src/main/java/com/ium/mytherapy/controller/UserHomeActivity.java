@@ -108,8 +108,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy1.putExtras(bundle);
                 startActivity(therapy1);
-                overridePendingTransition(R.anim.anim_slide_in_right,
-                        R.anim.anim_slide_out_left);
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
         });
         secondo.setOnClickListener(view -> {
@@ -117,8 +116,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 Intent therapy2 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy2.putExtra(MEDICINA, therapy.get(1));
                 startActivity(therapy2);
-                overridePendingTransition(R.anim.anim_slide_in_right,
-                        R.anim.anim_slide_out_left);
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
         });
         terzo.setOnClickListener(view -> {
@@ -126,8 +124,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 Intent therapy3 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
                 therapy3.putExtra(MEDICINA, therapy.get(2));
                 startActivity(therapy3);
-                overridePendingTransition(R.anim.anim_slide_in_right,
-                        R.anim.anim_slide_out_left);
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
                 finish();
         });
 
@@ -180,10 +177,8 @@ public class UserHomeActivity extends AppCompatActivity {
         builder.setAutoCancel(true);
         builder.setContentText("Hey! Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
         builder.setSubText("Promemoria");
-        builder.addAction(R.drawable.notification, "Rimanda di 10 minuti",
-                remindActionIntent);
-        builder.addAction(R.drawable.notification, "Segna come presa",
-                markDoneActionIntent);
+        builder.addAction(R.drawable.notification, "Rimanda di 10 minuti", remindActionIntent);
+        builder.addAction(R.drawable.notification, "Segna come presa", markDoneActionIntent);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setContentIntent(landingPendingIntent);
 
