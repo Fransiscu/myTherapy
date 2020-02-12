@@ -179,6 +179,7 @@ public class UserHomeActivity extends AppCompatActivity {
         builder.setContentTitle(therapy.get(1).getNome());
         builder.setAutoCancel(true);
         builder.setContentText("Hey! Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
+        builder.setSubText("Promemoria");
         builder.addAction(R.drawable.notification, "Rimanda di 10 minuti",
                 remindActionIntent);
         builder.addAction(R.drawable.notification, "Segna come presa",
