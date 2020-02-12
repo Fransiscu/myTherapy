@@ -42,6 +42,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".views.NotificationReceiver" />
     </application>
 
 </manifest>

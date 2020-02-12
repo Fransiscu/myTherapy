@@ -16,6 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.views.NotificationReceiver;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -163,14 +164,25 @@ public class UserHomeActivity extends AppCompatActivity {
 
         PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
 
+        Intent broadcastReminerActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        broadcastReminerActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
+        broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", NOTIFICATION_ID);
+        PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminerActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
+        broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", NOTIFICATION_ID);
+        PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
         builder.setSmallIcon(R.drawable.robot);
         builder.setContentTitle(therapy.get(1).getNome());
+        builder.setAutoCancel(true);
         builder.setContentText("Hey! Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
         builder.addAction(R.drawable.notification, "Rimanda di 10 minuti",
-                null);
+                remindActionIntent);
         builder.addAction(R.drawable.notification, "Segna come presa",
-                null);
+                markDoneActionIntent);
         builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setContentIntent(landingPendingIntent);
 
