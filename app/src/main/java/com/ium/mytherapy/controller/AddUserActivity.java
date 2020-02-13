@@ -8,9 +8,12 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -30,6 +33,8 @@ public class AddUserActivity extends AppCompatActivity {
 
     TextInputEditText nameInput, surnameInput, dateInput, emailInput, usernameInput, passwordInput;
     TextInputLayout passwordInputLayout;
+    TextView closeAlert;
+    MaterialCardView alertCard;
     MaterialButton addUserButton;
     private int mYear, mMonth, mDay;
     File path = Environment.getExternalStorageDirectory();
@@ -48,8 +53,12 @@ public class AddUserActivity extends AppCompatActivity {
         usernameInput = findViewById(R.id.user_username);
         passwordInput = findViewById(R.id.user_password);
         addUserButton = findViewById(R.id.conferma_aggiunta_utente_button);
-
+        alertCard = findViewById(R.id.adduser_alert_card);
+        closeAlert = findViewById(R.id.x_chiudi_alert);
         passwordInputLayout = findViewById(R.id.user_password_toggle);
+
+        /* Per nascondere la carta di avviso */
+        closeAlert.setOnClickListener(view -> alertCard.setVisibility(View.GONE));
 
         /* Calendario al tocco del campo data */
         dateInput.setShowSoftInputOnFocus(false);

@@ -243,7 +243,6 @@ public class UserManagementActivity extends AppCompatActivity {
         editMedicineName2.setText(medicinesList.get(1).getNome());
         editMedicineName3.setText(medicinesList.get(2).getNome());
 
-
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
@@ -278,6 +277,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 })
                 .show());
 
+        /* Listener per tasto aggiunta terapia */
         addTherapy.setOnClickListener(view -> {
             Intent addTherapyIntent = new Intent(getApplicationContext(), AddTherapyActivity.class);
             startActivity(addTherapyIntent);
