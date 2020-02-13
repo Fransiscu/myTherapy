@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="25dp"
+        android:paddingBottom="25dp"
         android:text="@string/nome_medicina"
         android:textSize="48sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,21 +22,174 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16sp"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/dettagli_nome_medicina">
+        app:layout_constraintTop_toBottomOf="@id/dettagli_nome_medicina"
+        tools:layout_editor_absoluteX="-44dp">
 
         <LinearLayout
             android:id="@+id/home_user_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
             tools:ignore="ExtraText">
 
-            <TextView
+            <Space
                 android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+
+            <!-- Prima riga -->
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ciao" />
+                android:text="@string/descrizione_descrizione"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/dettagli_medicina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/esempio_dettagli"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <!-- Seconda riga -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/assunzione_e_dosaggio"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/assunzione_e_dosaggio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/esempio_dettagli"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <!-- Terza riga -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/consigli_e_raccomandazioni"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/consigli_e_raccomandazioni"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/esempio_dettagli"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <!-- Quarta riga -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/link_utili"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/link_utili"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="@string/esempio_dettagli"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorAccent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <!-- Quinta riga -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dosaggio_corrente"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
+
+                <Spinner
+                    android:id="@+id/spinnerInt"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/colorAccent" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <Spinner
+                    android:id="@+id/spinnerString"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
 
         </LinearLayout>
 

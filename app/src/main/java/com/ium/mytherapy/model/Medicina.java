@@ -4,44 +4,28 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Medicina implements Parcelable {
+
     private String nome;
     private String descrizione;
     private String frequenza;
+    private int frequenzaNum;
     private String ora;
     private String consigliSupervisore;
     private String dosaggio;
     private String link;
     private boolean presa;
 
+
     private Medicina(Parcel in) {
         nome = in.readString();
         descrizione = in.readString();
         frequenza = in.readString();
+        frequenzaNum = in.readInt();
         ora = in.readString();
         consigliSupervisore = in.readString();
         dosaggio = in.readString();
         link = in.readString();
         presa = in.readByte() != 0;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    void setLink(String link) {
-        this.link = link;
-    }
-
-    public static Creator<Medicina> getCREATOR() {
-        return CREATOR;
-    }
-
-    public String getConsigliSupervisore() {
-        return consigliSupervisore;
-    }
-
-    void setConsigliSupervisore(String consigliSupervisore) {
-        this.consigliSupervisore = consigliSupervisore;
     }
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -84,12 +68,28 @@ public class Medicina implements Parcelable {
         this.frequenza = frequenza;
     }
 
+    public int getFrequenzaNum() {
+        return frequenzaNum;
+    }
+
+    void setFrequenzaNum(int frequenzaNum) {
+        this.frequenzaNum = frequenzaNum;
+    }
+
     public String getOra() {
         return ora;
     }
 
     void setOra(String ora) {
         this.ora = ora;
+    }
+
+    public String getConsigliSupervisore() {
+        return consigliSupervisore;
+    }
+
+    void setConsigliSupervisore(String consigliSupervisore) {
+        this.consigliSupervisore = consigliSupervisore;
     }
 
     public String getDosaggio() {
@@ -100,6 +100,14 @@ public class Medicina implements Parcelable {
         this.dosaggio = dosaggio;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    void setLink(String link) {
+        this.link = link;
+    }
+
     public boolean isPresa() {
         return presa;
     }
@@ -107,6 +115,7 @@ public class Medicina implements Parcelable {
     void setPresa(boolean presa) {
         this.presa = presa;
     }
+
 
     @Override
     public int describeContents() {
@@ -118,10 +127,11 @@ public class Medicina implements Parcelable {
         parcel.writeString(nome);
         parcel.writeString(descrizione);
         parcel.writeString(frequenza);
+        parcel.writeInt(frequenzaNum);
         parcel.writeString(ora);
-        parcel.writeString(link);
         parcel.writeString(consigliSupervisore);
         parcel.writeString(dosaggio);
+        parcel.writeString(link);
         parcel.writeByte((byte) (presa ? 1 : 0));
     }
 }
