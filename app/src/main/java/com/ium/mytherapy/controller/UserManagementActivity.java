@@ -21,6 +21,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.views.CardAdapter;
@@ -28,6 +30,7 @@ import com.ium.mytherapy.views.CardAdapter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.annotation.NonNull;
@@ -39,11 +42,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
 
-    TextView nome;
+    TextView nome, medicine1, medicine2, medicine3, medicine1Time, medicine2Time, medicine3Time;
+    TextView editMedicineName1, editMedicineName2, editMedicineName3;
     CircleImageView profileImage, editPicture;
     ImageView notif1, notif2, notif3, completed1, completed2, completed3;
     ImageView deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
+    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getMedicines();
     MaterialButton deleteUser, save, addTherapy;
     private int mYear, mMonth, mDay;
     boolean avatarChanged;
@@ -72,6 +77,19 @@ public class UserManagementActivity extends AppCompatActivity {
         profileSurname = findViewById(R.id.profile_surname);
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
+
+        /* Singole medicine mini timeline */
+        medicine1 = findViewById(R.id.nome_medicina_uno);
+        medicine2 = findViewById(R.id.nome_medicina_due);
+        medicine3 = findViewById(R.id.nome_medicina_tre);
+
+        medicine1Time = findViewById(R.id.orario_medicina_uno);
+        medicine2Time = findViewById(R.id.orario_medicina_due);
+        medicine3Time = findViewById(R.id.orario_medicina_tre);
+
+        editMedicineName1 = findViewById(R.id.nome_modifica_medicina_uno);
+        editMedicineName2 = findViewById(R.id.nome_modifica_medicina_due);
+        editMedicineName3 = findViewById(R.id.nome_modifica_medicina_tre);
 
         /* Elementi della mini timeline */
         notif1 = findViewById(R.id.notifica_uno);
@@ -215,6 +233,16 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername.setText(user.getUsername());
         birthdateInput.setText(user.getDataNascita());
         profilePassword.setText(user.getPassword());
+        medicine1.setText(medicinesList.get(0).getNome());
+        medicine2.setText(medicinesList.get(1).getNome());
+        medicine3.setText(medicinesList.get(2).getNome());
+        medicine1Time.setText(medicinesList.get(0).getOra());
+        medicine2Time.setText(medicinesList.get(1).getOra());
+        medicine3Time.setText(medicinesList.get(2).getOra());
+        editMedicineName1.setText(medicinesList.get(0).getNome());
+        editMedicineName2.setText(medicinesList.get(1).getNome());
+        editMedicineName3.setText(medicinesList.get(2).getNome());
+
 
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 

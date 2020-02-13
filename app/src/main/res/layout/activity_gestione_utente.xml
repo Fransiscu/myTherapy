@@ -328,6 +328,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/orario_medicina_uno"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/timeline_ora_uno"
@@ -336,6 +337,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_medicina_uno"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_uno"
@@ -396,6 +398,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/orario_medicina_due"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/timeline_ora_due"
@@ -404,6 +407,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_medicina_due"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_due"
@@ -464,6 +468,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/orario_medicina_tre"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/timeline_ora_tre"
@@ -472,6 +477,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_medicina_tre"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_tre"
@@ -607,6 +613,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_modifica_medicina_uno"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_uno"
@@ -667,6 +674,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_modifica_medicina_due"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_due"
@@ -727,6 +735,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="match_parent"
+                                                android:id="@+id/nome_modifica_medicina_tre"
                                                 android:layout_gravity="center_vertical"
                                                 android:padding="@dimen/padding_therapy_cards"
                                                 android:text="@string/nome_medicina_tre"
