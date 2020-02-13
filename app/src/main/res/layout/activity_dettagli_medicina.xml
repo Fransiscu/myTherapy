@@ -160,7 +160,7 @@
 
                 <Spinner
                     android:id="@+id/spinnerInt"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
@@ -180,7 +180,7 @@
 
                 <Spinner
                     android:id="@+id/spinnerString"
-                    android:layout_width="100dp"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
