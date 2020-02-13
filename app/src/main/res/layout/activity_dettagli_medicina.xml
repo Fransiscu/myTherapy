@@ -39,20 +39,43 @@
                 android:layout_height="35dp" />
 
             <!-- Prima riga -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/descrizione_descrizione"
-                android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/dettagli_medicina"
-                android:layout_width="match_parent"
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="20dp"
-                android:text="@string/esempio_dettagli"
-                android:textSize="18sp" />
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/description_image" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/descrizione_descrizione"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dettagli_medicina"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="25dp"
+                        android:text="@string/esempio_dettagli"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -64,20 +87,42 @@
                 android:layout_height="25dp" />
 
             <!-- Seconda riga -->
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:text="@string/assunzione_e_dosaggio"
-                android:textSize="24sp" />
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/assunzione_e_dosaggio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="20dp"
-                android:text="@string/esempio_dettagli"
-                android:textSize="18sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/dosage_image" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/assunzione_e_dosaggio"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/assunzione_e_dosaggio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="25dp"
+                        android:text="@string/esempio_dettagli"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -89,20 +134,42 @@
                 android:layout_height="25dp" />
 
             <!-- Terza riga -->
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:text="@string/consigli_e_raccomandazioni"
-                android:textSize="24sp" />
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/consigli_e_raccomandazioni"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="20dp"
-                android:text="@string/esempio_dettagli"
-                android:textSize="18sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/warning_image" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/consigli_e_raccomandazioni"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/consigli_e_raccomandazioni"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="25dp"
+                        android:text="@string/esempio_dettagli"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -114,21 +181,43 @@
                 android:layout_height="25dp" />
 
             <!-- Quarta riga -->
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:text="@string/link_utili"
-                android:textSize="24sp" />
+                android:layout_width="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/link_utili"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:paddingTop="16dp"
-                android:paddingBottom="20dp"
-                android:text="@string/esempio_dettagli"
-                android:textSize="18sp" />
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="top"
+                    android:src="@drawable/link_image" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingStart="24dp"
+                    tools:ignore="RtlSymmetry">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/link_utili"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/link_utili"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="25dp"
+                        android:text="@string/esempio_dettagli"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -146,41 +235,38 @@
                 android:text="@string/dosaggio_corrente"
                 android:textSize="24sp" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="30dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingTop="16dp">
+                android:orientation="horizontal">
 
-                <Spinner
+                <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerInt"
                     android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:background="@android:drawable/btn_dropdown" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:drawable/btn_dropdown"
-                    android:spinnerMode="dropdown" />
+                    android:text="@string/forward_slash"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="48sp" />
 
                 <Space
                     android:layout_width="30dp"
                     android:layout_height="wrap_content" />
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:background="@color/colorAccent" />
-
-                <Space
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content" />
-
-                <Spinner
+                <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerString"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="100dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 

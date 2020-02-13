@@ -57,4 +57,5 @@
     <string name="link_utili">LINK UTILI</string>
     <string name="dosaggio_corrente">DOSAGGIO CORRENTE</string>
     <string name="chiudi">X</string>
+    <string name="forward_slash">/</string>
 </resources>
