@@ -50,4 +50,10 @@
     <string name="segna_rimanda">Rimanda</string>
     <string name="presa">Medicina già presa</string>
     <string name="appunti_medicina">Dettagli aggiunti dal supervisore per la medicina</string>
+    <string name="descrizione_descrizione">DESCRIZIONE</string>
+    <string name="esempio_dettagli">Esempio dettagli per medicina</string>
+    <string name="assunzione_e_dosaggio">ASSUNZIONE E DOSAGGIO</string>
+    <string name="consigli_e_raccomandazioni">CONSIGLI E RACCOMANDAZIONI</string>
+    <string name="link_utili">LINK UTILI</string>
+    <string name="dosaggio_corrente">DOSAGGIO CORRENTE</string>
 </resources>
