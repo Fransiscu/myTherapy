@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
@@ -29,6 +30,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
     TextView medicineName, medicineHour, confirmText, medicineDetails, reminderCardTitle;
     ImageView doneCardDrawable, remindCardDrawable;
     MaterialCardView confirm, remindLater;
+    MaterialButton medicineDetailsButton;
     LinearLayout home;
     Medicina medicine;
 
@@ -47,18 +49,22 @@ public class MedicineStatusActivity extends AppCompatActivity {
         doneCardDrawable = findViewById(R.id.stato_terapia_done);
         remindCardDrawable = findViewById(R.id.stato_terapia_notifica);
         reminderCardTitle = findViewById(R.id.titolo_carta_non_preso);
+        medicineDetailsButton = findViewById(R.id.dettagli_medicina_button);
 
         home = findViewById(R.id.home_user_view);
 
+        /* Recupero intent */
         Intent medicineIntent = getIntent();
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();
             if (bundle != null) {
                 medicine = bundle.getParcelable(UserHomeActivity.MEDICINA);
+                if (medicine != null) {
+                    medicineName.setText(Objects.requireNonNull(medicine).getNome().toUpperCase());
+                    medicineHour.setText(medicine.getOra());
+                    medicineDetails.setText(medicine.getConsigliSupervisore());
+                }
             }
-            medicineName.setText(Objects.requireNonNull(medicine).getNome().toUpperCase());
-            medicineHour.setText(medicine.getOra());
-            medicineDetails.setText(medicine.getConsigliSupervisore());
         }
 
         /* Listener tasto conferma medicina persa */
@@ -75,9 +81,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 .show());
 
         /* Listener tasto rimanda notifica */
-        remindLater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        remindLater.setOnClickListener(view -> {
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -99,11 +103,18 @@ public class MedicineStatusActivity extends AppCompatActivity {
                         confirmTime.show();
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+            mTimePicker.setMessage("Seleziona l'orario");
                 mTimePicker.show();
-            }
         });
 
+        /* Listener tasto dettagli medicina */
+        medicineDetailsButton.setOnClickListener(view -> {
+            Intent medicineDetailsActivity = new Intent(getApplicationContext(), MedicineDetailsActivity.class);
+            medicineDetailsActivity.putExtra(UserHomeActivity.MEDICINA, medicine);
+            startActivity(medicineDetailsActivity);
+        });
+
+        /* Preimposto i tasti se è già presa */
         if (medicine.isPresa()) {
             setPresa();
         }

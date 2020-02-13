@@ -130,9 +130,6 @@ public class UserHomeActivity extends AppCompatActivity {
 
         /* Listener per notifica test */
         notifTitolo.setOnClickListener(view -> {
-            Runnable task2 = () -> {
-                System.out.println("Task #2 is running");
-            };
             Runnable notificationExample = () -> {
                 showNotificationExample();
             };

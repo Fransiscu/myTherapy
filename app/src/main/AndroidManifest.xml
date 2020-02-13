@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".controller.MedicineDetailsActivity" />
         <activity android:name=".controller.AddTherapyActivity" />
         <activity android:name=".controller.MedicineStatusActivity" />
         <activity android:name=".controller.UserHomeActivity" />

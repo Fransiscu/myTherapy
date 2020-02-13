@@ -22,7 +22,6 @@ public class AddTherapyActivity extends AppCompatActivity {
         userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(userManagementHome);
         finish();
-        overridePendingTransition(R.anim.anim_slide_in_left,
-                R.anim.anim_slide_out_right);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 }

@@ -9,7 +9,8 @@ public class Medicina implements Parcelable {
     private String frequenza;
     private String ora;
     private String consigliSupervisore;
-    private int dosaggio;
+    private String dosaggio;
+    private String link;
     private boolean presa;
 
     private Medicina(Parcel in) {
@@ -18,8 +19,17 @@ public class Medicina implements Parcelable {
         frequenza = in.readString();
         ora = in.readString();
         consigliSupervisore = in.readString();
-        dosaggio = in.readInt();
+        dosaggio = in.readString();
+        link = in.readString();
         presa = in.readByte() != 0;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    void setLink(String link) {
+        this.link = link;
     }
 
     public static Creator<Medicina> getCREATOR() {
@@ -82,11 +92,11 @@ public class Medicina implements Parcelable {
         this.ora = ora;
     }
 
-    public int getDosaggio() {
+    public String getDosaggio() {
         return dosaggio;
     }
 
-    void setDosaggio(int dosaggio) {
+    void setDosaggio(String dosaggio) {
         this.dosaggio = dosaggio;
     }
 
@@ -109,8 +119,9 @@ public class Medicina implements Parcelable {
         parcel.writeString(descrizione);
         parcel.writeString(frequenza);
         parcel.writeString(ora);
+        parcel.writeString(link);
         parcel.writeString(consigliSupervisore);
-        parcel.writeInt(dosaggio);
+        parcel.writeString(dosaggio);
         parcel.writeByte((byte) (presa ? 1 : 0));
     }
 }

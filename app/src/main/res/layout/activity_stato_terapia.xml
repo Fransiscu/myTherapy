@@ -230,7 +230,7 @@
             android:paddingTop="5sp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/Userhelp"
+                android:id="@+id/dettagli_medicina_button"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"

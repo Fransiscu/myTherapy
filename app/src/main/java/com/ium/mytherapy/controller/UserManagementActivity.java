@@ -290,7 +290,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-//                    userList.remove(userKey);   //TODO: implementare con utenti veri
+//                    userList.remove(userKey);
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
                     overridePendingTransition(R.anim.anim_slide_in_right,
                             R.anim.anim_slide_out_left);
