@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="25dp"
-        android:paddingBottom="25dp"
+        android:paddingBottom="15dp"
         android:text="@string/nome_medicina"
         android:textSize="48sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/dettagli_nome_medicina"
-        tools:layout_editor_absoluteX="-44dp">
+        app:layout_constraintTop_toBottomOf="@id/dettagli_nome_medicina">
 
         <LinearLayout
             android:id="@+id/home_user_view"
@@ -37,7 +36,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="35dp" />
 
             <!-- Prima riga -->
             <TextView
@@ -51,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="20dp"
                 android:text="@string/esempio_dettagli"
                 android:textSize="18sp" />
 
@@ -62,7 +61,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="25dp" />
 
             <!-- Seconda riga -->
             <TextView
@@ -76,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="20dp"
                 android:text="@string/esempio_dettagli"
                 android:textSize="18sp" />
 
@@ -87,7 +86,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="25dp" />
 
             <!-- Terza riga -->
             <TextView
@@ -101,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="20dp"
                 android:text="@string/esempio_dettagli"
                 android:textSize="18sp" />
 
@@ -112,7 +111,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="25dp" />
 
             <!-- Quarta riga -->
             <TextView
@@ -127,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="web"
                 android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingBottom="20dp"
                 android:text="@string/esempio_dettagli"
                 android:textSize="18sp" />
 
@@ -138,7 +137,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_height="25dp" />
 
             <!-- Quinta riga -->
             <TextView
