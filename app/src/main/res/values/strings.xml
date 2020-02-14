@@ -56,4 +56,15 @@
     <string name="consigli_e_raccomandazioni">CONSIGLI E RACCOMANDAZIONI</string>
     <string name="link_utili">LINK UTILI</string>
     <string name="dosaggio_corrente">DOSAGGIO CORRENTE</string>
+    <string name="chiudi">X</string>
+    <string name="forward_slash">/</string>
+    <string name="titolo_aggiunta_modifica_medicina">Dettagli medicina</string>
+    <string name="suggerimento_nome_medicina">Nome medicina</string>
+    <string name="suggerimento_descrizione_medicina">Descrizione generica</string>
+    <string name="assunzione_e_dosaggio_medicina">Assunzione e dosaggio standard</string>
+    <string name="link_utili_medicina">Link utili per l\'utente</string>
+    <string name="dosaggio_corrente_medicina">Assegna un dosaggio</string>
+    <string name="imposta_la_frequenza_per_la_terapia">Imposta la frequenza per la terapia</string>
+    <string name="aggiungi_terapia">Aggiungi la terapia</string>
+    <string name="attiva_notifiche_terapia_checkbox">Attiva notifiche per questa terapia</string>
 </resources>

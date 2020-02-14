@@ -124,6 +124,37 @@ public class UserManagementActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        /* Listeners per tasti di modifica terapia */
+        editTherapy1.setOnClickListener(view -> {
+            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("MEDICINA", medicinesList.get(0));
+            editTherapyIntent.putExtras(bundle);
+            startActivity(editTherapyIntent);
+            finish();
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        });
+
+        editTherapy2.setOnClickListener(view -> {
+            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("MEDICINA", medicinesList.get(1));
+            editTherapyIntent.putExtras(bundle);
+            startActivity(editTherapyIntent);
+            finish();
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        });
+
+        editTherapy3.setOnClickListener(view -> {
+            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("MEDICINA", medicinesList.get(2));
+            editTherapyIntent.putExtras(bundle);
+            startActivity(editTherapyIntent);
+            finish();
+            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+        });
+
         /* Primo item timeline */
         notif1.setOnClickListener(view -> {
             if (notifEnabled1) {
@@ -243,7 +274,6 @@ public class UserManagementActivity extends AppCompatActivity {
         editMedicineName2.setText(medicinesList.get(1).getNome());
         editMedicineName3.setText(medicinesList.get(2).getNome());
 
-
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
@@ -278,12 +308,13 @@ public class UserManagementActivity extends AppCompatActivity {
                 })
                 .show());
 
+        /* Listener per tasto aggiunta terapia */
         addTherapy.setOnClickListener(view -> {
             Intent addTherapyIntent = new Intent(getApplicationContext(), AddTherapyActivity.class);
             startActivity(addTherapyIntent);
+            finish();
             overridePendingTransition(R.anim.anim_slide_in_right,
                     R.anim.anim_slide_out_left);
-            finish();
         });
 
         /* Calendario al tocco del campo data */

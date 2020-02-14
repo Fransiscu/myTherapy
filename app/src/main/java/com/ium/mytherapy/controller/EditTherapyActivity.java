@@ -11,22 +11,24 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.Medicina;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class AddTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks;
     MaterialSpinner spinnerNum, spinnerFreq;
-    MaterialButton addTherapy;
+    Medicina currentTherapy;
+    MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiunta_terapia);
+        setContentView(R.layout.activity_modifica_terapia);
 
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
@@ -36,7 +38,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
 
-        addTherapy = findViewById(R.id.add_therapy_button);
+        saveEdits = findViewById(R.id.save_therapy_edits);
 
         spinnerNum.setOnItemSelectedListener(this);
 
@@ -47,15 +49,30 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
 
+        /* Intent per user */
+        Intent therapyIntent = getIntent();
+        if (therapyIntent != null) {
+            Bundle bundle = therapyIntent.getExtras();
+            if (bundle != null) {
+                currentTherapy = bundle.getParcelable("MEDICINA");
+                if (currentTherapy != null) {
+                    medicineName.setText(currentTherapy.getNome());
+                    medicineDetails.setText(currentTherapy.getDescrizione());
+                    medicineStandardDosage.setText(currentTherapy.getDosaggio());
+                    medicineLinks.setText(currentTherapy.getLink());
+                }
+            }
+        }
+
         /* Listener tasto per confermare l'aggiunta della terapia */
-        addTherapy.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("AGGIUNTA TERAPIA")
-                .setMessage("Stai per aggiungere la terapia, sicuro di voler procedere?")
+        saveEdits.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                .setTitle("MODIFICA TERAPIA")
+                .setMessage("Stai per modificare la terapia, sicuro di voler procedere?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
                     Intent backToManagement = new Intent(this, UserManagementActivity.class);
                     startActivity(backToManagement);
-                    Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Terapia modificata", Toast.LENGTH_LONG).show();
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 })
@@ -77,11 +94,11 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        // niente, è solo per scena
+
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        // niente, è solo per scena
+
     }
 }

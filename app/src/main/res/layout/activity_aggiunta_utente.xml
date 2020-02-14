@@ -40,6 +40,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/adduser_alert_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="20dp"
+                android:padding="10sp"
+                android:visibility="visible"
+                app:cardCornerRadius="4sp"
+                app:cardUseCompatPadding="true"
+                app:shapeAppearanceOverlay="@color/colorAccent"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10sp"
+                            android:text="@string/consigli_aggiunta_utente_titolo"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="26sp" />
+
+                        <TextView
+                            android:id="@+id/x_chiudi_alert"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:gravity="right"
+                            android:text="@string/chiudi"
+                            android:textColor="@android:color/holo_red_dark"
+                            android:textSize="20sp"
+                            tools:ignore="RtlHardcoded" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15sp"
+                        android:text="@string/consigli_aggiunta_utente_testo"
+                        android:textColor="@android:color/holo_red_dark"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
@@ -150,42 +211,6 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20sp" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:elevation="20dp"
-                android:padding="10sp"
-                app:cardCornerRadius="4sp"
-                app:cardUseCompatPadding="true"
-                app:shapeAppearanceOverlay="@color/colorAccent"
-                app:strokeColor="@color/colorAccent"
-                app:strokeWidth="1dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10sp"
-                        android:text="@string/consigli_aggiunta_utente_titolo"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="26sp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="15sp"
-                        android:text="@string/consigli_aggiunta_utente_testo"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
