@@ -18,7 +18,7 @@ public class MedicinaFactory {
     }
 
     /* Medicine d'esempio */
-    public static List<Medicina> getMedicines() {
+    public List<Medicina> getMedicines() {
         List<Medicina> list = new ArrayList<>();
 
         Medicina temp = new Medicina();

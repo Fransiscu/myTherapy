@@ -16,6 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.UserReport;
+import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.views.HelpDialogFragment;
 import com.ium.mytherapy.views.NotificationReceiver;
 
@@ -31,7 +33,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 @SuppressWarnings("ALL")
-public class UserHomeActivity extends AppCompatActivity {
+public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
     MaterialButton logout, helpMe;
     public final String CHANNEL_ID = "myThrapy";
@@ -213,6 +215,11 @@ public class UserHomeActivity extends AppCompatActivity {
         medTime1.setText(therapy.get(0).getOra());
         medTime2.setText(therapy.get(1).getOra());
         medTime3.setText(therapy.get(2).getOra());
+    }
+
+    @Override
+    public void getDataFromFragment(UserReport report) {
+        UserReportFactory.getInstance().addReport(report);
     }
 
     public enum Mesi {Gennaio, Febbraio, Marzo, Aprile, Maggio, Giugno, Luglio, Agosto, Settembre, Ottobre, Novembre, Dicembre;}
