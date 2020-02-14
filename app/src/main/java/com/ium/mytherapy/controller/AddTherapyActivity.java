@@ -56,6 +56,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
                     Intent backToManagement = new Intent(this, UserManagementActivity.class);
                     startActivity(backToManagement);
                     Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
+                    finish();
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {

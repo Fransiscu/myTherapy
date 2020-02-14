@@ -69,7 +69,6 @@
                     android:id="@+id/add_edit_medicine_details"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@"
                     android:inputType="textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +87,6 @@
                     android:id="@+id/add_edit_medicine_dosage"
                     android:layout_width="match_parent"
                     android:layout_height="100sp"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                     android:inputType="textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -104,10 +102,10 @@
                 android:hint="@string/link_utili_medicina">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/signup_username"
+                    android:id="@+id/link_utili"
+                    android:autoLink="web"
                     android:layout_width="match_parent"
                     android:layout_height="100sp"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                     android:inputType="textFilter" />
 
             </com.google.android.material.textfield.TextInputLayout>
