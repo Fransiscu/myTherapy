@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addDefaultItems() {
         File defaultAvatarPath = new File(path.getAbsolutePath() + "/myTherapy/default.jpg");
+        File defaultReportFile = new File(path.getAbsolutePath() + "/myTherapy/supervisors/report.txt");
 
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
@@ -121,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                 final Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.avatardefault);
                 wasSuccessful = defaultAvatarPath.createNewFile();
                 if (!wasSuccessful) {   // per evitare i warnings
+                    System.out.println("was not successful.");
+                }
+                wasSuccessful = defaultReportFile.createNewFile();
+                if (!wasSuccessful) { // per evitare i warnings
                     System.out.println("was not successful.");
                 }
                 FileOutputStream fos = new FileOutputStream(defaultAvatarPath);

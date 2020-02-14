@@ -48,7 +48,7 @@ public class UserManagementActivity extends AppCompatActivity {
     ImageView notif1, notif2, notif3, completed1, completed2, completed3;
     ImageView deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getMedicines();
+    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
     MaterialButton deleteUser, save, addTherapy;
     private int mYear, mMonth, mDay;
     boolean avatarChanged;

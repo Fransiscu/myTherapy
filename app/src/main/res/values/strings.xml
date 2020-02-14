@@ -67,4 +67,6 @@
     <string name="imposta_la_frequenza_per_la_terapia">Imposta la frequenza per la terapia</string>
     <string name="aggiungi_terapia">Aggiungi la terapia</string>
     <string name="attiva_notifiche_terapia_checkbox">Attiva notifiche per questa terapia</string>
+    <string name="quale_terapia_domanda">Con quale delle terapie hai un problema?</string>
+    <string name="dettagli_terapia_domanda">Che problema si verifica?</string>
 </resources>
