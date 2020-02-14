@@ -21,7 +21,7 @@ public class UserReport {
         this.medicina = medicina;
     }
 
-    String getErrorMessage() {
+    public String getErrorMessage() {
         return errorMessage;
     }
 

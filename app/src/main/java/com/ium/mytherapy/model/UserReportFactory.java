@@ -28,7 +28,7 @@ public class UserReportFactory {
     }
 
     /* Setto il report come già letto */
-    public static void setChecked() throws IOException {
+    public void setChecked() throws IOException {
         UserReport userReport = new UserReport();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
 
@@ -66,7 +66,7 @@ public class UserReportFactory {
     }
 
     /* Prendo il report dal file di testo */
-    private UserReport getReportFromFile() throws IOException {
+    public UserReport getReportFromFile() throws IOException {
         UserReport userReport = new UserReport();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
 

@@ -6,13 +6,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.model.UserReport;
+import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
@@ -28,9 +32,10 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     RecyclerView cardRecyclerView;
     CardAdapter cardAdapter;
     TextView noUser;
+    ImageView notifications;
     MaterialButton addUser, logout;
-    ArrayList<User> list;
-    ArrayList<User> check;
+    ArrayList<User> list, check;
+    UserReport report;
 
     public static ArrayList<User> getMyList() throws IOException {
         ArrayList<User> users;
@@ -67,6 +72,39 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             setContentView(R.layout.activity_home_supervisore);
             cardRecyclerView = findViewById(R.id.usersListRecyclerView);
             cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            notifications = findViewById(R.id.supervisor_notification);
+
+            Runnable checkNotifications = () -> {
+                try {
+                    if (UserReportFactory.getInstance().checkReports()) {
+                        notifications.setVisibility(View.VISIBLE);
+                        report = UserReportFactory.getInstance().getReportFromFile();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            };
+            checkNotifications.run();
+
+            /* Listener per l'icona delle notifiche */
+            notifications.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
+                    .setTitle("Richiesta di supporto")
+                    .setMessage("Terapia in questione:" + report.getMedicina())
+                    .setMessage(report.getErrorMessage())
+                    .setCancelable(false)
+                    .setPositiveButton("Segna come letto", (dialogInterface, i) -> {
+                        try {
+                            UserReportFactory.getInstance().setChecked();
+                            notifications.setVisibility(View.INVISIBLE);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(getBaseContext(), "Report segnato come letto", Toast.LENGTH_LONG).show();
+                    })
+                    .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                    })
+                    .show());
+
             try {
                 list = getMyList();
                 cardAdapter = new CardAdapter(this, list);
