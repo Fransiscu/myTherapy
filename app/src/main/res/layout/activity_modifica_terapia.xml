@@ -103,7 +103,7 @@
                 android:hint="@string/link_utili_medicina">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/signup_username"
+                    android:id="@+id/link_utili"
                     android:layout_width="match_parent"
                     android:layout_height="100sp"
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
@@ -123,6 +123,76 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/imposta_la_frequenza_per_la_terapia"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_quantita"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:background="@android:drawable/btn_dropdown" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forward_slash"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="48sp" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_freq"
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:background="@android:drawable/btn_dropdown"
+                    android:spinnerMode="dropdown" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkbox_notifiche"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/attiva_notifiche_terapia_checkbox"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
