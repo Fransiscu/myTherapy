@@ -24,7 +24,7 @@ public class MedicineDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dettagli_medicina);
 
         String[] itemsNumber = new String[]{"1", "2", "3"};
-        String[] itemsString = new String[]{"Giorno", "Settimana", "Mese"};
+        String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", ""};
 
         pageTitle = findViewById(R.id.dettagli_nome_medicina);
         medicineDetails = findViewById(R.id.dettagli_medicina);
@@ -65,10 +65,8 @@ public class MedicineDetailsActivity extends AppCompatActivity {
                         case "Mese":
                             spinnerString.setSelection(2);
                             break;
-                        case "Anno":
-                            spinnerString.setSelection(3);
-                            break;
                         default:
+                            spinnerString.setSelection(Integer.parseInt(medicine.getFrequenza()));
                             break;
                     }
 

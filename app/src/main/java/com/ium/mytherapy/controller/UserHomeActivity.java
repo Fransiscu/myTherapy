@@ -152,8 +152,10 @@ public class UserHomeActivity extends AppCompatActivity {
     private void showNotificationExample() {
         createNotificationChannel();
 
+        Medicina current = therapy.get(2);
+
         Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-        landingIntent.putExtra(MEDICINA, therapy.get(1));
+        landingIntent.putExtra(MEDICINA, current);
         landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
@@ -170,9 +172,9 @@ public class UserHomeActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
         builder.setSmallIcon(R.drawable.robot);
-        builder.setContentTitle(therapy.get(1).getNome());
+        builder.setContentTitle("Promemoria");
         builder.setAutoCancel(true);
-        builder.setContentText("Hey! Non dimenticare di prendere la tua medicina oggi alle " + therapy.get(1).getOra() + "!");
+        builder.setContentText("Hey! Non dimenticare di prendere " + current.getNome() + " oggi alle " + current.getOra() + "!");
         builder.setSubText("Promemoria");
         builder.addAction(R.drawable.notification, "Rimanda di 10 minuti", remindActionIntent);
         builder.addAction(R.drawable.notification, "Segna come presa", markDoneActionIntent);

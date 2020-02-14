@@ -59,7 +59,7 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="20dp" />
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -86,7 +86,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="30sp" />
+                android:layout_height="20sp" />
 
             <!-- Prima carta -->
             <com.google.android.material.card.MaterialCardView

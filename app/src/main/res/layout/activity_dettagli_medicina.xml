@@ -233,19 +233,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dosaggio_corrente"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerInt"
                     android:layout_width="150dp"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown" />
 
                 <Space
@@ -266,7 +267,7 @@
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerString"
                     android:layout_width="150dp"
-                    android:layout_height="100dp"
+                    android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
 
