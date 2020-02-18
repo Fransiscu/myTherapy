@@ -2,6 +2,8 @@ package com.ium.mytherapy.model;
 
 import android.os.Environment;
 
+import com.ium.mytherapy.utils.DefaultValues;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,11 +19,6 @@ public class SupervisorFactory {
 
     private static SupervisorFactory dummy;
 
-    private File path = Environment.getExternalStorageDirectory();
-    public File usersDir = new File(path.getAbsolutePath() + "/myTherapy/users/");
-    private File supervisorDir = new File(path.getAbsolutePath() + "/myTherapy/supervisors/");
-    private File baseDir = new File(path.getAbsolutePath() + "/myTherapy/");
-
     private SupervisorFactory() {
     }
 
@@ -32,8 +29,9 @@ public class SupervisorFactory {
         return dummy;
     }
 
+    /* Aggiungo supervisore */
     public void addSupervisor(Supervisor supervisor) throws IOException {
-        File newSupervisor = new File(supervisorDir + "/" + supervisor.getSupervisorId() + "/");
+        File newSupervisor = new File(DefaultValues.supervisorDir + "/" + supervisor.getSupervisorId() + "/");
         boolean wasSuccessful = newSupervisor.mkdirs();
 
         if (!wasSuccessful) {
@@ -56,6 +54,7 @@ public class SupervisorFactory {
 
     }
 
+    /* Da file a object in java */
     private Supervisor getSupervisorFromFile(String filePath) throws IOException {
         Supervisor supervisor = new Supervisor();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
@@ -74,6 +73,7 @@ public class SupervisorFactory {
         return supervisor;
     }
 
+    /* Verifica esistenza supervisore per login futuro */
     public Supervisor verifySupervisor(String username, String password) throws IOException {
         ArrayList<Supervisor> supervisors = this.getSupervisors();
 
@@ -108,6 +108,7 @@ public class SupervisorFactory {
         return supervisors;
     }
 
+    /* Da creare in futuro se necessario */
     public ArrayList<User> getUsersFromSupervisor(Supervisor supervisor) {
         return null;
     }

@@ -12,19 +12,18 @@ public class User implements Parcelable, Comparable<User> {
     private String password;
     private String dataNascita;
     private String avatar;
-//    private Terapia terapia;
 
-    public User() {
-    }
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
 
-//    public Terapia getTerapia() {
-//        return terapia;
-//    }
-//
-//    public void setTerapia(Terapia terapia) {
-//        this.terapia = terapia;
-//    }
-
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public String getUsername() {
         return username;
@@ -40,27 +39,6 @@ public class User implements Parcelable, Comparable<User> {
 
     public void setUserId(int id) {
         this.userId = id;
-    }
-
-    public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
-        }
-
-        @Override
-        public User[] newArray(int size) {
-            return new User[size];
-        }
-    };
-
-    private User(Parcel in) {
-        nome = in.readString();
-        cognome = in.readString();
-        email = in.readString();
-        password = in.readString();
-        dataNascita = in.readString();
-        avatar = in.readString();
     }
 
     String getEmail() {
@@ -109,6 +87,18 @@ public class User implements Parcelable, Comparable<User> {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public User() {
+    }
+
+    private User(Parcel in) {
+        nome = in.readString();
+        cognome = in.readString();
+        email = in.readString();
+        password = in.readString();
+        dataNascita = in.readString();
+        avatar = in.readString();
     }
 
     @Override

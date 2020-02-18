@@ -15,9 +15,6 @@ public class Supervisor implements Parcelable {
     private int supervisorId;
     private ArrayList<User> pazienti;
 
-    public Supervisor() {
-    }
-
     public static final Creator<Supervisor> CREATOR = new Creator<Supervisor>() {
         @Override
         public Supervisor createFromParcel(Parcel in) {
@@ -29,17 +26,6 @@ public class Supervisor implements Parcelable {
             return new Supervisor[size];
         }
     };
-
-    private Supervisor(Parcel in) {
-        nome = in.readString();
-        cognome = in.readString();
-        email = in.readString();
-        username = in.readString();
-        password = in.readString();
-        dataNascita = in.readString();
-        supervisorId = in.readInt();
-        pazienti = in.createTypedArrayList(User.CREATOR);
-    }
 
     int getSupervisorId() {
         return supervisorId;
@@ -103,6 +89,20 @@ public class Supervisor implements Parcelable {
 
     public void setDataNascita(String dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public Supervisor() {
+    }
+
+    private Supervisor(Parcel in) {
+        nome = in.readString();
+        cognome = in.readString();
+        email = in.readString();
+        username = in.readString();
+        password = in.readString();
+        dataNascita = in.readString();
+        supervisorId = in.readInt();
+        pazienti = in.createTypedArrayList(User.CREATOR);
     }
 
     @Override

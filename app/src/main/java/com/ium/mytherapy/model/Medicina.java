@@ -15,19 +15,6 @@ public class Medicina implements Parcelable {
     private String link;
     private boolean presa;
 
-
-    private Medicina(Parcel in) {
-        nome = in.readString();
-        descrizione = in.readString();
-        frequenza = in.readString();
-        frequenzaNum = in.readInt();
-        ora = in.readString();
-        consigliSupervisore = in.readString();
-        dosaggio = in.readString();
-        link = in.readString();
-        presa = in.readByte() != 0;
-    }
-
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
         @Override
         public Medicina createFromParcel(Parcel in) {
@@ -39,10 +26,6 @@ public class Medicina implements Parcelable {
             return new Medicina[size];
         }
     };
-
-    Medicina() {
-
-    }
 
     public String getNome() {
         return nome;
@@ -116,6 +99,20 @@ public class Medicina implements Parcelable {
         this.presa = presa;
     }
 
+    Medicina() {
+    }
+
+    private Medicina(Parcel in) {
+        nome = in.readString();
+        descrizione = in.readString();
+        frequenza = in.readString();
+        frequenzaNum = in.readInt();
+        ora = in.readString();
+        consigliSupervisore = in.readString();
+        dosaggio = in.readString();
+        link = in.readString();
+        presa = in.readByte() != 0;
+    }
 
     @Override
     public int describeContents() {

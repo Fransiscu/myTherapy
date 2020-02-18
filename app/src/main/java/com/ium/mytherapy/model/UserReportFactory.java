@@ -1,9 +1,8 @@
 package com.ium.mytherapy.model;
 
-import android.os.Environment;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,9 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserReportFactory {
-
-    private static File path = Environment.getExternalStorageDirectory();
-    private static File defaultReportFile = new File(path.getAbsolutePath() + "/myTherapy/supervisors/report.txt");
 
     private static UserReportFactory dummy;
 
@@ -27,10 +23,21 @@ public class UserReportFactory {
         return dummy;
     }
 
+    /* Aggiungo report al file di testo */
+    public static void addReport(UserReport report) {
+        try {
+            FileWriter fw = new FileWriter(DefaultValues.defaultReportFile, false);
+            fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage());
+            fw.close();
+        } catch (IOException ioe) {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+    }
+
     /* Setto il report come già letto */
     public void setChecked() throws IOException {
         UserReport userReport = new UserReport();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
         /* Leggo dal file e assegno ogni valore al report, per ora solo un report alla volta */
         String line = bufferedReader.readLine();
@@ -44,23 +51,11 @@ public class UserReportFactory {
 
     /* Controllo se il report è già letto */
     public boolean checkRead() throws IOException {
-        UserReport userReport = new UserReport();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
         String line = bufferedReader.readLine();
         List<String> strings = Arrays.asList(line.split(","));
         return (Boolean.getBoolean(strings.get(0)));
-    }
-
-    /* Aggiungo report al file di testo */
-    public static void addReport(UserReport report) {
-        try {
-            FileWriter fw = new FileWriter(defaultReportFile, false);
-            fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage());
-            fw.close();
-        } catch (IOException ioe) {
-            System.err.println("IOException: " + ioe.getMessage());
-        }
     }
 
     public boolean checkReports() throws IOException {     // rende true se ci sono reports
@@ -68,7 +63,7 @@ public class UserReportFactory {
     }
 
     private int countReports() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(defaultReportFile));
+        BufferedReader reader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
         int lines = 0;
         while (reader.readLine() != null) lines++;
         reader.close();
@@ -78,7 +73,7 @@ public class UserReportFactory {
     /* Prendo il report dal file di testo */
     public UserReport getReportFromFile() throws IOException {
         UserReport userReport = new UserReport();
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
         /* Leggo dal file e assegno ogni valore al report, per ora solo un report alla volta */
         String line = bufferedReader.readLine();
