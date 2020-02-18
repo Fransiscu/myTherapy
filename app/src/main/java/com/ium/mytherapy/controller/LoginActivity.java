@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         supervisorButton = findViewById(R.id.login_supervisore_button);
         loginButton = findViewById(R.id.login_button);
 
+        /* Listen per tasto di redirezione a supervisor login */
         supervisorButton.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), SupervisorLoginActivity.class);
             startActivity(newActivity);
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         });
 
+        /* Listener tasto di login */
         loginButton.setOnClickListener(view -> {
             try {
                 login();
@@ -53,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        /* Serve per togliere il simbolo di errore quando si riprende a scrivere dopo un input sbagliato */
         passwordText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -75,12 +78,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() throws IOException {
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed();    // chiamo se il login non va a buon fine
             return;
         }
 
-        loginButton.setEnabled(false);
+        loginButton.setEnabled(false);  // disabilito tasto
 
+        /* Mostro finestrella di caricamento giusto per scena */
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppCompatAlertDialogStyle);
         progressDialog.setIndeterminate(true);
@@ -92,12 +96,13 @@ public class LoginActivity extends AppCompatActivity {
         String password = Objects.requireNonNull(passwordText.getText()).toString();
         String username = Objects.requireNonNull(usernameInput.getText()).toString();
 
-        User validation = UserFactory.getInstance().verifyUser(username, password);
+        User validation = UserFactory.getInstance().verifyUser(username, password); // verifico validità utente
 
+        /* Se non è valido */
         if (validation == null) {
-            Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show(); //TODO: aggiungi finestrella migliore
+            Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show();
             new android.os.Handler().postDelayed(
-                    progressDialog::dismiss, 1000);
+                    progressDialog::dismiss, 1000); // simulo un mini delay
 
             new MaterialAlertDialogBuilder(this)
                     .setTitle("LOGIN ERROR")
@@ -106,13 +111,13 @@ public class LoginActivity extends AppCompatActivity {
                     .setPositiveButton("Ok", (dialogInterface, i) -> {
                     })
                     .show();
-            loginButton.setEnabled(true);
+            loginButton.setEnabled(true);   // riabilito tasto login
             return;
         }
 
         new android.os.Handler().postDelayed(
                 () -> {
-                    onLoginSuccess();
+                    onLoginSuccess();   // chiamo se login OK
 //                    onLoginFailed();
                     progressDialog.dismiss();
                     Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
@@ -128,20 +133,22 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // disable going back to the MainActivity
+        // Non faccio tornare a MainActivity visto che c'è solo la splash
         moveTaskToBack(true);
     }
 
+    /* Da chiamare se il login va a buon fine */
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
-//        finish();
     }
 
+    /* Da chiamare se il login non va a buon fine */
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
         loginButton.setEnabled(true);
     }
 
+    /* Controllo validità dei dati inseriti e trigger del segnale di errore */
     @SuppressWarnings("deprecation")
     public boolean validate() {
         boolean valid = true;
