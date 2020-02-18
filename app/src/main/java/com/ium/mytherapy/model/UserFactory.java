@@ -1,6 +1,6 @@
 package com.ium.mytherapy.model;
 
-import android.os.Environment;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,10 +14,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class UserFactory {
-    private File path = Environment.getExternalStorageDirectory();
-    private File usersDir = new File(path.getAbsolutePath() + "/myTherapy/users/");
-    private File supervisorDir = new File(path.getAbsolutePath() + "/myTherapy/supervisors/");
-    private File baseDir = new File(path.getAbsolutePath() + "/myTherapy/");
 
     private static UserFactory dummy;
 
@@ -32,7 +28,7 @@ public class UserFactory {
     }
 
     public User getUser(int userId) throws IOException {
-        return getUserFromFile(usersDir + "/" + userId + "/profile.txt");
+        return getUserFromFile(DefaultValues.usersDir + "/" + userId + "/profile.txt");
     }
 
     public User verifyUser(String username, String password) throws IOException {
@@ -53,7 +49,7 @@ public class UserFactory {
     }
 
     public ArrayList<User> getUsers() throws IOException {
-        File f = new File(usersDir.toString());
+        File f = new File(DefaultValues.usersDir.toString());
         ArrayList<User> users = new ArrayList<>();
 
         /* Scorro tutte le cartelle */
@@ -70,6 +66,7 @@ public class UserFactory {
         return users;
     }
 
+    /* User da file a java object */
     private User getUserFromFile(String filePath) throws IOException {
         User user = new User();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
@@ -89,7 +86,7 @@ public class UserFactory {
     }
 
     public void addUser(User user, Supervisor supervisor) throws IOException {
-        File newUser = new File(usersDir.toString() + "/" + user.getUserId() + "/");
+        File newUser = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/");
         boolean wasSuccessful = newUser.mkdirs();
 
         if (!wasSuccessful) {
@@ -112,7 +109,7 @@ public class UserFactory {
 
         /* Aggiungo file al profilo del supervisore */
         try {
-            FileWriter fw = new FileWriter(supervisorDir + "/" + supervisor.getSupervisorId() + "/utenti.txt");
+            FileWriter fw = new FileWriter(DefaultValues.supervisorDir + "/" + supervisor.getSupervisorId() + "/utenti.txt");
             fw.write(user.getUserId() + ",");
             fw.close();
         } catch (IOException ioe) {

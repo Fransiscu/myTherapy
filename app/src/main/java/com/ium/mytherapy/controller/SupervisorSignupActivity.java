@@ -3,7 +3,6 @@ package com.ium.mytherapy.controller;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -15,6 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Supervisor;
 import com.ium.mytherapy.model.SupervisorFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -137,6 +137,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             String passwordConfirmation = Objects.requireNonNull(passwordConfirmationInput.getText()).toString();
             String birthdate = Objects.requireNonNull(birthdateInput.getText()).toString();
 
+            /* Controllo che tutti i campi siano validi */
             if (email.isEmpty()) {
                 emailInput.setError("Inserisci una email valida");
                 valid = false;
@@ -178,18 +179,19 @@ public class SupervisorSignupActivity extends AppCompatActivity {
                 birthdateInput.setError(null);
             }
 
+            /* Se passo tutti i check chiamo addSupervisor */
             if (valid) {
                 addSupervisor();
             }
         });
-
     }
 
+    /* Aggiungo supervisore */
     public void addSupervisor() {
         Runnable signUp = () -> {
             Supervisor newSupervisor = new Supervisor();
             int max = 0;
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myTherapy/supervisors/");
+            File f = new File(DefaultValues.supervisorDir.toString());
 
             /* Setto id supervisore a seconda di quante cartelle ho */
             File[] files = f.listFiles();
@@ -226,6 +228,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         signUp.run();
     }
 
+    /* Override pressione tasto back per cambiare l'animazione */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

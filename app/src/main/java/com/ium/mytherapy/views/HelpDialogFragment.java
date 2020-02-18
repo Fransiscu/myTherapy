@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -51,7 +52,9 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
                 })
                 .setPositiveButton("OK", (dialogInterface, i) -> {
                     userReport.setChecked(false);
-                    userReport.setMedicina(spinnerPick.getSelectedItem().toString());
+                    TextView textView = (TextView) spinnerPick.getSelectedView();
+                    String result = textView.getText().toString();
+                    userReport.setMedicina(result);
                     userReport.setErrorMessage(Objects.requireNonNull(errorMessage.getText()).toString());
                     listener.getDataFromFragment(userReport);
                     Toast.makeText(getActivity(), "Report inviato", Toast.LENGTH_LONG).show();

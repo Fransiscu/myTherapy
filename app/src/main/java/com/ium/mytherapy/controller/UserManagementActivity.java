@@ -9,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.CardAdapter;
 
 import java.io.File;
@@ -42,29 +42,37 @@ import de.hdodenhof.circleimageview.CircleImageView;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
 
-    TextView nome, medicine1, medicine2, medicine3, medicine1Time, medicine2Time, medicine3Time;
-    TextView editMedicineName1, editMedicineName2, editMedicineName3;
+    TextView nome, medicine1, medicine2, medicine3, medicine1Time, medicine2Time, medicine3Time,
+            editMedicineName1, editMedicineName2, editMedicineName3;
+
+    ImageView notif1, notif2, notif3, completed1, completed2, completed3,
+            deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
+
     CircleImageView profileImage, editPicture;
-    ImageView notif1, notif2, notif3, completed1, completed2, completed3;
-    ImageView deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
-    TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
     MaterialButton deleteUser, save, addTherapy;
+    TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
+
+
+    boolean notifEnabled1 = true, completedEnabled1 = true,
+            notifEnabled2 = true, completedEnabled2 = false,
+            notifEnabled3 = false, completedEnabled3 = false;
     private int mYear, mMonth, mDay;
     boolean avatarChanged;
+    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
     int userKey;
-    boolean notifEnabled1 = true, completedEnabled1 = true;
-    boolean notifEnabled2 = true, completedEnabled2 = false;
-    boolean notifEnabled3 = false, completedEnabled3 = false;
     User user;
-    File path = Environment.getExternalStorageDirectory();
-    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_utente);
+
+        /*
+         *  In questa Activity per ora c'è tutto hardcoded e neinte di dinamico
+         *  più avanti aggiornerò con una recyclerView e corrispondente adapter +
+         *  raccolta dei dati
+         *
+         */
 
         nome = findViewById(R.id.profileTitle);
         profileImage = findViewById(R.id.profileImage);
@@ -78,7 +86,7 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        /* Singole medicine mini timeline */
+        /* Singole medicina mini timeline */
         medicine1 = findViewById(R.id.nome_medicina_uno);
         medicine2 = findViewById(R.id.nome_medicina_due);
         medicine3 = findViewById(R.id.nome_medicina_tre);
@@ -101,7 +109,6 @@ public class UserManagementActivity extends AppCompatActivity {
         completed3 = findViewById(R.id.status_terapia_tre);
 
         /* Elementi terapie associate all'utente */
-
         deleteTherapy1 = findViewById(R.id.cancella_terapia_uno);
         deleteTherapy2 = findViewById(R.id.cancella_terapia_due);
         deleteTherapy3 = findViewById(R.id.cancella_terapia_tre);
@@ -276,8 +283,8 @@ public class UserManagementActivity extends AppCompatActivity {
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
-        File profilePicture = new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
-        File defaultAvatar = new File(dir + "/default.jpg");
+        File profilePicture = new File(DefaultValues.dir + "/avatar_" + user.getUserId() + ".jpeg");
+        File defaultAvatar = new File(DefaultValues.dir + "/default.jpg");
         if (profilePicture.exists()) {
             profileImage.setImageURI(Uri.fromFile(profilePicture));
         } else {
@@ -292,10 +299,10 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Salva", (dialogInterface, i) -> {
                     if (avatarChanged) {
-                        File file = new File(dir, "avatar_" + userKey + ".jpeg");
+                        File file = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
                         file.delete();
-                        File from = new File(dir, "avatar_" + userKey + "t.jpeg");
-                        File to = new File(dir, "avatar_" + userKey + ".jpeg");
+                        File from = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
+                        File to = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
                         from.renameTo(to);
                     }
                     Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
@@ -359,12 +366,13 @@ public class UserManagementActivity extends AppCompatActivity {
                 .show());
     }
 
+    /* Override pressione tasto back per cambiare l'animazione */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
-        File file = new File(dir, "avatar_" + userKey + "t.jpeg");
+        File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
         file.delete();  // annullo eventuale cambiamento avatar non salvato
         overridePendingTransition(R.anim.anim_slide_in_left,
                 R.anim.anim_slide_out_right);
@@ -382,12 +390,12 @@ public class UserManagementActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 profileImage.setImageBitmap(bitmap);
 
-                if (!dir.exists()) {
-                    success = dir.mkdir();
+                if (!DefaultValues.dir.exists()) {
+                    success = DefaultValues.dir.mkdir();
                 }
                 if (success) {
                     /* Salva nella cartella */
-                    File file = new File(dir, "avatar_" + userKey + "t.jpeg");
+                    File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
                     avatarChanged = true;
@@ -401,6 +409,7 @@ public class UserManagementActivity extends AppCompatActivity {
         }
     }
 
+    /* Apro image picker */
     @SuppressLint("IntentReset")
     public void pickImage() {
         Intent intent = new Intent();

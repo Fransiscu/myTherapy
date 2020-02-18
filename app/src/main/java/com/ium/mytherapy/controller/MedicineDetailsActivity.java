@@ -17,12 +17,12 @@ public class MedicineDetailsActivity extends AppCompatActivity {
     MaterialSpinner spinnerNum, spinnerFreq;
     Medicina medicine;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_medicina);
 
+        /* Valori degli spinners */
         String[] itemsNumber = new String[]{"1", "2", "3"};
         String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", ""};
 
@@ -34,6 +34,7 @@ public class MedicineDetailsActivity extends AppCompatActivity {
         spinnerNum = findViewById(R.id.spinnerInt);
         spinnerFreq = findViewById(R.id.spinnerString);
 
+        /* Prendo la medicina in input e setto i vari campi dell'activity */
         Intent medicineIntent = getIntent();
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();

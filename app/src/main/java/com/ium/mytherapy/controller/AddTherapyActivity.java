@@ -28,18 +28,21 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta_terapia);
 
+        /* TextInputEditText */
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
         medicineLinks = findViewById(R.id.link_utili);
 
+        /* Spinners */
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
-
-        addTherapy = findViewById(R.id.add_therapy_button);
-
         spinnerNum.setOnItemSelectedListener(this);
 
+        /* Buttons */
+        addTherapy = findViewById(R.id.add_therapy_button);
+
+        /* Setto i valori degli spinners + adapters */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ArrayAdapter<String> adapterString = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
@@ -65,6 +68,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    /* Override pressione tasto back per cambiare l'animazione */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -77,11 +81,11 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        // niente, è solo per scena
+        // niente, è solo per scena - da modificare in caso di tasti presenti sulle carte
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        // niente, è solo per scena
+        // niente, è solo per scena - da modificare in caso di tasti presenti sulle carte
     }
 }

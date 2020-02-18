@@ -37,11 +37,11 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
 
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
+        spinnerNum.setOnItemSelectedListener(this);
 
         saveEdits = findViewById(R.id.save_therapy_edits);
 
-        spinnerNum.setOnItemSelectedListener(this);
-
+        /* Setto valori e adapter degli spinner */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ArrayAdapter<String> adapterString = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
@@ -82,6 +82,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
 
     }
 
+    /* Override pressione tasto back per cambiare l'animazione */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -94,11 +95,11 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        // non serve ancora
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
+        // non serve ancora
     }
 }

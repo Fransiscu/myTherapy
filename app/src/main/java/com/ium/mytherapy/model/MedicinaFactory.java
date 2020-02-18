@@ -17,7 +17,7 @@ public class MedicinaFactory {
         return dummy;
     }
 
-    /* Medicine d'esempio */
+    /* Medicine d'esempio hardcoded */
     public List<Medicina> getMedicines() {
         List<Medicina> list = new ArrayList<>();
 
