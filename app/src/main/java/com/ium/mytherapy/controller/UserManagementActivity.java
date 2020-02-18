@@ -78,7 +78,7 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        /* Singole medicine mini timeline */
+        /* Singole medicina mini timeline */
         medicine1 = findViewById(R.id.nome_medicina_uno);
         medicine2 = findViewById(R.id.nome_medicina_due);
         medicine3 = findViewById(R.id.nome_medicina_tre);

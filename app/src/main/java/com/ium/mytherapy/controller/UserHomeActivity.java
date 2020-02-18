@@ -105,7 +105,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                     .show();
         });
 
-        /* Listeners per medicine di esmepio */
+        /* Listeners per medicina di esmepio */
         primo.setOnClickListener(view -> {
                 primo.setSelected(true);    // coloro di grigio al tocco
                 Bundle bundle = new Bundle();
