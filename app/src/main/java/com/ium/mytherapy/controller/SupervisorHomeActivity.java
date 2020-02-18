@@ -76,7 +76,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
             Runnable checkNotifications = () -> {
                 try {
-                    if (UserReportFactory.getInstance().checkReports()) {
+                    if (UserReportFactory.getInstance().checkReports() && !UserReportFactory.getInstance().checkRead()) {
                         notifications.setVisibility(View.VISIBLE);
                         report = UserReportFactory.getInstance().getReportFromFile();
                     }

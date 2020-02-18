@@ -242,7 +242,6 @@ public class UserManagementActivity extends AppCompatActivity {
         /* Fine elementi della mini timeline */
 
         /* Listeners terapie associate all'utente */
-
         View.OnClickListener onClickListener = view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Rimozione terapia")
                 .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")

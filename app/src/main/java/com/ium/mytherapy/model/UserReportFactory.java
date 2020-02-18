@@ -42,6 +42,16 @@ public class UserReportFactory {
         addReport(userReport);
     }
 
+    /* Controllo se il report è già letto */
+    public boolean checkRead() throws IOException {
+        UserReport userReport = new UserReport();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(defaultReportFile));
+
+        String line = bufferedReader.readLine();
+        List<String> strings = Arrays.asList(line.split(","));
+        return (Boolean.getBoolean(strings.get(0)));
+    }
+
     /* Aggiungo report al file di testo */
     public static void addReport(UserReport report) {
         try {
