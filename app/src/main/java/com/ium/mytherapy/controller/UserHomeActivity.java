@@ -18,6 +18,7 @@ import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.HelpDialogFragment;
 import com.ium.mytherapy.views.NotificationReceiver;
 
@@ -36,18 +37,25 @@ import androidx.core.app.NotificationManagerCompat;
 public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
     MaterialButton logout, helpMe;
-    public final String CHANNEL_ID = "myThrapy";
     View primo, secondo, terzo;
     List<Medicina> therapy;
     public static final String MEDICINA = "MEDICINE_INTENT";
-    public final int NOTIFICATION_ID = 001;
-    TextView todaysDate, medName1, medName2, medName3, medTime1, medTime2, medTime3, notifTitolo;
+    TextView todaysDate, notifTitolo,
+            medName1, medName2, medName3,
+            medTime1, medTime2, medTime3;
 
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
+
+        /*
+         *  In questa Activity per ora c'è tutto hardcoded e neinte di dinamico
+         *  più avanti aggiornerò con una recyclerView e corrispondente adapter +
+         *  raccolta dei dati
+         *
+         */
 
         primo = findViewById(R.id.primo_item);
         secondo = findViewById(R.id.secondo_item);
@@ -74,7 +82,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         todaysDate = findViewById(R.id.data_oggi);
         Date date = new Date();
         LocalDate localDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {     // controllo la versione di android perchè non compatibile prima di Oreo
             localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             int year = localDate.getYear();
             int month = localDate.getMonthValue();
@@ -105,7 +113,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                     .show();
         });
 
-        /* Listeners per medicina di esmepio */
+        /* Listeners per medicine di esmepio */
         primo.setOnClickListener(view -> {
                 primo.setSelected(true);    // coloro di grigio al tocco
                 Bundle bundle = new Bundle();
@@ -151,6 +159,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
     }
 
+    /* Apre dialog di aiuto per mandare messaggio al supervisore */
     public void openHelpDialog() {
         HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
         helpDialogFragment.show(getSupportFragmentManager(), "help dialog");
@@ -161,7 +170,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "myTherapy";
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, name, importance);
+            NotificationChannel notificationChannel = new NotificationChannel(DefaultValues.CHANNEL_ID, name, importance);
             notificationChannel.setDescription("Notifiche dell'app myTherapy");
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(notificationChannel);
@@ -181,15 +190,15 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
         Intent broadcastReminerActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
         broadcastReminerActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
-        broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", NOTIFICATION_ID);
+        broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
         PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminerActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
         broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
-        broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", NOTIFICATION_ID);
+        broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
         PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), DefaultValues.CHANNEL_ID);
         builder.setSmallIcon(R.drawable.robot);
         builder.setContentTitle("Promemoria");
         builder.setAutoCancel(true);
@@ -201,7 +210,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         builder.setContentIntent(landingPendingIntent);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());
+        notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
     }
 
     /* In un thread separato in quanto in teoria potrebbe richiedere tempo facendo un feth dal server */
