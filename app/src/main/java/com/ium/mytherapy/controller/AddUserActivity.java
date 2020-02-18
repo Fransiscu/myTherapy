@@ -21,6 +21,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Supervisor;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,8 +38,6 @@ public class AddUserActivity extends AppCompatActivity {
     MaterialCardView alertCard;
     MaterialButton addUserButton;
     private int mYear, mMonth, mDay;
-    File path = Environment.getExternalStorageDirectory();
-    File dir = new File(path.getAbsolutePath() + "/myTherapy/");
 
     @SuppressWarnings("deprecation")
     @Override
@@ -57,7 +56,7 @@ public class AddUserActivity extends AppCompatActivity {
         closeAlert = findViewById(R.id.x_chiudi_alert);
         passwordInputLayout = findViewById(R.id.user_password_toggle);
 
-        /* Per nascondere la carta di avviso */
+        /* Per nascondere la carta di "ATTENZIONE" */
         closeAlert.setOnClickListener(view -> alertCard.setVisibility(View.GONE));
 
         /* Calendario al tocco del campo data */
@@ -65,7 +64,7 @@ public class AddUserActivity extends AppCompatActivity {
         dateInput.setInputType(InputType.TYPE_NULL);
         dateInput.setFocusable(false);
 
-        /* Resetto errore per birthdate*/
+        /* Resetto errore per birthdate in caso venga assegnato un valore sbagliato */
         dateInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -95,7 +94,7 @@ public class AddUserActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        /* Aggiunta utente */
+        /* Listener tasto aggiunta utente */
         addUserButton.setOnClickListener(view -> {
             boolean valid = true;
             String name = Objects.requireNonNull(nameInput.getText()).toString();
@@ -105,6 +104,7 @@ public class AddUserActivity extends AppCompatActivity {
             String password = Objects.requireNonNull(passwordInput.getText()).toString();
             String birthdate = Objects.requireNonNull(dateInput.getText()).toString();
 
+            /* Controllo validità di tutti i campi */
             if (email.isEmpty()) {
                 emailInput.setError("Inserisci una email valida");
                 valid = false;
@@ -143,6 +143,7 @@ public class AddUserActivity extends AppCompatActivity {
                 dateInput.setError(null);
             }
 
+            /* Se tutto ok */
             if (valid) {
                 new MaterialAlertDialogBuilder(this)
                         .setTitle("AGGIUNTA UTENTE")
@@ -170,7 +171,7 @@ public class AddUserActivity extends AppCompatActivity {
     private void addUser() {
         Runnable signUp = () -> {
             User user = new User();
-            Supervisor test = new Supervisor(); //TODO: aggiorna con vero valore di supervisore
+            Supervisor test = new Supervisor(); // per ora è solo un valore di default a 0
             test.setSupervisorId(0);
             int max = 0;
             File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myTherapy/users/");
@@ -198,8 +199,9 @@ public class AddUserActivity extends AppCompatActivity {
             user.setUsername(Objects.requireNonNull(usernameInput.getText()).toString());
             user.setPassword(Objects.requireNonNull(passwordInput.getText()).toString());
 
-            new File(dir + "/avatar_" + user.getUserId() + ".jpeg");
-            new File(dir + "/default.jpg");
+            /* Aggiungo avatar di default al nuovo utente */
+            new File(DefaultValues.dir + "/avatar_" + user.getUserId() + ".jpeg");
+            new File(String.valueOf(DefaultValues.defaultAvatar));
 
             try {
                 UserFactory.getInstance().addUser(user, test);
