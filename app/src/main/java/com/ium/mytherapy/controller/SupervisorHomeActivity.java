@@ -91,8 +91,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             /* Apro una finestrella con l'ultima non letta */
             notifications.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                     .setTitle("Richiesta di supporto")
-                    .setMessage("Terapia in questione:" + report.getMedicina())
-                    .setMessage(report.getErrorMessage())
+                    .setMessage("Terapia in questione: " + report.getMedicina() + "\n\n" + report.getErrorMessage())
                     .setCancelable(false)
                     .setPositiveButton("Segna come letto", (dialogInterface, i) -> {
                         try {

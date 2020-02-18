@@ -26,7 +26,7 @@ public class UserReportFactory {
     /* Aggiungo report al file di testo */
     public static void addReport(UserReport report) {
         try {
-            FileWriter fw = new FileWriter(DefaultValues.defaultReportFile, false);
+            FileWriter fw = new FileWriter(DefaultValues.path + "/myTherapy/supervisors/report.txt", false);
             fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage());
             fw.close();
         } catch (IOException ioe) {
@@ -55,7 +55,7 @@ public class UserReportFactory {
 
         String line = bufferedReader.readLine();
         List<String> strings = Arrays.asList(line.split(","));
-        return (Boolean.getBoolean(strings.get(0)));
+        return Boolean.parseBoolean(strings.get(0));
     }
 
     public boolean checkReports() throws IOException {     // rende true se ci sono reports
