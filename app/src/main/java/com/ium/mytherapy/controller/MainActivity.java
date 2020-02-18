@@ -7,13 +7,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,35 +28,32 @@ public class MainActivity extends AppCompatActivity {
     final static int PERMISSION_REQUEST_CODE = 123;
     final static String USER_LIST = "DEFAULT_USER_LIST";
     ArrayList<User> userList = new ArrayList<>();
-    File path = Environment.getExternalStorageDirectory();
-    File baseDir = new File(path.getAbsolutePath() + "/myTherapy/");
-    File usersDir = new File(path.getAbsolutePath() + "/myTherapy/users/");
-    File supervisorDir = new File(path.getAbsolutePath() + "/myTherapy/supervisors/");
-
-    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
-    public final static String USER_TYPE = "user_type";
+    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";   // key per le shared preferences
+    public final static String USER_TYPE = "user_type";     // key per il tipo di utente salvato nelle shared preferences
     public static SharedPreferences mPreferences;
     public static String sharedPrefFile = SHARED_PREFS;
-    String userType;
+    String userValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /* Inizializzo sharedPreferences */
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         /* Riprendo stato passato dell'utente nell'app */
-
         Runnable loadData = this::loadData;
         loadData.run();
 
+        /* Controllo i permessi */
         Runnable permissionsThread = this::permissions;
         permissionsThread.run();
 
+        /* Thread che recupera gli users dalle directory */
         Runnable getUsers = () -> {
             try {
                 userList = UserFactory.getInstance().getUsers();
-                Collections.sort(userList);
+                Collections.sort(userList); // ordino alfabeticamente
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -65,32 +61,31 @@ public class MainActivity extends AppCompatActivity {
         getUsers.run();
 
         /* Reimposto utente al riavvio dell'app */
-        if (userType.equals("user")) {
+        if (userValue.equals("user")) {
             Intent userIntent = new Intent(this, UserHomeActivity.class);
             startActivity(userIntent);
             finish();
-        } else if (userType.equals("supervisor")) {
+        } else if (userValue.equals("supervisor")) {
             Intent supervisorIntent = new Intent(this, SupervisorHomeActivity.class);
             startActivity(supervisorIntent);
             finish();
         } else {
-            Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity
+            Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity alla login se non c'è alcun utente salvata
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(USER_LIST, userList);
+            bundle.putParcelableArrayList(USER_LIST, userList); // passo la lista di utenti in intent
             loginActivity.putExtras(bundle);
             startActivity(loginActivity);
             finish();
         }
-
-
     }
 
+    /* Metodo per il caricamento dei dati dalle sharedPreferences */
     private void loadData() {
-
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        userType = sharedPreferences.getString(USER_TYPE, "");
+        userValue = sharedPreferences.getString(USER_TYPE, "");
     }
 
+    /* Metodo di controllo dei permessi e aggiunta files di default */
     private void permissions() {
         if (!(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
@@ -102,45 +97,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addDefaultItems() {
-        File defaultAvatarPath = new File(path.getAbsolutePath() + "/myTherapy/default.jpg");
-        File defaultReportFile = new File(path.getAbsolutePath() + "/myTherapy/supervisors/report.txt");
 
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             try {
                 boolean wasSuccessful;
 //                noinspection ResultOfMethodCallIgnored
-                baseDir.mkdirs();   // per evitare i warning zzz
-                wasSuccessful = usersDir.mkdirs();
+                DefaultValues.dir.mkdirs();   // per evitare i warning zzz
+                wasSuccessful = DefaultValues.usersDir.mkdirs();
                 if (!wasSuccessful) {
                     System.out.println("was not successful.");
                 }
-                wasSuccessful = supervisorDir.mkdirs();
+                wasSuccessful = DefaultValues.supervisorDir.mkdirs();
                 if (!wasSuccessful) {
                     System.out.println("was not successful.");
                 }
                 final Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.avatardefault);
-                wasSuccessful = defaultAvatarPath.createNewFile();
+                wasSuccessful = DefaultValues.defaultAvatar.createNewFile();
                 if (!wasSuccessful) {   // per evitare i warnings
                     System.out.println("was not successful.");
                 }
-                wasSuccessful = defaultReportFile.createNewFile();
+                wasSuccessful = DefaultValues.defaultReportFile.createNewFile();
                 if (!wasSuccessful) { // per evitare i warnings
                     System.out.println("was not successful.");
                 }
-                FileOutputStream fos = new FileOutputStream(defaultAvatarPath);
+                FileOutputStream fos = new FileOutputStream(DefaultValues.defaultAvatar);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 fos.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
+        } else {    // altrimenti richiedo i permessi e continuo ricorsivamente :) - fuck you utente
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
             addDefaultItems();
         }
-
     }
 
+    /* Controllo che i permessi siano stati accettati */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
