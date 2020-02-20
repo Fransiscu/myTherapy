@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.recycleviews.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.UserManagementActivity;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.views.recycleviews.holders.UserlistCardHolder;
 
 import java.io.File;
 import java.util.ArrayList;
