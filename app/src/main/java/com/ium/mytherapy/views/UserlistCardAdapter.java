@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
+public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder> {
 
     private Context context;
     private ArrayList<User> models;
@@ -31,33 +31,33 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder> {
     public static String USER_KEY = "userKey";
     private User user;
 
-    public CardAdapter(Context context, ArrayList<User> models) {
+    public UserlistCardAdapter(Context context, ArrayList<User> models) {
         this.context = context;
         this.models = models;
     }
 
     @NonNull
     @Override
-    public CardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisor_users_card, null);
-        return new CardHolder(view);
+    public UserlistCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisore_users_card, null);
+        return new UserlistCardHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardHolder cardHolder, int position) {
+    public void onBindViewHolder(@NonNull UserlistCardHolder userlistCardHolder, int position) {
         File path = Environment.getExternalStorageDirectory();
         File dir = new File(path.getAbsolutePath() + "/myTherapy/");
         File file = new File(dir + "/avatar_" + models.get(position).getUserId() + ".jpeg");
-        cardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
+        userlistCardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
 
         /* Aggiorno l'immagine in caso sia cambiata dalla default */
         if (!file.exists()) {
-            cardHolder.avatar.setImageDrawable(Drawable.createFromPath(models.get(position).getAvatar()));
+            userlistCardHolder.avatar.setImageDrawable(Drawable.createFromPath(models.get(position).getAvatar()));
         } else {
-            cardHolder.avatar.setImageURI(Uri.fromFile(file));
+            userlistCardHolder.avatar.setImageURI(Uri.fromFile(file));
         }
 
-        cardHolder.setItemClickListener((v, position1) -> {
+        userlistCardHolder.setUserlistItemClickListener((v, position1) -> {
             /* Mando a UserManagementActivity */
             user = models.get(position);
             Intent intent = new Intent(context, UserManagementActivity.class);

@@ -17,7 +17,7 @@ import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
-import com.ium.mytherapy.views.CardAdapter;
+import com.ium.mytherapy.views.UserlistCardAdapter;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,8 +29,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SupervisorHomeActivity extends AppCompatActivity {
-    RecyclerView cardRecyclerView;
-    CardAdapter cardAdapter;
+    RecyclerView userCardRecyclerView;
+    UserlistCardAdapter userlistCardAdapter;
     TextView noUser;
     ImageView notifications;
     MaterialButton addUser, logout;
@@ -69,8 +69,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
         if (check != null) {
             setContentView(R.layout.activity_home_supervisore);
-            cardRecyclerView = findViewById(R.id.usersListRecyclerView);
-            cardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            userCardRecyclerView = findViewById(R.id.usersListRecyclerView);
+            userCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             notifications = findViewById(R.id.supervisor_notification);
             addUser = findViewById(R.id.aggiungi_utenti_button);
             logout = findViewById(R.id.supervisore_logout_button);
@@ -108,11 +108,11 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
             try {
                 list = getUsers();
-                cardAdapter = new CardAdapter(this, list);
+                userlistCardAdapter = new UserlistCardAdapter(this, list);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            cardRecyclerView.setAdapter(cardAdapter);
+            userCardRecyclerView.setAdapter(userlistCardAdapter);
         } else {
             noUser = findViewById(R.id.no_user_found);
             noUser.setVisibility(View.VISIBLE);
@@ -148,9 +148,9 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         if (check != null) {
-            cardAdapter = new CardAdapter(this, list);
-            cardRecyclerView.setAdapter(cardAdapter);
-            cardAdapter.notifyDataSetChanged();
+            userlistCardAdapter = new UserlistCardAdapter(this, list);
+            userCardRecyclerView.setAdapter(userlistCardAdapter);
+            userlistCardAdapter.notifyDataSetChanged();
         }
     }
 
@@ -158,9 +158,9 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 11 && resultCode == Activity.RESULT_OK) {
             super.onActivityResult(requestCode, resultCode, data);
-            cardAdapter = new CardAdapter(this, list);
-            cardRecyclerView.setAdapter(cardAdapter);
-            cardAdapter.notifyDataSetChanged(); // aggiorno con questa method
+            userlistCardAdapter = new UserlistCardAdapter(this, list);
+            userCardRecyclerView.setAdapter(userlistCardAdapter);
+            userlistCardAdapter.notifyDataSetChanged(); // aggiorno con questa method
         }
     }
 
