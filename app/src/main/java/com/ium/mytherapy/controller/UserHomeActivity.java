@@ -19,8 +19,8 @@ import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
-import com.ium.mytherapy.views.HelpDialogFragment;
-import com.ium.mytherapy.views.NotificationReceiver;
+import com.ium.mytherapy.utils.NotificationReceiver;
+import com.ium.mytherapy.views.fragments.HelpDialogFragment;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
