@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;

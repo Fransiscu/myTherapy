@@ -11,8 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +24,7 @@ import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.recycleviews.adapters.MedicineTimelineCardAdapter;
+import com.ium.mytherapy.views.recycleviews.adapters.MedicinelistCardAdapter;
 import com.ium.mytherapy.views.recycleviews.adapters.UserlistCardAdapter;
 
 import java.io.File;
@@ -45,41 +44,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
-    RecyclerView MedicineTimelineCardRecyclerView;
+    RecyclerView MedicineTimelineCardRecyclerView, MedicinelistCardRecyclerView;
     MedicineTimelineCardAdapter medicineTimelineCardAdapter;
-
-    TextView nome, medicine1, medicine2, medicine3, medicine1Time, medicine2Time, medicine3Time,
-            editMedicineName1, editMedicineName2, editMedicineName3;
-
-    ImageView notif1, notif2, notif3, completed1, completed2, completed3,
-            deleteTherapy1, deleteTherapy2, deleteTherapy3, editTherapy1, editTherapy2, editTherapy3;
-
+    MedicinelistCardAdapter medicinelistCardAdapter;
     CircleImageView profileImage, editPicture;
     MaterialButton deleteUser, save, addTherapy;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-
     List<Medicina> medicineList;
-
-    boolean notifEnabled1 = true, completedEnabled1 = true,
-            notifEnabled2 = true, completedEnabled2 = false,
-            notifEnabled3 = false, completedEnabled3 = false;
-    private int mYear, mMonth, mDay;
+    TextView nome;
+    private int mYear, mMonth, mDay, userKey;
     boolean avatarChanged;
-    ArrayList<Medicina> medicinesList = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
-    int userKey;
     User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_utente);
-
-        /*
-         *  In questa Activity per ora c'è tutto hardcoded e neinte di dinamico
-         *  più avanti aggiornerò con una recyclerView e corrispondente adapter +
-         *  raccolta dei dati
-         *
-         */
 
         nome = findViewById(R.id.profileTitle);
         profileImage = findViewById(R.id.profileImage);
@@ -93,18 +73,10 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        editMedicineName1 = findViewById(R.id.nome_modifica_medicina_uno);
-        editMedicineName2 = findViewById(R.id.nome_modifica_medicina_due);
-        editMedicineName3 = findViewById(R.id.nome_modifica_medicina_tre);
-
-        /* Elementi terapie associate all'utente */
-        deleteTherapy1 = findViewById(R.id.cancella_terapia_uno);
-        deleteTherapy2 = findViewById(R.id.cancella_terapia_due);
-        deleteTherapy3 = findViewById(R.id.cancella_terapia_tre);
-
-        editTherapy1 = findViewById(R.id.modifica_medicina_uno);
-        editTherapy2 = findViewById(R.id.modifica_medicina_due);
-        editTherapy3 = findViewById(R.id.modifica_medicina_tre);
+        /* Lista per le recyclerviews */
+        medicineList = MedicinaFactory.getInstance().getMedicines();
+        ArrayList<Medicina> medicineArrayList;
+        medicineArrayList = new ArrayList<>(medicineList);
 
         /* Intent per user */
         Intent usersIntent = getIntent();
@@ -120,76 +92,12 @@ public class UserManagementActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /* Timeline */
-
-        MedicineTimelineCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
-        MedicineTimelineCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        medicineList = MedicinaFactory.getInstance().getMedicines();
-        ArrayList<Medicina> medicineArrayList;
-        medicineArrayList = new ArrayList<>(medicineList);
-        medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, medicineArrayList);
-        MedicineTimelineCardRecyclerView.setAdapter(medicineTimelineCardAdapter);
-
-        /* Fine timeline */
-
-        /* Listeners per tasti di modifica terapia */
-        editTherapy1.setOnClickListener(view -> {
-            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("MEDICINA", medicinesList.get(0));
-            editTherapyIntent.putExtras(bundle);
-            startActivity(editTherapyIntent);
-            finish();
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-        });
-
-        editTherapy2.setOnClickListener(view -> {
-            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("MEDICINA", medicinesList.get(1));
-            editTherapyIntent.putExtras(bundle);
-            startActivity(editTherapyIntent);
-            finish();
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-        });
-
-        editTherapy3.setOnClickListener(view -> {
-            Intent editTherapyIntent = new Intent(this, EditTherapyActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("MEDICINA", medicinesList.get(2));
-            editTherapyIntent.putExtras(bundle);
-            startActivity(editTherapyIntent);
-            finish();
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-        });
-
-        /* Listeners terapie associate all'utente */
-        View.OnClickListener onClickListener = view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("Rimozione terapia")
-                .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
-                .setCancelable(false)
-                .setPositiveButton("Rimuovi", (dialogInterface, i) -> Toast.makeText(getBaseContext(), "Terapia rimossa", Toast.LENGTH_LONG).show())
-                .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                })
-                .show();
-
-        deleteTherapy1.setOnClickListener(onClickListener);
-        deleteTherapy2.setOnClickListener(onClickListener);
-        deleteTherapy3.setOnClickListener(onClickListener);
-
-        /* Fine listeners terapie associate all'utente */
-
-        /* Riempio i campi */
+        /* Riempio i campi base */
         profileName.setText(user.getNome());
         profileSurname.setText(user.getCognome());
         profileUsername.setText(user.getUsername());
         birthdateInput.setText(user.getDataNascita());
         profilePassword.setText(user.getPassword());
-        editMedicineName1.setText(medicinesList.get(0).getNome());
-        editMedicineName2.setText(medicinesList.get(1).getNome());
-        editMedicineName3.setText(medicinesList.get(2).getNome());
-
         nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
 
         /* Immagine profilo */
@@ -201,6 +109,20 @@ public class UserManagementActivity extends AppCompatActivity {
             profileImage.setImageURI(Uri.fromFile(defaultAvatar));
 
         }
+
+        /* Riempio timeline */
+        MedicineTimelineCardRecyclerView = findViewById(R.id.userManagementMedicineTimelineRecycleView);
+        MedicineTimelineCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, medicineArrayList);
+        MedicineTimelineCardRecyclerView.setAdapter(medicineTimelineCardAdapter);
+        /* Fine timeline */
+
+        /* Riempio lista terapie */
+        MedicinelistCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
+        MedicinelistCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        medicinelistCardAdapter = new MedicinelistCardAdapter(this, medicineArrayList);
+        MedicinelistCardRecyclerView.setAdapter(medicinelistCardAdapter);
+        /* Fine lista terapie */
 
         /* Listener tasto salvataggio dati utente */
         save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
@@ -254,7 +176,7 @@ public class UserManagementActivity extends AppCompatActivity {
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
                 pickImage();
-            } else {
+            } else {    // se non ho i permessi li chiedo
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
             }
         });
@@ -265,7 +187,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-//                    userList.remove(userKey);
+//                    userList.remove(userKey);     //method per cancellare l'utente
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left,

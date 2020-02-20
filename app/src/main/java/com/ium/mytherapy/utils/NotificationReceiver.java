@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.utils;
 
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;

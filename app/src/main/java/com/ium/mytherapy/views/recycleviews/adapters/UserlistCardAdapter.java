@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.UserManagementActivity;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.recycleviews.holders.UserlistCardHolder;
 
 import java.io.File;
@@ -46,9 +46,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
 
     @Override
     public void onBindViewHolder(@NonNull UserlistCardHolder userlistCardHolder, int position) {
-        File path = Environment.getExternalStorageDirectory();
-        File dir = new File(path.getAbsolutePath() + "/myTherapy/");
-        File file = new File(dir + "/avatar_" + models.get(position).getUserId() + ".jpeg");
+        File file = new File(DefaultValues.dir + "/avatar_" + models.get(position).getUserId() + ".jpeg");
         userlistCardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
 
         /* Aggiorno l'immagine in caso sia cambiata dalla default */
@@ -69,7 +67,6 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
             context.startActivity(intent);
             ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right,
                     R.anim.anim_slide_out_left);
-//            ((Activity) context).finish();
         });
     }
 

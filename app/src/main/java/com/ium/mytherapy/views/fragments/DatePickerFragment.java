@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
