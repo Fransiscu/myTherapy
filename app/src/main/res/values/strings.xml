@@ -36,6 +36,7 @@
     <string name="nome_medicina_uno">Nome medicina 1</string>
     <string name="nome_medicina_due">Nome medicina 2</string>
     <string name="nome_medicina_tre">Nome medicina 3</string>
+    <string name="timeline_ora">00:00</string>
     <string name="timeline_ora_uno">Orario</string>
     <string name="timeline_ora_due">Orario</string>
     <string name="timeline_ora_tre">Orario</string>

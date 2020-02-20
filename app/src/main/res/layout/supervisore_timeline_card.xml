@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/carta_timeline_supervisore"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="10dp"
+    app:cardUseCompatPadding="true"
+    app:strokeColor="@color/BorderGrey"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/orario_medicina"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_therapy_cards"
+            android:paddingEnd="@dimen/padding_therapy_cards"
+            android:text="@string/timeline_ora"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/nome_medicina"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_therapy_cards"
+            android:paddingEnd="@dimen/padding_therapy_cards"
+            android:text="@string/nome_medicina"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/notifica"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:background="@drawable/notification_inactive"
+            android:textSize="20sp"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1sp"
+            tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+        <ImageView
+            android:id="@+id/status_terapia"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/timeline_not_done"
+            android:textSize="20sp"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1sp"
+            tools:ignore="ContentDescription,RelativeOverlap,RtlHardcoded" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -25,22 +25,28 @@ import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
-import com.ium.mytherapy.views.CardAdapter;
+import com.ium.mytherapy.views.MedicineTimelineCardAdapter;
+import com.ium.mytherapy.views.UserlistCardAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
+    RecyclerView MedicineTimelineCardRecyclerView;
+    MedicineTimelineCardAdapter medicineTimelineCardAdapter;
 
     TextView nome, medicine1, medicine2, medicine3, medicine1Time, medicine2Time, medicine3Time,
             editMedicineName1, editMedicineName2, editMedicineName3;
@@ -52,6 +58,7 @@ public class UserManagementActivity extends AppCompatActivity {
     MaterialButton deleteUser, save, addTherapy;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
 
+    List<Medicina> medicineList;
 
     boolean notifEnabled1 = true, completedEnabled1 = true,
             notifEnabled2 = true, completedEnabled2 = false,
@@ -86,27 +93,9 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        /* Singole medicina mini timeline */
-        medicine1 = findViewById(R.id.nome_medicina_uno);
-        medicine2 = findViewById(R.id.nome_medicina_due);
-        medicine3 = findViewById(R.id.nome_medicina_tre);
-
-        medicine1Time = findViewById(R.id.orario_medicina_uno);
-        medicine2Time = findViewById(R.id.orario_medicina_due);
-        medicine3Time = findViewById(R.id.orario_medicina_tre);
-
         editMedicineName1 = findViewById(R.id.nome_modifica_medicina_uno);
         editMedicineName2 = findViewById(R.id.nome_modifica_medicina_due);
         editMedicineName3 = findViewById(R.id.nome_modifica_medicina_tre);
-
-        /* Elementi della mini timeline */
-        notif1 = findViewById(R.id.notifica_uno);
-        notif2 = findViewById(R.id.notifica_due);
-        notif3 = findViewById(R.id.notifica_tre);
-
-        completed1 = findViewById(R.id.status_terapia_uno);
-        completed2 = findViewById(R.id.status_terapia_due);
-        completed3 = findViewById(R.id.status_terapia_tre);
 
         /* Elementi terapie associate all'utente */
         deleteTherapy1 = findViewById(R.id.cancella_terapia_uno);
@@ -122,7 +111,7 @@ public class UserManagementActivity extends AppCompatActivity {
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
-                userKey = bundle.getInt(CardAdapter.USER_KEY);
+                userKey = bundle.getInt(UserlistCardAdapter.USER_KEY);
             }
         }
         try {
@@ -130,6 +119,19 @@ public class UserManagementActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /* Timeline */
+
+        MedicineTimelineCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
+        MedicineTimelineCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        medicineList = MedicinaFactory.getInstance().getMedicines();
+        ArrayList<Medicina> medicineArrayList;
+        medicineArrayList = new ArrayList<>(medicineList);
+        medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, medicineArrayList);
+        MedicineTimelineCardRecyclerView.setAdapter(medicineTimelineCardAdapter);
+
+        /* Fine timeline */
 
         /* Listeners per tasti di modifica terapia */
         editTherapy1.setOnClickListener(view -> {
@@ -162,92 +164,6 @@ public class UserManagementActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         });
 
-        /* Primo item timeline */
-        notif1.setOnClickListener(view -> {
-            if (notifEnabled1) {
-                notif1.setBackgroundResource(0);
-                notif1.setImageDrawable(getDrawable(R.drawable.notification_inactive));
-                notifEnabled1 = !notifEnabled1;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
-            } else {
-                notif1.setBackgroundResource(0);
-                notif1.setImageDrawable(getDrawable(R.drawable.notification_active));
-                notifEnabled1 = !notifEnabled1;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
-            }
-        });
-        completed1.setOnClickListener(view -> {
-            if (completedEnabled1) {
-                completed1.setBackgroundResource(0);
-                completed1.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
-                completedEnabled1 = !completedEnabled1;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            } else {
-                completed1.setBackgroundResource(0);
-                completed1.setImageDrawable(getDrawable(R.drawable.timeline_done));
-                completedEnabled1 = !completedEnabled1;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        /* Secondo item timeline */
-        notif2.setOnClickListener(view -> {
-            if (notifEnabled2) {
-                notif2.setBackgroundResource(0);
-                notif2.setImageDrawable(getDrawable(R.drawable.notification_inactive));
-                notifEnabled2 = !notifEnabled2;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
-            } else {
-                notif2.setBackgroundResource(0);
-                notif2.setImageDrawable(getDrawable(R.drawable.notification_active));
-                notifEnabled2 = !notifEnabled2;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
-            }
-        });
-        completed2.setOnClickListener(view -> {
-            if (completedEnabled2) {
-                completed2.setBackgroundResource(0);
-                completed2.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
-                completedEnabled2 = !completedEnabled2;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            } else {
-                completed2.setBackgroundResource(0);
-                completed2.setImageDrawable(getDrawable(R.drawable.timeline_done));
-                completedEnabled2 = !completedEnabled2;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        /* Terzo item timeline */
-        notif3.setOnClickListener(view -> {
-            if (notifEnabled3) {
-                notif3.setBackgroundResource(0);
-                notif3.setImageDrawable(getDrawable(R.drawable.notification_inactive));
-                notifEnabled3 = !notifEnabled3;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche disattivate", Toast.LENGTH_LONG).show();
-            } else {
-                notif3.setBackgroundResource(0);
-                notif3.setImageDrawable(getDrawable(R.drawable.notification_active));
-                notifEnabled3 = !notifEnabled3;   // toggle
-                Toast.makeText(getBaseContext(), "Notifiche attivate", Toast.LENGTH_LONG).show();
-            }
-        });
-        completed3.setOnClickListener(view -> {
-            if (completedEnabled3) {
-                completed3.setBackgroundResource(0);
-                completed3.setImageDrawable(getDrawable(R.drawable.timeline_not_done));
-                completedEnabled3 = !completedEnabled3;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            } else {
-                completed3.setBackgroundResource(0);
-                completed3.setImageDrawable(getDrawable(R.drawable.timeline_done));
-                completedEnabled3 = !completedEnabled3;   // toggle
-                Toast.makeText(getBaseContext(), "Stato modificato", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        /* Fine elementi della mini timeline */
-
         /* Listeners terapie associate all'utente */
         View.OnClickListener onClickListener = view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Rimozione terapia")
@@ -270,12 +186,6 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername.setText(user.getUsername());
         birthdateInput.setText(user.getDataNascita());
         profilePassword.setText(user.getPassword());
-        medicine1.setText(medicinesList.get(0).getNome());
-        medicine2.setText(medicinesList.get(1).getNome());
-        medicine3.setText(medicinesList.get(2).getNome());
-        medicine1Time.setText(medicinesList.get(0).getOra());
-        medicine2Time.setText(medicinesList.get(1).getOra());
-        medicine3Time.setText(medicinesList.get(2).getOra());
         editMedicineName1.setText(medicinesList.get(0).getNome());
         editMedicineName2.setText(medicinesList.get(1).getNome());
         editMedicineName3.setText(medicinesList.get(2).getNome());
