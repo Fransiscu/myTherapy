@@ -21,8 +21,6 @@ class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implements View
         this.medicineTime = itemView.findViewById(R.id.orario_medicina);
         this.notif = itemView.findViewById(R.id.notifica);
         this.checks = itemView.findViewById(R.id.status_terapia);
-
-        itemView.setOnClickListener(this);
     }
 
     @Override

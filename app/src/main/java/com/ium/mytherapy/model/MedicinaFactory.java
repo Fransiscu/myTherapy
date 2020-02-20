@@ -68,7 +68,8 @@ public class MedicinaFactory {
         temp.setNotifEnabled(false);
         list.add(temp);
 
-        return list;
+        // si possono aggiungere altre medicine qui
 
+        return list;
     }
 }
