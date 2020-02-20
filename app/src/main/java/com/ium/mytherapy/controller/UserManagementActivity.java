@@ -186,12 +186,6 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername.setText(user.getUsername());
         birthdateInput.setText(user.getDataNascita());
         profilePassword.setText(user.getPassword());
-        medicine1.setText(medicinesList.get(0).getNome());
-        medicine2.setText(medicinesList.get(1).getNome());
-        medicine3.setText(medicinesList.get(2).getNome());
-        medicine1Time.setText(medicinesList.get(0).getOra());
-        medicine2Time.setText(medicinesList.get(1).getOra());
-        medicine3Time.setText(medicinesList.get(2).getOra());
         editMedicineName1.setText(medicinesList.get(0).getNome());
         editMedicineName2.setText(medicinesList.get(1).getNome());
         editMedicineName3.setText(medicinesList.get(2).getNome());

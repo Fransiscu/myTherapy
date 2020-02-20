@@ -1,16 +1,12 @@
 package com.ium.mytherapy.views;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.controller.UserManagementActivity;
 import com.ium.mytherapy.model.Medicina;
 
 import java.util.ArrayList;
@@ -22,7 +18,6 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
 
     private Context context;
     private ArrayList<Medicina> models;
-    private Medicina medicina;
 
     public MedicineTimelineCardAdapter(Context context, ArrayList<Medicina> models) {
         this.context = context;
@@ -42,20 +37,31 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
         medicineTimelineCardHolder.medicineTime.setText(models.get(position).getOra());
         medicineTimelineCardHolder.medicineName.setText(models.get(position).getNome());
 
+        /* Setto le varie icone */
+        if (models.get(position).isNotifEnabled()) {
+            medicineTimelineCardHolder.notif.setBackgroundResource(0);
+            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_inactive));
+            models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
+//            Toast.makeText(context, "Notifiche disattivate", Toast.LENGTH_LONG).show();
+        } else {
+            medicineTimelineCardHolder.notif.setBackgroundResource(0);
+            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_active));
+            models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
+//            Toast.makeText(context, "Notifiche attivate", Toast.LENGTH_LONG).show();
+        }
 
-        medicineTimelineCardHolder.setMedicineListClickListener((v, position1) -> {
-            /* Mando a UserManagementActivity */
-            user = models.get(position);
-            Intent intent = new Intent(context, UserManagementActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putInt(USER_KEY, user.getUserId());
-            bundle.putParcelable(USER_INTENT, user);
-            intent.putExtras(bundle);
-            context.startActivity(intent);
-            ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right,
-                    R.anim.anim_slide_out_left);
-//            ((Activity) context).finish();
-        });
+        if (models.get(position).isPresa()) {
+            medicineTimelineCardHolder.checks.setBackgroundResource(0);
+            medicineTimelineCardHolder.checks.setImageDrawable(context.getResources().getDrawable(R.drawable.timeline_not_done));
+            models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
+//            Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
+        } else {
+            medicineTimelineCardHolder.checks.setBackgroundResource(0);
+            medicineTimelineCardHolder.checks.setImageDrawable(context.getResources().getDrawable(R.drawable.timeline_done));
+            models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
+//            Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override

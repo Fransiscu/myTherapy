@@ -13,7 +13,7 @@ class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implements View
 
     TextView medicineTime, medicineName;
     ImageView notif, checks;
-    MedicineTimelineClickListener medicineTimelineClickListener;
+    private MedicineTimelineClickListener medicineTimelineClickListener;
 
     MedicineTimelineCardHolder(@NonNull View itemView) {
         super(itemView);
@@ -27,8 +27,8 @@ class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implements View
 
     @Override
     public void onClick(View view) {
-
-        this.medicineTimelineClickListener.onItemClickListener(view, getLayoutPosition());
+//        do nothing
+//        this.medicineTimelineClickListener.onItemClickListener(view, getLayoutPosition());
     }
 
     void setMedicineListClickListener(MedicineTimelineClickListener itemClick) {

@@ -33,7 +33,13 @@
     <string name="consigli_aggiunta_utente_testo">Le informazioni qui inserite verranno utilizzate per la creazione di un account utente che potrà essere assegnato
     ad un paziente.\nPotrai comunque modificare i dati in un qualsiasi momento dalla schermata principale.</string>
     <string name="titolo_user_home">La tua home</string>
+    <string name="nome_medicina_uno">Nome medicina 1</string>
+    <string name="nome_medicina_due">Nome medicina 2</string>
+    <string name="nome_medicina_tre">Nome medicina 3</string>
     <string name="timeline_ora">00:00</string>
+    <string name="timeline_ora_uno">Orario</string>
+    <string name="timeline_ora_due">Orario</string>
+    <string name="timeline_ora_tre">Orario</string>
     <string name="visto_timeline">visto presa medicina</string>
     <string name="inizio_giornata">00:00</string>
     <string name="richiedi_assistenza">Richiedi aiuto</string>

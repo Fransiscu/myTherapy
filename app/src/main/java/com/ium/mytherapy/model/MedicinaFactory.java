@@ -36,6 +36,7 @@ public class MedicinaFactory {
                 "fine della terapia");
         temp.setLink("https://www.my-personaltrainer.it/salute-benessere/ketoprofene.html");
         temp.setPresa(true);
+        temp.setNotifEnabled(true);
         list.add(temp);
 
         temp = new Medicina();
@@ -50,6 +51,7 @@ public class MedicinaFactory {
         temp.setConsigliSupervisore("Da prendere necessariamente a stomaco pieno, una volta al giorno prima di andare a letto");
         temp.setLink("https://www.my-personaltrainer.it/Foglietti-illustrativi/Folidex.html");
         temp.setPresa(false);
+        temp.setNotifEnabled(true);
         list.add(temp);
 
         temp = new Medicina();
@@ -63,6 +65,7 @@ public class MedicinaFactory {
         temp.setConsigliSupervisore("Una compressa al giorno in un'unica somministrazione, non oltre i 45 minuti dopo la fine del pasto");
         temp.setLink("https://www.my-personaltrainer.it/Foglietti-illustrativi/Cardioaspirin.html");
         temp.setPresa(false);
+        temp.setNotifEnabled(false);
         list.add(temp);
 
         return list;

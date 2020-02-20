@@ -13,6 +13,7 @@ public class Medicina implements Parcelable {
     private String consigliSupervisore;
     private String dosaggio;
     private String link;
+    private boolean notifEnabled;
     private boolean presa;
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -26,6 +27,14 @@ public class Medicina implements Parcelable {
             return new Medicina[size];
         }
     };
+
+    public boolean isNotifEnabled() {
+        return notifEnabled;
+    }
+
+    public void setNotifEnabled(boolean notifEnabled) {
+        this.notifEnabled = notifEnabled;
+    }
 
     public String getNome() {
         return nome;
@@ -95,7 +104,7 @@ public class Medicina implements Parcelable {
         return presa;
     }
 
-    void setPresa(boolean presa) {
+    public void setPresa(boolean presa) {
         this.presa = presa;
     }
 
