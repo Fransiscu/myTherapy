@@ -1,21 +1,22 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.recycleviews.holders;
 
 import android.view.View;
 import android.widget.TextView;
 
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.views.recycleviews.itemclicklisteners.UserlistItemClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-class UserlistCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class UserlistCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    CircleImageView avatar;
-    TextView mTitle;
+    public CircleImageView avatar;
+    public TextView mTitle;
     private UserlistItemClickListener userlistItemClickListener;
 
-    UserlistCardHolder(@NonNull View itemView) {
+    public UserlistCardHolder(@NonNull View itemView) {
         super(itemView);
         this.avatar = itemView.findViewById(R.id.imageIv);
         this.mTitle = itemView.findViewById(R.id.titleIv);
@@ -29,7 +30,7 @@ class UserlistCardHolder extends RecyclerView.ViewHolder implements View.OnClick
         this.userlistItemClickListener.onItemClickListener(view, getLayoutPosition());
     }
 
-    void setUserlistItemClickListener(UserlistItemClickListener itemClick) {
+    public void setUserlistItemClickListener(UserlistItemClickListener itemClick) {
         this.userlistItemClickListener = itemClick;
     }
 }

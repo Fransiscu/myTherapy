@@ -17,7 +17,7 @@ import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
-import com.ium.mytherapy.views.UserlistCardAdapter;
+import com.ium.mytherapy.views.recycleviews.adapters.UserlistCardAdapter;
 
 import java.io.File;
 import java.io.IOException;

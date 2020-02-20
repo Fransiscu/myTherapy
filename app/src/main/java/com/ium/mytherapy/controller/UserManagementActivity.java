@@ -25,8 +25,8 @@ import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
-import com.ium.mytherapy.views.MedicineTimelineCardAdapter;
-import com.ium.mytherapy.views.UserlistCardAdapter;
+import com.ium.mytherapy.views.recycleviews.adapters.MedicineTimelineCardAdapter;
+import com.ium.mytherapy.views.recycleviews.adapters.UserlistCardAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -267,9 +267,9 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
 //                    userList.remove(userKey);
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
-                    overridePendingTransition(R.anim.anim_slide_in_right,
-                            R.anim.anim_slide_out_left);
                     finish();
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })

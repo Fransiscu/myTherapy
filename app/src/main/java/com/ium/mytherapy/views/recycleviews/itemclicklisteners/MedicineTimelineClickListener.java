@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.recycleviews.itemclicklisteners;
 
 import android.view.View;
 

@@ -1,21 +1,24 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.recycleviews.holders;
 
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.views.recycleviews.itemclicklisteners.MedicineTimelineClickListener;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView medicineTime, medicineName;
-    ImageView notif, checks;
+    public TextView medicineTime;
+    public TextView medicineName;
+    public ImageView notif;
+    public ImageView checks;
     private MedicineTimelineClickListener medicineTimelineClickListener;
 
-    MedicineTimelineCardHolder(@NonNull View itemView) {
+    public MedicineTimelineCardHolder(@NonNull View itemView) {
         super(itemView);
         this.medicineName = itemView.findViewById(R.id.nome_medicina);
         this.medicineTime = itemView.findViewById(R.id.orario_medicina);

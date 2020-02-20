@@ -1,4 +1,4 @@
-package com.ium.mytherapy.views;
+package com.ium.mytherapy.views.recycleviews.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,12 +9,14 @@ import android.widget.Toast;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.views.recycleviews.holders.MedicineTimelineCardHolder;
 
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+@SuppressWarnings("deprecation")
 public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTimelineCardHolder> {
 
     private Context context;
@@ -54,14 +56,14 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
             medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_active));
             models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
             if (changed) {
-                Toast.makeText(context, "Notifiche disattivate", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Notifiche attivate", Toast.LENGTH_LONG).show();
             }
         } else {
             medicineTimelineCardHolder.notif.setBackgroundResource(0);
             medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_inactive));
             models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
             if (changed) {
-                Toast.makeText(context, "Notifiche attivate", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Notifiche disattivate", Toast.LENGTH_LONG).show();
             }
         }
     }
