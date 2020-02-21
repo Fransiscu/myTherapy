@@ -113,9 +113,16 @@ public class MedicineStatusActivity extends AppCompatActivity {
         });
 
         /* Preimposto i tasti se è già presa */
-        if (medicina.isPresa()) {
-            setPresa();
-        }
+        Runnable checkPresa = new Runnable() {
+            @Override
+            public void run() {
+                if (medicina.isPresa()) {
+                    setPresa();
+                }
+            }
+        };
+        checkPresa.run();
+
 
     }
 

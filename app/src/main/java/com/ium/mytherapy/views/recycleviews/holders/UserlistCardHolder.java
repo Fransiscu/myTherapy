@@ -26,7 +26,6 @@ public class UserlistCardHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View view) {
-
         this.userlistItemClickListener.onItemClickListener(view, getLayoutPosition());
     }
 
