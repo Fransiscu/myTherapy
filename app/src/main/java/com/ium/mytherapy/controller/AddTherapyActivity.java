@@ -54,7 +54,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
         addTherapy.setOnClickListener(view -> {
             if (checkInput()) {
-                new MaterialAlertDialogBuilder(getApplicationContext())
+                new MaterialAlertDialogBuilder(this)
                         .setTitle("AGGIUNTA TERAPIA")
                         .setMessage("Stai per aggiungere la terapia, sicuro di voler procedere?")
                         .setCancelable(false)
