@@ -39,7 +39,7 @@
                     android:textSize="42sp" />
 
                 <ImageView
-                    android:id="@+id/supervisor_notification"
+                    android:id="@+id/notifiche_supervisore"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginVertical="10dp"
@@ -58,7 +58,7 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="@id/supervisor_notification"
+                    android:layout_alignParentEnd="@id/notifiche_supervisore"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="15sp"
                     android:height="48sp"
