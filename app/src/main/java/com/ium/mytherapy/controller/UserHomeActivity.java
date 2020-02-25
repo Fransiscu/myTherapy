@@ -21,6 +21,7 @@ import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.NotificationReceiver;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
+import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -32,13 +33,19 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 @SuppressWarnings("ALL")
 public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
+    RecyclerView userTimelineRecyclerView;
+    UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
     View primo, secondo, terzo;
-    List<Medicina> therapy;
+    List<Medicina> therapy = MedicinaFactory.getInstance().getMedicines();
+    ArrayList<Medicina> medicineArrayList;
+
     public static final String MEDICINA = "MEDICINE_INTENT";
     TextView todaysDate, notifTitolo,
             medName1, medName2, medName3,
@@ -50,24 +57,11 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
 
-        /*
-         *  In questa Activity per ora c'è tutto hardcoded e neinte di dinamico
-         *  più avanti aggiornerò con una recyclerView e corrispondente adapter +
-         *  raccolta dei dati
-         *
-         */
-
-        primo = findViewById(R.id.primo_item);
-        secondo = findViewById(R.id.secondo_item);
-        terzo = findViewById(R.id.terzo_item);
-
-        medName1 = findViewById(R.id.timeline_nome_medicina_uno);
-        medName2 = findViewById(R.id.timeline_nome_medicina_due);
-        medName3 = findViewById(R.id.timeline_nome_medicina_tre);
-
-        medTime1 = findViewById(R.id.timeline_ora_medicina_uno);
-        medTime2 = findViewById(R.id.timeline_ora_medicina_due);
-        medTime3 = findViewById(R.id.timeline_ora_medicina_tre);
+        /* RecyclerView per le medicine */
+        userTimelineRecyclerView = findViewById(R.id.userHomeTimelineRecyclerView);
+        userTimelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        medicineArrayList = new ArrayList<>(therapy);
+        userTimelineCardAdapter = new UserTimelineCardAdapter(this, medicineArrayList);
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
 

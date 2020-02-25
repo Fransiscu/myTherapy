@@ -88,17 +88,10 @@
 
             <include layout="@layout/user_horizontal_ok_line" />
 
-            <include
-                android:id="@+id/primo_item"
-                layout="@layout/user_timeline_item_one" />
-
-            <include
-                android:id="@+id/secondo_item"
-                layout="@layout/user_timeline_item_two" />
-
-            <include
-                android:id="@+id/terzo_item"
-                layout="@layout/user_timeline_item_three" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/userHomeTimelineRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <include layout="@layout/user_horizontal_todo_line" />
 

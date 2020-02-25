@@ -76,7 +76,6 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             userCardRecyclerView = findViewById(R.id.usersListRecyclerView);
             userCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
             Runnable checkNotifications = () -> {
                 try {
                     if (UserReportFactory.getInstance().checkReports() && !UserReportFactory.getInstance().checkRead()) {
