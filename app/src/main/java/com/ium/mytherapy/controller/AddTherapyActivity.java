@@ -73,6 +73,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
     }
 
+    /* Controllo che i valori inseriti siano validi */
     private boolean checkInput() {
         boolean valid = true;
 

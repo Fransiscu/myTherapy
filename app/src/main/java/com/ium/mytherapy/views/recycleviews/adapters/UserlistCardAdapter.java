@@ -40,7 +40,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
     @NonNull
     @Override
     public UserlistCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisore_users_card, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_supervisore_users_card, null);
         return new UserlistCardHolder(view);
     }
 
