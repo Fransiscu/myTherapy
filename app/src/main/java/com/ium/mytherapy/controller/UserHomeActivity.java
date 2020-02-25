@@ -104,18 +104,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                     .show();
         });
 
-        /* Listeners per medicine di esmepio */
-//        primo.setOnClickListener(view -> {
-//                primo.setSelected(true);    // coloro di grigio al tocco
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable(MEDICINA, therapy.get(0));
-//                Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-//                therapy1.putExtras(bundle);
-//                startActivity(therapy1);
-//            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-//                finish();
-//        });
-
         /* Listener per notifica test */
         notifTitolo.setOnClickListener(view -> {
             Runnable notificationExample = () -> {

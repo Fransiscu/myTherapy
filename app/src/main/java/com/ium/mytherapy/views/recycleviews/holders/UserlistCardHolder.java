@@ -20,7 +20,6 @@ public class UserlistCardHolder extends RecyclerView.ViewHolder implements View.
         super(itemView);
         this.avatar = itemView.findViewById(R.id.imageIv);
         this.mTitle = itemView.findViewById(R.id.titleIv);
-
         itemView.setOnClickListener(this);
     }
 

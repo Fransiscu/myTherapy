@@ -12,29 +12,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class UserTimelineCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public View verticalLine;
-    public View timelineDot;
-    public TextView medicineTime;
-    public TextView medicineName;
+    public View verticalLine, timelineDot;
+    public TextView medicineTime, medicineName;
     public ImageView medicineStatus;
     private UserTimelineClickListener userTimelineClickListener;
 
     public UserTimelineCardHolder(@NonNull View itemView) {
         super(itemView);
-        this.medicineName = itemView.findViewById(R.id.timeline_ora_medicina);
-        this.medicineTime = itemView.findViewById(R.id.timeline_nome_medicina);
+        this.medicineName = itemView.findViewById(R.id.timeline_nome_medicina);
+        this.medicineTime = itemView.findViewById(R.id.timeline_ora_medicina);
         this.verticalLine = itemView.findViewById(R.id.timeline_vertical_line);
         this.timelineDot = itemView.findViewById(R.id.timeline_dot);
         this.medicineStatus = itemView.findViewById(R.id.timeline_status);
+        itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-//        do nothing
         this.userTimelineClickListener.onItemClickListener(view, getLayoutPosition());
     }
 
-    void setUserTimelineListClickListener(UserTimelineClickListener itemClick) {
+    public void setUserTimelineClickListener(UserTimelineClickListener itemClick) {
         this.userTimelineClickListener = itemClick;
     }
 }

@@ -28,7 +28,6 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
     private Context context;
     private ArrayList<User> models;
     private static String USER_INTENT = "user";
-    public static String USERS_INTENT = "userList";
     public static String USER_KEY = "userKey";
     private User user;
 
