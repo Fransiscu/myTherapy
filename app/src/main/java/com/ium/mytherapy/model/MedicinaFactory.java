@@ -68,6 +68,7 @@ public class MedicinaFactory {
         temp.setNotifEnabled(false);
         list.add(temp);
 
+
         // si possono aggiungere altre medicine qui
 
         return list;

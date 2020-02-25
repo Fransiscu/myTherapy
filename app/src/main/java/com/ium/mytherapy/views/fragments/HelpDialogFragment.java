@@ -29,6 +29,7 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
     private HelpDialogListener listener;
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -46,20 +47,23 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
         ArrayAdapter<String> adapterMedicines = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerItems);
         adapterMedicines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        builder.setView(view)
-                .setCancelable(false)
-                .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                })
-                .setPositiveButton("OK", (dialogInterface, i) -> {
-                    userReport.setChecked(false);
-                    TextView textView = (TextView) spinnerPick.getSelectedView();
-                    String result = textView.getText().toString();
-                    userReport.setMedicina(result);
-                    userReport.setErrorMessage(Objects.requireNonNull(errorMessage.getText()).toString());
-                    listener.getDataFromFragment(userReport);
-                    Toast.makeText(getActivity(), "Report inviato", Toast.LENGTH_LONG).show();
-                });
+        builder.setView(view);
+        builder.setCancelable(false);
+        builder.setNegativeButton("Annulla", (dialogInterface, i) -> {
+        });
+        builder.setPositiveButton("OK", (dialogInterface, i) -> {
+            if (Objects.requireNonNull(errorMessage.getText()).toString().matches("")) {
+                errorMessage.setText("Nessun messaggio di errore fornito");
+            }
+            userReport.setChecked(false);
+            TextView textView = (TextView) spinnerPick.getSelectedView();
+            String result = textView.getText().toString();
+            userReport.setMedicina(result);
+            userReport.setErrorMessage(Objects.requireNonNull(errorMessage.getText()).toString());
+            listener.getDataFromFragment(userReport);
+            Toast.makeText(getActivity(), "Report inviato", Toast.LENGTH_LONG).show();
 
+        });
 
         spinnerPick.setAdapter(adapterMedicines);
 

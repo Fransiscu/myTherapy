@@ -6,9 +6,9 @@
     android:focusable="true">
 
     <RelativeLayout
-        android:id="@+id/layout"
+        android:id="@+id/usertimeline_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="500dp"
         android:background="@drawable/bg_key"
         android:clipToPadding="false"
         tools:ignore="UselessParent">

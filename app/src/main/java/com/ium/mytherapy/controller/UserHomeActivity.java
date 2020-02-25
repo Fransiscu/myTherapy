@@ -144,7 +144,8 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     private void showNotificationExample() {
         createNotificationChannel();
 
-        Medicina current = therapy.get((int) (Math.random() * therapy.size()) + 0);
+        int rand = (int) (Math.random() * therapy.size()) + 0;
+        Medicina current = therapy.get(rand);
 
         Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
         landingIntent.putExtra(MEDICINA, current);

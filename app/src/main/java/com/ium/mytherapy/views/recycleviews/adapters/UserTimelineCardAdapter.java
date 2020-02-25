@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +44,25 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
         userTimelineCardHolder.medicineTime.setText(models.get(position).getOra());
         userTimelineCardHolder.medicineName.setText(models.get(position).getNome());
 
+        /* Calcolo dimensione schermo per poi decidere la grandezza del singolo item */
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int baseHeight = displayMetrics.heightPixels;
+
+        int scale = 575;    // valore da scalare per la dimensione dell'item, da rivedere
+
         /* Setto colori a seconda se prese o no */
         if (models.get(position).isPresa()) {
             setDone(userTimelineCardHolder);
         } else {
             setNotDone(userTimelineCardHolder);
         }
+
+        /* Cambio l'altezza della scheda singola a seconda di quante medicine sono presenti il giorno */
+        if (models.size() >= 3) {
+            userTimelineCardHolder.layout.getLayoutParams().height = baseHeight - scale * models.size();
+        }
+
 
         /* Listeners click sulla timeline */
         userTimelineCardHolder.setUserTimelineClickListener((v, position1) -> {
