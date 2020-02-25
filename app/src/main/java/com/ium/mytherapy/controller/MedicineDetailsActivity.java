@@ -70,10 +70,8 @@ public class MedicineDetailsActivity extends AppCompatActivity {
                             spinnerFreq.setSelection(Integer.parseInt(medicine.getFrequenza()));
                             break;
                     }
-
                 }
             }
-
         }
     }
 }

@@ -49,8 +49,6 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int baseHeight = displayMetrics.heightPixels;
 
-        int scale = 575;    // valore da scalare per la dimensione dell'item, da rivedere
-
         /* Setto colori a seconda se prese o no */
         if (models.get(position).isPresa()) {
             setDone(userTimelineCardHolder);
@@ -60,7 +58,7 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
 
         /* Cambio l'altezza della scheda singola a seconda di quante medicine sono presenti il giorno */
         if (models.size() >= 3) {
-            userTimelineCardHolder.layout.getLayoutParams().height = baseHeight - scale * models.size();
+            userTimelineCardHolder.layout.getLayoutParams().height = baseHeight / (models.size() + 2);
         }
 
 
