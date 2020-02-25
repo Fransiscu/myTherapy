@@ -33,6 +33,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,9 +41,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
     RecyclerView userTimelineRecyclerView;
+    View topLine, bottomLine;
     UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
-    View primo, secondo, terzo;
     List<Medicina> therapy = MedicinaFactory.getInstance().getMedicines();
     ArrayList<Medicina> medicineArrayList;
 
@@ -57,12 +58,28 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
 
+        topLine = findViewById(R.id.horizontal_top_line);
+        bottomLine = findViewById(R.id.horizontal_bottom_line);
+
         /* RecyclerView per le medicine */
         userTimelineRecyclerView = findViewById(R.id.userHomeTimelineRecyclerView);
         userTimelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicineArrayList = new ArrayList<>(therapy);
         userTimelineCardAdapter = new UserTimelineCardAdapter(this, medicineArrayList);
         userTimelineRecyclerView.setAdapter(userTimelineCardAdapter);
+
+        /* Setto le linee orizzontali a seconda dello stato della terapia */
+
+        if (therapy.get(0).isPresa()) {
+            topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
+        } else {
+            topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        }
+        if (therapy.get(therapy.size() - 1).isPresa()) {
+            bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
+        } else {
+            bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        }
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
 

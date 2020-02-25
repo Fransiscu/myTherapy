@@ -1,6 +1,7 @@
 package com.ium.mytherapy.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MedicinaFactory {
@@ -50,8 +51,24 @@ public class MedicinaFactory {
         temp.setOra("12:30");
         temp.setConsigliSupervisore("Da prendere necessariamente a stomaco pieno, una volta al giorno prima di andare a letto");
         temp.setLink("https://www.my-personaltrainer.it/Foglietti-illustrativi/Folidex.html");
-        temp.setPresa(false);
+        temp.setPresa(true);
         temp.setNotifEnabled(true);
+        list.add(temp);
+
+        temp = new Medicina();
+        temp.setNome("Medicina Omeopatica");
+        temp.setDescrizione("Curare significa per il medico omeopata confrontare i sintomi riferiti dal soggetto" +
+                " malato con i sintomi indotti dalle sostanze sperimentate e somministrare al paziente quel rimedio" +
+                " che nel soggetto sano provoca una sindrome simile.");
+        temp.setDosaggio("I medicinali omeopatici orali devono essere assunti, possibilmente lontano dai pasti,  15 – " +
+                "20 minuti prima dei pasti o 2 ore dopo. ");
+        temp.setFrequenza("Giorno");
+        temp.setFrequenzaNum(1);
+        temp.setOra("18:30");
+        temp.setConsigliSupervisore("Le dosi uniche devono essere assunte in una sola volta, di preferenza la mattina oppure dopo la cena.");
+        temp.setLink("https://www.libriomeopatia.it/articoli/assumere_medicine_omeopatiche.php");
+        temp.setPresa(false);
+        temp.setNotifEnabled(false);
         list.add(temp);
 
         temp = new Medicina();
@@ -69,7 +86,7 @@ public class MedicinaFactory {
         list.add(temp);
 
         // si possono aggiungere altre medicine qui
-
+        Collections.sort(list);
         return list;
     }
 }

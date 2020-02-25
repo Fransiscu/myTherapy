@@ -86,14 +86,14 @@
                 android:layout_height="20sp"
                 tools:ignore="SmallSp" />
 
-            <include layout="@layout/user_horizontal_ok_line" />
+            <include layout="@layout/userhome_horizontal_top_line" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/userHomeTimelineRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <include layout="@layout/user_horizontal_todo_line" />
+            <include layout="@layout/userhome_horizontal_bottom_line" />
 
             <Space
                 android:layout_width="wrap_content"

@@ -3,7 +3,7 @@ package com.ium.mytherapy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Medicina implements Parcelable {
+public class Medicina implements Parcelable, Comparable<Medicina> {
 
     private String nome;
     private String descrizione;
@@ -139,5 +139,18 @@ public class Medicina implements Parcelable {
         parcel.writeString(dosaggio);
         parcel.writeString(link);
         parcel.writeByte((byte) (presa ? 1 : 0));
+    }
+
+    @Override
+    public int compareTo(Medicina medicina) {
+        String oraEdited = ora.replace(":", "");    // workaround per confrontare le ore
+        String toOraEdited = medicina.ora.replace(":", "");
+        if (oraEdited.equals(toOraEdited)) {
+            return 0;
+        } else if (Integer.parseInt(oraEdited) > Integer.parseInt(toOraEdited)) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
