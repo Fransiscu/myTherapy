@@ -30,7 +30,7 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
     @NonNull
     @Override
     public MedicineTimelineCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisore_timeline_card, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_supervisore_timeline_card, null);
         return new MedicineTimelineCardHolder(view);
     }
 

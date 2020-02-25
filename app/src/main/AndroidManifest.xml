@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:windowSoftInputMode="adjustResize"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".controller.EditTherapyActivity" />
@@ -25,7 +26,9 @@
             android:parentActivityName=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.AddUserActivity" />
-        <activity android:name=".controller.SupervisorSignupActivity" />
+        <activity
+            android:name=".controller.SupervisorSignupActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".controller.SupervisorLoginActivity" />
         <activity android:name=".controller.LoginActivity" />
         <activity

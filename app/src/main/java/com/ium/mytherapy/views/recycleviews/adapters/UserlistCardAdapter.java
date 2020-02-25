@@ -28,7 +28,6 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
     private Context context;
     private ArrayList<User> models;
     private static String USER_INTENT = "user";
-    public static String USERS_INTENT = "userList";
     public static String USER_KEY = "userKey";
     private User user;
 
@@ -40,7 +39,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
     @NonNull
     @Override
     public UserlistCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.supervisore_users_card, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_supervisore_users_card, null);
         return new UserlistCardHolder(view);
     }
 

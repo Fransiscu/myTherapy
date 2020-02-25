@@ -12,6 +12,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 
+import java.util.Objects;
+
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -50,22 +52,55 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
 
-        /* Listener tasto per confermare l'aggiunta della terapia */
-        addTherapy.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                .setTitle("AGGIUNTA TERAPIA")
-                .setMessage("Stai per aggiungere la terapia, sicuro di voler procedere?")
-                .setCancelable(false)
-                .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    Intent backToManagement = new Intent(this, UserManagementActivity.class);
-                    startActivity(backToManagement);
-                    Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
-                    finish();
-                    overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
-                })
-                .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                })
-                .show());
+        addTherapy.setOnClickListener(view -> {
+            if (checkInput()) {
+                new MaterialAlertDialogBuilder(this)
+                        .setTitle("AGGIUNTA TERAPIA")
+                        .setMessage("Stai per aggiungere la terapia, sicuro di voler procedere?")
+                        .setCancelable(false)
+                        .setPositiveButton("Procedi", (dialogInterface, i) -> {
+                            Intent backToManagement = new Intent(getApplicationContext(), UserManagementActivity.class);
+                            startActivity(backToManagement);
+                            Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
+                            finish();
+                            overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+                        })
+                        .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                        })
+                        .show();
+            }
+        });
 
+    }
+
+    /* Controllo che i valori inseriti siano validi */
+    private boolean checkInput() {
+        boolean valid = true;
+
+        String medName = Objects.requireNonNull(medicineName.getText()).toString();
+        String medDetails = Objects.requireNonNull(medicineDetails.getText()).toString();
+        String medStandardDosage = Objects.requireNonNull(medicineStandardDosage.getText()).toString();
+
+        if (medName.isEmpty()) {
+            medicineName.setError("Inserisci una nome valido");
+            valid = false;
+        } else {
+            medicineName.setError(null);
+        }
+        if (medDetails.isEmpty()) {
+            medicineDetails.setError("Inserisci dei dettagli");
+            valid = false;
+        } else {
+            medicineDetails.setError(null);
+        }
+        if (medStandardDosage.isEmpty()) {
+            medicineStandardDosage.setError("Inserisci dosaggio");
+            valid = false;
+        } else {
+            medicineStandardDosage.setError(null);
+        }
+
+        return valid;
     }
 
     /* Override pressione tasto back per cambiare l'animazione */

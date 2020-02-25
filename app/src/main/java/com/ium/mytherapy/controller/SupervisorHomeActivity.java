@@ -60,20 +60,21 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        check = null;
+        setContentView(R.layout.activity_home_supervisore);
+
+        notifications = findViewById(R.id.notifiche_supervisore);
+        addUser = findViewById(R.id.aggiungi_utenti_button);
+        logout = findViewById(R.id.supervisore_logout_button);
+
         try {
             check = getUsers();    // controllo che la mia lista utenti presa da getUsers() non sia null
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (check != null) {
-            setContentView(R.layout.activity_home_supervisore);
+        if (check != null && check.size() != 0) {
             userCardRecyclerView = findViewById(R.id.usersListRecyclerView);
             userCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            notifications = findViewById(R.id.supervisor_notification);
-            addUser = findViewById(R.id.aggiungi_utenti_button);
-            logout = findViewById(R.id.supervisore_logout_button);
 
             Runnable checkNotifications = () -> {
                 try {
@@ -147,7 +148,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override     // non serve tornando indietro ma solo confermando
     public void onResume() {
         super.onResume();
-        if (check != null) {
+        if (check != null && check.size() != 0) {
             userlistCardAdapter = new UserlistCardAdapter(this, list);
             userCardRecyclerView.setAdapter(userlistCardAdapter);
             userlistCardAdapter.notifyDataSetChanged();

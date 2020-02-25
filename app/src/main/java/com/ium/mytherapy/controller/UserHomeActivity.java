@@ -21,6 +21,7 @@ import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.NotificationReceiver;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
+import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -32,13 +33,19 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 @SuppressWarnings("ALL")
 public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
+    RecyclerView userTimelineRecyclerView;
+    UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
     View primo, secondo, terzo;
-    List<Medicina> therapy;
+    List<Medicina> therapy = MedicinaFactory.getInstance().getMedicines();
+    ArrayList<Medicina> medicineArrayList;
+
     public static final String MEDICINA = "MEDICINE_INTENT";
     TextView todaysDate, notifTitolo,
             medName1, medName2, medName3,
@@ -50,33 +57,17 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
 
-        /*
-         *  In questa Activity per ora c'è tutto hardcoded e neinte di dinamico
-         *  più avanti aggiornerò con una recyclerView e corrispondente adapter +
-         *  raccolta dei dati
-         *
-         */
-
-        primo = findViewById(R.id.primo_item);
-        secondo = findViewById(R.id.secondo_item);
-        terzo = findViewById(R.id.terzo_item);
-
-        medName1 = findViewById(R.id.timeline_nome_medicina_uno);
-        medName2 = findViewById(R.id.timeline_nome_medicina_due);
-        medName3 = findViewById(R.id.timeline_nome_medicina_tre);
-
-        medTime1 = findViewById(R.id.timeline_ora_medicina_uno);
-        medTime2 = findViewById(R.id.timeline_ora_medicina_due);
-        medTime3 = findViewById(R.id.timeline_ora_medicina_tre);
+        /* RecyclerView per le medicine */
+        userTimelineRecyclerView = findViewById(R.id.userHomeTimelineRecyclerView);
+        userTimelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        medicineArrayList = new ArrayList<>(therapy);
+        userTimelineCardAdapter = new UserTimelineCardAdapter(this, medicineArrayList);
+        userTimelineRecyclerView.setAdapter(userTimelineCardAdapter);
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
 
         logout = findViewById(R.id.user_logout_button);
         helpMe = findViewById(R.id.user_help);
-
-        /* Prendo valori terapie e setto valori nella schermata */
-        Runnable getTherapiesThread = this::setMedsValues;
-        getTherapiesThread.run();
 
         /* Setto la data di oggi */
         todaysDate = findViewById(R.id.data_oggi);
@@ -111,34 +102,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                     .show();
-        });
-
-        /* Listeners per medicine di esmepio */
-        primo.setOnClickListener(view -> {
-                primo.setSelected(true);    // coloro di grigio al tocco
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(MEDICINA, therapy.get(0));
-                Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy1.putExtras(bundle);
-                startActivity(therapy1);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
-        });
-        secondo.setOnClickListener(view -> {
-                secondo.setSelected(true);  // coloro di grigio al tocco
-                Intent therapy2 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy2.putExtra(MEDICINA, therapy.get(1));
-                startActivity(therapy2);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
-        });
-        terzo.setOnClickListener(view -> {
-                terzo.setSelected(true);    // coloro di grigio al tocco
-                Intent therapy3 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy3.putExtra(MEDICINA, therapy.get(2));
-                startActivity(therapy3);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
         });
 
         /* Listener per notifica test */
@@ -177,10 +140,12 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         }
     }
 
+    /* Mostra notifica di esempio */
     private void showNotificationExample() {
         createNotificationChannel();
 
-        Medicina current = therapy.get(2);
+        int rand = (int) (Math.random() * therapy.size()) + 0;
+        Medicina current = therapy.get(rand);
 
         Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
         landingIntent.putExtra(MEDICINA, current);
@@ -211,19 +176,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
-    }
-
-    /* In un thread separato in quanto in teoria potrebbe richiedere tempo facendo un feth dal server */
-    private void setMedsValues() {
-        therapy = new ArrayList<>();
-        therapy = MedicinaFactory.getInstance().getMedicines();
-        medName1.setText(therapy.get(0).getNome());
-        medName2.setText(therapy.get(1).getNome());
-        medName3.setText(therapy.get(2).getNome());
-
-        medTime1.setText(therapy.get(0).getOra());
-        medTime2.setText(therapy.get(1).getOra());
-        medTime3.setText(therapy.get(2).getOra());
     }
 
     @Override
