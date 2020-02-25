@@ -13,6 +13,7 @@ import com.ium.mytherapy.views.recycleviews.holders.UserTimelineCardHolder;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCardHolder> {
@@ -47,21 +48,17 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
     }
 
     private void setDone(UserTimelineCardHolder userTimelineCardHolder) {
-        userTimelineCardHolder.verticalLine.setBackgroundResource(0);
-        userTimelineCardHolder.verticalLine.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        userTimelineCardHolder.verticalLine.setBackgroundColor(ContextCompat.getColor(context, android.R.color.holo_green_dark));
 
-        userTimelineCardHolder.timelineDot.setBackgroundResource(0);
-        userTimelineCardHolder.timelineDot.setBackgroundColor(context.getResources().getColor(android.R.color.holo_green_dark));
+        userTimelineCardHolder.timelineDot.setBackground(context.getResources().getDrawable(R.drawable.dot_ok));
 
         userTimelineCardHolder.medicineStatus.setImageDrawable(context.getDrawable(R.drawable.timeline_done));
     }
 
     private void setNotDone(UserTimelineCardHolder userTimelineCardHolder) {
-        userTimelineCardHolder.verticalLine.setBackgroundResource(0);
-        userTimelineCardHolder.verticalLine.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        userTimelineCardHolder.verticalLine.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
 
-        userTimelineCardHolder.timelineDot.setBackgroundResource(0);
-        userTimelineCardHolder.timelineDot.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+        userTimelineCardHolder.timelineDot.setBackground(context.getResources().getDrawable(R.drawable.dot));
 
         userTimelineCardHolder.medicineStatus.setImageDrawable(context.getDrawable(R.drawable.timeline_not_done));
     }

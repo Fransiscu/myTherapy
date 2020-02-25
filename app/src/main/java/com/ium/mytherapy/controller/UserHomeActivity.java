@@ -62,15 +62,12 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         userTimelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicineArrayList = new ArrayList<>(therapy);
         userTimelineCardAdapter = new UserTimelineCardAdapter(this, medicineArrayList);
+        userTimelineRecyclerView.setAdapter(userTimelineCardAdapter);
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
 
         logout = findViewById(R.id.user_logout_button);
         helpMe = findViewById(R.id.user_help);
-
-        /* Prendo valori terapie e setto valori nella schermata */
-        Runnable getTherapiesThread = this::setMedsValues;
-        getTherapiesThread.run();
 
         /* Setto la data di oggi */
         todaysDate = findViewById(R.id.data_oggi);
@@ -108,32 +105,16 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         });
 
         /* Listeners per medicine di esmepio */
-        primo.setOnClickListener(view -> {
-                primo.setSelected(true);    // coloro di grigio al tocco
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(MEDICINA, therapy.get(0));
-                Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy1.putExtras(bundle);
-                startActivity(therapy1);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
-        });
-        secondo.setOnClickListener(view -> {
-                secondo.setSelected(true);  // coloro di grigio al tocco
-                Intent therapy2 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy2.putExtra(MEDICINA, therapy.get(1));
-                startActivity(therapy2);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
-        });
-        terzo.setOnClickListener(view -> {
-                terzo.setSelected(true);    // coloro di grigio al tocco
-                Intent therapy3 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-                therapy3.putExtra(MEDICINA, therapy.get(2));
-                startActivity(therapy3);
-            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
-                finish();
-        });
+//        primo.setOnClickListener(view -> {
+//                primo.setSelected(true);    // coloro di grigio al tocco
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable(MEDICINA, therapy.get(0));
+//                Intent therapy1 = new Intent(getApplicationContext(), MedicineStatusActivity.class);
+//                therapy1.putExtras(bundle);
+//                startActivity(therapy1);
+//            overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
+//                finish();
+//        });
 
         /* Listener per notifica test */
         notifTitolo.setOnClickListener(view -> {
@@ -205,19 +186,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
-    }
-
-    /* In un thread separato in quanto in teoria potrebbe richiedere tempo facendo un feth dal server */
-    private void setMedsValues() {
-        therapy = new ArrayList<>();
-        therapy = MedicinaFactory.getInstance().getMedicines();
-        medName1.setText(therapy.get(0).getNome());
-        medName2.setText(therapy.get(1).getNome());
-        medName3.setText(therapy.get(2).getNome());
-
-        medTime1.setText(therapy.get(0).getOra());
-        medTime2.setText(therapy.get(1).getOra());
-        medTime3.setText(therapy.get(2).getOra());
     }
 
     @Override
