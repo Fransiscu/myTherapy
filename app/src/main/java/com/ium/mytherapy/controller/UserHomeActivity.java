@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +17,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -61,16 +61,17 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
 
-
         User user = new User();
-        user.setUserId(0);
+        try {
+            user = UserFactory.getInstance().getUser(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             therapy = MedicinaFactory.getInstance().getMedicinesForUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Log.d("user", therapy.get(0).getNome());
 
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);
@@ -156,6 +157,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     /* Apre dialog di aiuto per mandare messaggio al supervisore */
     public void openHelpDialog() {
         HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
+        Bundle bundle = new Bundle();
         helpDialogFragment.show(getSupportFragmentManager(), "help dialog");
     }
 
