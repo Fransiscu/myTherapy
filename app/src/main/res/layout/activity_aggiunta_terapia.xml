@@ -160,7 +160,7 @@
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinner_quantita"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown" />
 
@@ -181,7 +181,7 @@
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinner_freq"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
@@ -192,7 +192,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="100dp"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/orario">
 
@@ -200,13 +200,11 @@
                         android:id="@+id/orario_medicina"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@drawable/baseline_calendar_today_24"
                         android:inputType="date" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
-
 
             <Space
                 android:layout_width="wrap_content"

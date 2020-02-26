@@ -35,10 +35,6 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
     private HelpDialogListener listener;
 
     private final static String SHARED_PREFS = "com.ium.mytherapy.controller";
-    private static SharedPreferences mPreferences;
-    private static String sharedPrefFile = SHARED_PREFS;
-
-    private int userId;
 
     @SuppressLint("SetTextI18n")
     @NonNull
@@ -47,8 +43,8 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
         UserReport userReport = new UserReport();
 
         /* Recupero userId dalle sharedPreferences */
-        mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
-        userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+        SharedPreferences mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        int userId = mPreferences.getInt(MainActivity.USER_ID, 0);
         User user = new User();
 
         /* Recupero user dati userId */
@@ -66,7 +62,13 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
             e.printStackTrace();
         }
 
-        String[] spinnerItems = new String[]{Objects.requireNonNull(list).get(0).getNome(), list.get(1).getNome(), list.get(2).getNome()};
+        ArrayList<String> spinnerItems = new ArrayList<>();
+
+        if (list != null) {
+            for (Medicina medicina : list)
+                spinnerItems.add(medicina.getNome());
+        }
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.layout_help_dialog, null);
@@ -95,10 +97,12 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
         });
 
+        builder.setOnCancelListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
+        builder.setOnDismissListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
+
         spinnerPick.setAdapter(adapterMedicines);
 
         return builder.create();
-
     }
 
     @Override
