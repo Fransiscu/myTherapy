@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +13,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserReport;
 
 import java.util.ArrayList;
@@ -35,8 +33,8 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         UserReport userReport = new UserReport();
         ArrayList<Medicina> list;
-        list = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
-        String[] spinnerItems = new String[]{list.get(0).getNome(), list.get(1).getNome(), list.get(2).getNome()};
+//        list = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
+//        String[] spinnerItems = new String[]{list.get(0).getNome(), list.get(1).getNome(), list.get(2).getNome()};
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.layout_help_dialog, null);
@@ -44,8 +42,8 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
         MaterialSpinner spinnerPick = view.findViewById(R.id.help_dialog_spinner);
         TextInputEditText errorMessage = view.findViewById(R.id.problema_textfield);
 
-        ArrayAdapter<String> adapterMedicines = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerItems);
-        adapterMedicines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        ArrayAdapter<String> adapterMedicines = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerItems);
+//        adapterMedicines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         builder.setView(view);
         builder.setCancelable(false);
@@ -65,7 +63,7 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
         });
 
-        spinnerPick.setAdapter(adapterMedicines);
+//        spinnerPick.setAdapter(adapterMedicines);
 
         return builder.create();
 

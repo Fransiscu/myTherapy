@@ -67,7 +67,6 @@ public class MedicineDetailsActivity extends AppCompatActivity {
                             spinnerFreq.setSelection(2);
                             break;
                         default:
-                            spinnerFreq.setSelection(Integer.parseInt(medicine.getFrequenza()));
                             break;
                     }
                 }

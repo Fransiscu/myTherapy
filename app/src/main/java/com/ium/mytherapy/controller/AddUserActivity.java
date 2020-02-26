@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -174,7 +173,7 @@ public class AddUserActivity extends AppCompatActivity {
             Supervisor test = new Supervisor(); // per ora è solo un valore di default a 0
             test.setSupervisorId(0);
             int max = 0;
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myTherapy/users/");
+            File f = new File(DefaultValues.usersDir.toString());
 
             /* Setto id supervisore a seconda di quante cartelle ho */
             File[] files = f.listFiles();

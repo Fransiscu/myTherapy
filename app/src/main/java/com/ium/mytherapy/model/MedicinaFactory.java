@@ -1,6 +1,14 @@
 package com.ium.mytherapy.model;
 
+import com.ium.mytherapy.utils.DefaultValues;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,72 +26,83 @@ public class MedicinaFactory {
         return dummy;
     }
 
-    /* Medicine d'esempio hardcoded */
-    public List<Medicina> getMedicines() {
-        List<Medicina> list = new ArrayList<>();
+    /* Prendo medicina da file */
+    private Medicina getMedicineFromFile(String filePath) throws IOException {
+        Medicina medicina = new Medicina();
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
-        Medicina temp = new Medicina();
-        temp.setNome("Ketoprofene");
-        temp.setDescrizione("Il ketoprofene è un farmaco antinfiammatorio non steroideo (FANS), derivato dell'acido propionico" +
-                " e simile all'ibuprofene, con azione analgesica, antipiretica e di antiaggregazione piastrinica. È usato nel " +
-                "trattamento di artriti reumatoidi e osteoartriti. La molecola è spesso commercializzata sotto forma di sale di lisina, " +
-                "chimicamente più stabile e più facilmente conservabile nel tempo.");
-        temp.setDosaggio("Adulti: una bustina da 80 mg (dose intera) tre volte al giorno durante i pasti. Bambini di età tra i 6 ed i 14 anni:" +
-                " mezza bustina da 40 mg (mezza dose) tre volte al giorno durante i pasti.");
-        temp.setFrequenza("Giorno");
-        temp.setFrequenzaNum(1);
-        temp.setOra("08:30");
-        temp.setConsigliSupervisore("Da prendere a stomaco pieno dopo i pasti. Iniziare con un dosaggio di 3 al giorno e diminuire gradualmente fino alla" +
-                "fine della terapia");
-        temp.setLink("https://www.my-personaltrainer.it/salute-benessere/ketoprofene.html");
-        temp.setPresa(true);
-        temp.setNotifEnabled(true);
-        list.add(temp);
+        /* Leggo dal file e assegno ogni valore al supervisore */
+        String line = bufferedReader.readLine();
+        List<String> strings = Arrays.asList(line.split(","));
 
-        temp = new Medicina();
-        temp.setNome("Folidex");
-        temp.setDescrizione("L'acido folico è una vitamina che serve per il ricambio delle cellule del corpo. Lei necessita di un " +
-                "regolare apporto di acido folico per mantenersi in salute.");
-        temp.setDosaggio("Una compressa al giorno dopo il pasto. La posologia giornaliera può essere raddoppiata, " +
-                "in caso di inadeguato apporto di folati.");
-        temp.setFrequenza("Giorno");
-        temp.setFrequenzaNum(1);
-        temp.setOra("12:30");
-        temp.setConsigliSupervisore("Da prendere necessariamente a stomaco pieno, una volta al giorno prima di andare a letto");
-        temp.setLink("https://www.my-personaltrainer.it/Foglietti-illustrativi/Folidex.html");
-        temp.setPresa(true);
-        temp.setNotifEnabled(true);
-        list.add(temp);
+        medicina.setCode(Integer.parseInt(strings.get(0)));
+        medicina.setNome(strings.get(1));
+        medicina.setDescrizione(strings.get(2));
+        medicina.setDosaggio(strings.get(3));
+        medicina.setFrequenza(strings.get(4));
+        medicina.setFrequenzaNum(Integer.parseInt(strings.get(5)));
+        medicina.setOra(strings.get(6));
+        medicina.setConsigliSupervisore(strings.get(7));
+        medicina.setLink(strings.get(8));
+        medicina.setPresa(Boolean.parseBoolean(strings.get(9)));
+        medicina.setNotifEnabled(Boolean.parseBoolean(strings.get(10)));
 
-        temp = new Medicina();
-        temp.setNome("Medicina Omeopatica");
-        temp.setDescrizione("Curare significa per il medico omeopata confrontare i sintomi riferiti dal soggetto" +
-                " malato con i sintomi indotti dalle sostanze sperimentate e somministrare al paziente quel rimedio" +
-                " che nel soggetto sano provoca una sindrome simile.");
-        temp.setDosaggio("I medicinali omeopatici orali devono essere assunti, possibilmente lontano dai pasti,  15 – " +
-                "20 minuti prima dei pasti o 2 ore dopo. ");
-        temp.setFrequenza("Giorno");
-        temp.setFrequenzaNum(1);
-        temp.setOra("18:30");
-        temp.setConsigliSupervisore("Le dosi uniche devono essere assunte in una sola volta, di preferenza la mattina oppure dopo la cena.");
-        temp.setLink("https://www.libriomeopatia.it/articoli/assumere_medicine_omeopatiche.php");
-        temp.setPresa(false);
-        temp.setNotifEnabled(false);
-        list.add(temp);
+        return medicina;
+    }
 
-        temp = new Medicina();
-        temp.setNome("Cardioaspirina");
-        temp.setDescrizione("La cardioaspirina è un farmaco a base di acido acetilsalicilico ed appartiene alla famiglia dei farmaci antitrombotici.");
-        temp.setDosaggio("La dose raccomandata è: 1 compressa al giorno in un'unica somministrazione. Assuma il medicinale con un'abbondante quantità " +
-                "di liquido (½ - 1 bicchiere d'acqua), prima dei pasti. ");
-        temp.setFrequenza("Giorno");
-        temp.setFrequenzaNum(1);
-        temp.setOra("20:30");
-        temp.setConsigliSupervisore("Una compressa al giorno in un'unica somministrazione, non oltre i 45 minuti dopo la fine del pasto");
-        temp.setLink("https://www.my-personaltrainer.it/Foglietti-illustrativi/Cardioaspirin.html");
-        temp.setPresa(false);
-        temp.setNotifEnabled(false);
-        list.add(temp);
+    /* Aggiunta medicina */
+    public void addMedicine(User user, Medicina medicina) {
+        File newMedicine = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/");
+
+        /* Setto id medicina a seconda di quanti file ho */
+        File[] files = newMedicine.listFiles();
+        if (files != null) {
+            int max = 0;
+            for (File inFile : files) {
+                if (inFile.isFile()) {
+                    String temp = inFile.getName();
+                    if (Integer.parseInt(temp) >= max) {
+                        max = Integer.parseInt(temp) + 1;
+                    }
+                }
+            }
+            medicina.setCode(max);
+        } else {
+            medicina.setCode(0);
+        }
+
+        File file = new File(newMedicine.toString() + "/" + medicina.getCode());
+
+        /* Aggiungo medicine al profilo utente */
+        try {
+            FileWriter fw = new FileWriter(file.toString(), true);
+            fw.write(medicina.getCode() + "," + medicina.getNome() + "," + medicina.getDescrizione() + "," + medicina.getDosaggio() + "," +
+                    medicina.getFrequenza() + "," + medicina.getFrequenzaNum() + "," + medicina.getOra() + "," + medicina.getConsigliSupervisore() + "," +
+                    medicina.getLink() + "," + medicina.isPresa() + "," + medicina.isNotifEnabled());
+            fw.close();
+        } catch (IOException ioe) {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+    }
+
+    /* Raccolgo medicine per utente */
+    public List<Medicina> getMedicinesForUser(User user) throws IOException {
+        ArrayList<Medicina> list = new ArrayList<>();
+
+        File f = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/");
+
+        /* Scorro tutte le cartelle */
+        File[] files = f.listFiles();
+        if (files != null) {
+            for (File inFile : files) {
+                if (inFile.isFile()) {
+                    list.add(getMedicineFromFile(inFile.toString()));
+                }
+            }
+        } else {
+            return null;
+        }
 
         // si possono aggiungere altre medicine qui
         Collections.sort(list);

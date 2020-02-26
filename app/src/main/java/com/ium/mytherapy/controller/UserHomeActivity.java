@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -23,6 +25,7 @@ import com.ium.mytherapy.utils.NotificationReceiver;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
 import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     View topLine, bottomLine;
     UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
-    List<Medicina> therapy = MedicinaFactory.getInstance().getMedicines();
+    List<Medicina> therapy;
     ArrayList<Medicina> medicineArrayList;
 
     public static final String MEDICINA = "MEDICINE_INTENT";
@@ -57,6 +60,17 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
+
+
+        User user = new User();
+        user.setUserId(0);
+        try {
+            therapy = MedicinaFactory.getInstance().getMedicinesForUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("user", therapy.get(0).getNome());
 
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);

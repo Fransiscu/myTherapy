@@ -73,11 +73,6 @@ public class UserManagementActivity extends AppCompatActivity {
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        /* Lista per le recyclerviews */
-        medicineList = MedicinaFactory.getInstance().getMedicines();
-        ArrayList<Medicina> medicineArrayList;
-        medicineArrayList = new ArrayList<>(medicineList);
-
         /* Intent per user */
         Intent usersIntent = getIntent();
         if (usersIntent != null) {
@@ -91,6 +86,15 @@ public class UserManagementActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /* Lista per le recyclerviews */
+        try {
+            medicineList = MedicinaFactory.getInstance().getMedicinesForUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ArrayList<Medicina> medicineArrayList;
+        medicineArrayList = new ArrayList<>(medicineList);
 
         /* Riempio i campi base */
         profileName.setText(user.getNome());

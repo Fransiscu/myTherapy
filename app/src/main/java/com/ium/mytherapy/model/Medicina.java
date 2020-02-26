@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class Medicina implements Parcelable, Comparable<Medicina> {
 
+
+    private int code;
     private String nome;
     private String descrizione;
     private String frequenza;
@@ -27,6 +29,22 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
             return new Medicina[size];
         }
     };
+
+    public Medicina() {
+    }
+
+    private Medicina(Parcel in) {
+        nome = in.readString();
+        code = in.readInt();
+        descrizione = in.readString();
+        frequenza = in.readString();
+        frequenzaNum = in.readInt();
+        ora = in.readString();
+        consigliSupervisore = in.readString();
+        dosaggio = in.readString();
+        link = in.readString();
+        presa = in.readByte() != 0;
+    }
 
     public boolean isNotifEnabled() {
         return notifEnabled;
@@ -108,19 +126,12 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         this.presa = presa;
     }
 
-    Medicina() {
+    int getCode() {
+        return code;
     }
 
-    private Medicina(Parcel in) {
-        nome = in.readString();
-        descrizione = in.readString();
-        frequenza = in.readString();
-        frequenzaNum = in.readInt();
-        ora = in.readString();
-        consigliSupervisore = in.readString();
-        dosaggio = in.readString();
-        link = in.readString();
-        presa = in.readByte() != 0;
+    void setCode(int code) {
+        this.code = code;
     }
 
     @Override
@@ -131,6 +142,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(nome);
+        parcel.writeInt(code);
         parcel.writeString(descrizione);
         parcel.writeString(frequenza);
         parcel.writeInt(frequenzaNum);
