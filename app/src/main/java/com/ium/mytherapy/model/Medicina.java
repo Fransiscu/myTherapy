@@ -90,7 +90,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return ora;
     }
 
-    void setOra(String ora) {
+    public void setOra(String ora) {
         this.ora = ora;
     }
 

@@ -117,13 +117,13 @@
                         android:layout_width="290dp"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingLeft="30sp"
+                        android:paddingStart="30sp"
                         android:text="@string/segna_preso"
                         android:textAlignment="center"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="30sp"
                         android:textStyle="bold"
-                        tools:ignore="PrivateResource,RtlHardcoded,RtlSymmetry" />
+                        tools:ignore="PrivateResource,RtlCompat,RtlSymmetry" />
 
                     <ImageView
                         android:layout_width="50dp"
@@ -172,7 +172,7 @@
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="30sp"
                         android:textStyle="bold"
-                        tools:ignore="PrivateResource,RtlHardcoded,RtlSymmetry" />
+                        tools:ignore="PrivateResource,RtlCompat,RtlHardcoded,RtlSymmetry" />
 
                     <ImageView
                         android:layout_width="50dp"

@@ -1,8 +1,11 @@
 package com.ium.mytherapy.controller;
 
+import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +21,7 @@ import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserFactory;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -28,15 +32,17 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
     public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
     public static SharedPreferences mPreferences;
+    public static String sharedPrefFile = SHARED_PREFS;
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialButton addTherapy;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
-    public static String sharedPrefFile = SHARED_PREFS;
-    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips;
+
+    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips, medicineHour;
     MaterialCheckBox checkbox;
     int userId;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +58,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
         medicineLinks = findViewById(R.id.link_utili);
         medicineTips = findViewById(R.id.consigli_paziente);
+        medicineHour = findViewById(R.id.orario_medicina);
 
         /* Spinners */
         spinnerNum = findViewById(R.id.spinner_quantita);
@@ -71,6 +78,22 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         adapterString.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
+
+        medicineHour.setShowSoftInputOnFocus(false);
+        medicineHour.setInputType(InputType.TYPE_NULL);
+        medicineHour.setFocusable(false);
+
+        medicineHour.setOnClickListener(view -> {
+            /* Apro datePicker per selezionare l'ora della notifica */
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
+            mTimePicker = new TimePickerDialog(AddTherapyActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
+            mTimePicker.setMessage("Seleziona l'orario");
+            mTimePicker.show();
+        });
 
         addTherapy.setOnClickListener(view -> {
             if (checkInput()) {
@@ -107,9 +130,10 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         medicine.setDosaggio(Objects.requireNonNull(medicineStandardDosage.getText()).toString());
         medicine.setLink(Objects.requireNonNull(medicineLinks.getText()).toString());
         medicine.setConsigliSupervisore(Objects.requireNonNull(medicineTips.getText()).toString());
-        medicine.setFrequenza(spinnerFreq.getSelectedItem().toString());
+        medicine.setFrequenza(String.valueOf(spinnerFreq.getSelectedItem()));
         medicine.setFrequenzaNum(Integer.parseInt(spinnerNum.getSelectedItem().toString()));
         medicine.setNotifEnabled(checkbox.isChecked());
+        medicine.setOra(Objects.requireNonNull(medicineHour.getText()).toString());
         medicine.setPresa(false);
         return medicine;
     }

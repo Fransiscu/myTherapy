@@ -3,6 +3,7 @@ package com.ium.mytherapy.views.fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +14,11 @@ import android.widget.Toast;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.controller.MainActivity;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 
 import java.io.IOException;
@@ -31,19 +34,38 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
     private HelpDialogListener listener;
 
+    private final static String SHARED_PREFS = "com.ium.mytherapy.controller";
+    private static SharedPreferences mPreferences;
+    private static String sharedPrefFile = SHARED_PREFS;
+
+    private int userId;
+
     @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         UserReport userReport = new UserReport();
-        User user = new User(); //temp per mettere id = 0
-        user.setUserId(0);
+
+        /* Recupero userId dalle sharedPreferences */
+        mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE);
+        userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+        User user = new User();
+
+        /* Recupero user dati userId */
+        try {
+            user = UserFactory.getInstance().getUser(userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /* Prendo lista medicine */
         ArrayList<Medicina> list = null;
         try {
             list = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicinesForUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         String[] spinnerItems = new String[]{Objects.requireNonNull(list).get(0).getNome(), list.get(1).getNome(), list.get(2).getNome()};
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
