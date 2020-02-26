@@ -16,6 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -23,6 +25,7 @@ import com.ium.mytherapy.utils.NotificationReceiver;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
 import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     View topLine, bottomLine;
     UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
-    List<Medicina> therapy = MedicinaFactory.getInstance().getMedicines();
+    List<Medicina> therapy;
     ArrayList<Medicina> medicineArrayList;
 
     public static final String MEDICINA = "MEDICINE_INTENT";
@@ -57,6 +60,18 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
+
+        User user = new User();
+        try {
+            user = UserFactory.getInstance().getUser(0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            therapy = MedicinaFactory.getInstance().getMedicinesForUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);
@@ -142,6 +157,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     /* Apre dialog di aiuto per mandare messaggio al supervisore */
     public void openHelpDialog() {
         HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
+        Bundle bundle = new Bundle();
         helpDialogFragment.show(getSupportFragmentManager(), "help dialog");
     }
 

@@ -38,7 +38,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="30dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -114,6 +114,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="20sp" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/consigli_paziente">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/consigli_paziente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoLink="web"
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -136,11 +155,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinner_quantita"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown" />
 
@@ -161,10 +181,28 @@
 
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spinner_freq"
-                    android:layout_width="150dp"
+                    android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:background="@android:drawable/btn_dropdown"
                     android:spinnerMode="dropdown" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/orario">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/orario_medicina"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 

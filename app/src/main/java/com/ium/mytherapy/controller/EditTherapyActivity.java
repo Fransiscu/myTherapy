@@ -18,7 +18,7 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks;
+    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour;
     MaterialSpinner spinnerNum, spinnerFreq;
     Medicina currentTherapy;
     MaterialButton saveEdits;
@@ -34,6 +34,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
         medicineLinks = findViewById(R.id.link_utili);
+        medicineHour = findViewById(R.id.orario_medicina);
 
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
@@ -60,6 +61,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                     medicineDetails.setText(currentTherapy.getDescrizione());
                     medicineStandardDosage.setText(currentTherapy.getDosaggio());
                     medicineLinks.setText(currentTherapy.getLink());
+                    medicineHour.setText(currentTherapy.getOra());
                 }
             }
         }

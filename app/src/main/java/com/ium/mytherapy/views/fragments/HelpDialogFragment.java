@@ -3,6 +3,7 @@ package com.ium.mytherapy.views.fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,14 @@ import android.widget.Toast;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.controller.MainActivity;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -29,14 +34,41 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
     private HelpDialogListener listener;
 
+    private final static String SHARED_PREFS = "com.ium.mytherapy.controller";
+
     @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         UserReport userReport = new UserReport();
-        ArrayList<Medicina> list;
-        list = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicines();
-        String[] spinnerItems = new String[]{list.get(0).getNome(), list.get(1).getNome(), list.get(2).getNome()};
+
+        /* Recupero userId dalle sharedPreferences */
+        SharedPreferences mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        int userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+        User user = new User();
+
+        /* Recupero user dati userId */
+        try {
+            user = UserFactory.getInstance().getUser(userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /* Prendo lista medicine */
+        ArrayList<Medicina> list = null;
+        try {
+            list = (ArrayList<Medicina>) MedicinaFactory.getInstance().getMedicinesForUser(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> spinnerItems = new ArrayList<>();
+
+        if (list != null) {
+            for (Medicina medicina : list)
+                spinnerItems.add(medicina.getNome());
+        }
+
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.layout_help_dialog, null);
@@ -65,10 +97,12 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
         });
 
+        builder.setOnCancelListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
+        builder.setOnDismissListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
+
         spinnerPick.setAdapter(adapterMedicines);
 
         return builder.create();
-
     }
 
     @Override

@@ -116,6 +116,14 @@ public class UserFactory {
             System.err.println("IOException: " + ioe.getMessage());
         }
 
+        /* Aggiungo cartella delle medicine */
+        File newMedicine = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine");
+        wasSuccessful = newMedicine.mkdirs();
+
+        if (!wasSuccessful) {
+            System.out.println("was not successful.");
+        }
+
     }
 
 

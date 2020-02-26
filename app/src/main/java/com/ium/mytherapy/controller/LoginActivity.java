@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText usernameInput, passwordText;
     MaterialButton loginButton, supervisorButton;
     TextInputLayout passwordInputLayout;
+    int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                     .show();
             loginButton.setEnabled(true);   // riabilito tasto login
             return;
+        } else {
+            userId = validation.getUserId();
         }
 
         new android.os.Handler().postDelayed(
@@ -124,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString(MainActivity.USER_TYPE, "user");
+                    editor.putInt(MainActivity.USER_ID, userId);
                     editor.apply();
                     finish();
                     startActivity(userLogin);

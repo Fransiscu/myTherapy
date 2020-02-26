@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 public class Medicina implements Parcelable, Comparable<Medicina> {
 
+
+    private int code;
     private String nome;
     private String descrizione;
     private String frequenza;
@@ -28,6 +30,22 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         }
     };
 
+    public Medicina() {
+    }
+
+    private Medicina(Parcel in) {
+        nome = in.readString();
+        code = in.readInt();
+        descrizione = in.readString();
+        frequenza = in.readString();
+        frequenzaNum = in.readInt();
+        ora = in.readString();
+        consigliSupervisore = in.readString();
+        dosaggio = in.readString();
+        link = in.readString();
+        presa = in.readByte() != 0;
+    }
+
     public boolean isNotifEnabled() {
         return notifEnabled;
     }
@@ -40,7 +58,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return nome;
     }
 
-    void setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -48,7 +66,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return descrizione;
     }
 
-    void setDescrizione(String descrizione) {
+    public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
@@ -56,7 +74,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return frequenza;
     }
 
-    void setFrequenza(String frequenza) {
+    public void setFrequenza(String frequenza) {
         this.frequenza = frequenza;
     }
 
@@ -64,7 +82,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return frequenzaNum;
     }
 
-    void setFrequenzaNum(int frequenzaNum) {
+    public void setFrequenzaNum(int frequenzaNum) {
         this.frequenzaNum = frequenzaNum;
     }
 
@@ -72,7 +90,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return ora;
     }
 
-    void setOra(String ora) {
+    public void setOra(String ora) {
         this.ora = ora;
     }
 
@@ -80,7 +98,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return consigliSupervisore;
     }
 
-    void setConsigliSupervisore(String consigliSupervisore) {
+    public void setConsigliSupervisore(String consigliSupervisore) {
         this.consigliSupervisore = consigliSupervisore;
     }
 
@@ -88,7 +106,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return dosaggio;
     }
 
-    void setDosaggio(String dosaggio) {
+    public void setDosaggio(String dosaggio) {
         this.dosaggio = dosaggio;
     }
 
@@ -96,7 +114,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return link;
     }
 
-    void setLink(String link) {
+    public void setLink(String link) {
         this.link = link;
     }
 
@@ -108,19 +126,12 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         this.presa = presa;
     }
 
-    Medicina() {
+    int getCode() {
+        return code;
     }
 
-    private Medicina(Parcel in) {
-        nome = in.readString();
-        descrizione = in.readString();
-        frequenza = in.readString();
-        frequenzaNum = in.readInt();
-        ora = in.readString();
-        consigliSupervisore = in.readString();
-        dosaggio = in.readString();
-        link = in.readString();
-        presa = in.readByte() != 0;
+    void setCode(int code) {
+        this.code = code;
     }
 
     @Override
@@ -131,6 +142,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(nome);
+        parcel.writeInt(code);
         parcel.writeString(descrizione);
         parcel.writeString(frequenza);
         parcel.writeInt(frequenzaNum);
