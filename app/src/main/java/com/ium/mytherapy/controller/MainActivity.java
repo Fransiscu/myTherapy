@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String SHARED_PREFS = "com.ium.mytherapy.controller";   // key per le shared preferences
     public final static String USER_TYPE = "user_type";     // key per il tipo di utente salvato nelle shared preferences
     public static SharedPreferences mPreferences;
+    public static final String USER_ID = "user_id";
     public static String sharedPrefFile = SHARED_PREFS;
     String userValue;
 

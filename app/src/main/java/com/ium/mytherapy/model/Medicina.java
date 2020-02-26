@@ -58,7 +58,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return nome;
     }
 
-    void setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -66,7 +66,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return descrizione;
     }
 
-    void setDescrizione(String descrizione) {
+    public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
@@ -74,7 +74,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return frequenza;
     }
 
-    void setFrequenza(String frequenza) {
+    public void setFrequenza(String frequenza) {
         this.frequenza = frequenza;
     }
 
@@ -82,7 +82,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return frequenzaNum;
     }
 
-    void setFrequenzaNum(int frequenzaNum) {
+    public void setFrequenzaNum(int frequenzaNum) {
         this.frequenzaNum = frequenzaNum;
     }
 
@@ -98,7 +98,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return consigliSupervisore;
     }
 
-    void setConsigliSupervisore(String consigliSupervisore) {
+    public void setConsigliSupervisore(String consigliSupervisore) {
         this.consigliSupervisore = consigliSupervisore;
     }
 
@@ -106,7 +106,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return dosaggio;
     }
 
-    void setDosaggio(String dosaggio) {
+    public void setDosaggio(String dosaggio) {
         this.dosaggio = dosaggio;
     }
 
@@ -114,7 +114,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         return link;
     }
 
-    void setLink(String link) {
+    public void setLink(String link) {
         this.link = link;
     }
 

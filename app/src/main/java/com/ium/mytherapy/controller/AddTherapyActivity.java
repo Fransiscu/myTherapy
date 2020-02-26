@@ -1,6 +1,7 @@
 package com.ium.mytherapy.controller;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,33 +9,49 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.UserFactory;
 
+import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class AddTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks;
+    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
+    public static SharedPreferences mPreferences;
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialButton addTherapy;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+    public static String sharedPrefFile = SHARED_PREFS;
+    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips;
+    MaterialCheckBox checkbox;
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta_terapia);
+        AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
+
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        userId = mPreferences.getInt(MainActivity.USER_ID, 0);
 
         /* TextInputEditText */
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
         medicineLinks = findViewById(R.id.link_utili);
+        medicineTips = findViewById(R.id.consigli_paziente);
 
         /* Spinners */
         spinnerNum = findViewById(R.id.spinner_quantita);
@@ -43,6 +60,9 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
 
         /* Buttons */
         addTherapy = findViewById(R.id.add_therapy_button);
+
+        /* Checkbox */
+        checkbox = findViewById(R.id.checkbox_notifiche);
 
         /* Setto i valori degli spinners + adapters */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
@@ -60,7 +80,14 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
                         .setCancelable(false)
                         .setPositiveButton("Procedi", (dialogInterface, i) -> {
                             Intent backToManagement = new Intent(getApplicationContext(), UserManagementActivity.class);
+                            medicine.set(getMedicine());
+                            try {
+                                MedicinaFactory.getInstance().addMedicine(UserFactory.getInstance().getUser(userId), medicine.get());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                             startActivity(backToManagement);
+
                             Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
                             finish();
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -71,6 +98,20 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
             }
         });
 
+    }
+
+    private Medicina getMedicine() {
+        Medicina medicine = new Medicina();
+        medicine.setNome(Objects.requireNonNull(medicineName.getText()).toString());
+        medicine.setDescrizione(Objects.requireNonNull(medicineDetails.getText()).toString());
+        medicine.setDosaggio(Objects.requireNonNull(medicineStandardDosage.getText()).toString());
+        medicine.setLink(Objects.requireNonNull(medicineLinks.getText()).toString());
+        medicine.setConsigliSupervisore(Objects.requireNonNull(medicineTips.getText()).toString());
+        medicine.setFrequenza(spinnerFreq.getSelectedItem().toString());
+        medicine.setFrequenzaNum(Integer.parseInt(spinnerNum.getSelectedItem().toString()));
+        medicine.setNotifEnabled(checkbox.isChecked());
+        medicine.setPresa(false);
+        return medicine;
     }
 
     /* Controllo che i valori inseriti siano validi */

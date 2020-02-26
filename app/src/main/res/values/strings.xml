@@ -70,4 +70,5 @@
     <string name="attiva_notifiche_terapia_checkbox">Attiva notifiche per questa terapia</string>
     <string name="quale_terapia_domanda">Con quale delle terapie hai un problema?</string>
     <string name="dettagli_terapia_domanda">Che problema si verifica?</string>
+    <string name="consigli_paziente">Consigli per il paziente</string>
 </resources>
