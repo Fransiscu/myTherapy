@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.views.recycleviews.holders.MedicineTimelineCardHolder;
 
 import java.util.ArrayList;
@@ -41,49 +42,47 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
         medicineTimelineCardHolder.medicineName.setText(models.get(position).getNome());
 
         /* Setto le varie icone */
-        changeNotif(medicineTimelineCardHolder, position, false);
-        changeStatus(medicineTimelineCardHolder, position, false);
+        setNotif(medicineTimelineCardHolder, position);
+        setStatus(medicineTimelineCardHolder, position);
 
         /* Listeners icone */
-        medicineTimelineCardHolder.notif.setOnClickListener(view -> changeNotif(medicineTimelineCardHolder, position, true));
-        medicineTimelineCardHolder.checks.setOnClickListener(view -> changeStatus(medicineTimelineCardHolder, position, true));
+        medicineTimelineCardHolder.notif.setOnClickListener(view -> changeNotif(medicineTimelineCardHolder, position));
+        medicineTimelineCardHolder.checks.setOnClickListener(view -> changeStatus(medicineTimelineCardHolder, position));
 
     }
 
-    private void changeNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position, boolean changed) {
-        if (models.get(position).isNotifEnabled()) {
-            medicineTimelineCardHolder.notif.setBackgroundResource(0);
-            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_active));
-            models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
-            if (changed) {
-                Toast.makeText(context, "Notifiche attivate", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            medicineTimelineCardHolder.notif.setBackgroundResource(0);
-            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_inactive));
-            models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
-            if (changed) {
-                Toast.makeText(context, "Notifiche disattivate", Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    private void changeStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position, boolean changed) {
+    private void setStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
         if (models.get(position).isPresa()) {
             medicineTimelineCardHolder.checks.setBackgroundResource(0);
             medicineTimelineCardHolder.checks.setImageDrawable(context.getResources().getDrawable(R.drawable.timeline_done));
-            models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
-            if (changed) {
-                Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
-            }
         } else {
             medicineTimelineCardHolder.checks.setBackgroundResource(0);
             medicineTimelineCardHolder.checks.setImageDrawable(context.getResources().getDrawable(R.drawable.timeline_not_done));
-            models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
-            if (changed) {
-                Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
-            }
         }
+    }
+
+    private void setNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
+        if (models.get(position).isNotifEnabled()) {
+            medicineTimelineCardHolder.notif.setBackgroundResource(0);
+            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_active));
+        } else {
+            medicineTimelineCardHolder.notif.setBackgroundResource(0);
+            medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_inactive));
+        }
+    }
+
+    private void changeNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
+        models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
+        setNotif(medicineTimelineCardHolder, position);
+        MedicinaFactory.getInstance().changeNotif(models.get(position));
+        Toast.makeText(context, "Notifiche modificate", Toast.LENGTH_LONG).show();
+    }
+
+    private void changeStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
+        models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
+        setStatus(medicineTimelineCardHolder, position);
+        MedicinaFactory.getInstance().changePresa(models.get(position));
+        Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
     }
 
     @Override

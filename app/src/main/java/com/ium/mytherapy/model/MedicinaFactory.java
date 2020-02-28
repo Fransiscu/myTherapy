@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class MedicinaFactory {
 
     private static MedicinaFactory dummy;
@@ -104,8 +105,50 @@ public class MedicinaFactory {
             return null;
         }
 
-        // si possono aggiungere altre medicine qui
         Collections.sort(list);
         return list;
+    }
+
+    public boolean deleteMedicineFromCode(User user, Medicina med) {
+
+        user = new User();
+        user.setUserId(0);
+
+        // impongo userid == 0
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + med.getCode());
+        boolean succeded = fileToDelete.delete();
+
+        if (!succeded) {
+            return false;
+        }
+
+        try {
+            this.addMedicine(user, med);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+    /* Cambio status presa o meno */
+    public void changePresa(Medicina medicina) {
+        User user = new User();
+        user.setUserId(0);
+
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        fileToDelete.delete();
+        addMedicine(user, medicina);
+    }
+
+    /* Cambio notifiche abilitate o meno */
+    public void changeNotif(Medicina medicina) {
+        User user = new User();
+        user.setUserId(0);
+
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        fileToDelete.delete();
+        addMedicine(user, medicina);
     }
 }

@@ -2,7 +2,6 @@ package com.ium.mytherapy.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +13,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -23,7 +23,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
     TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour, medicineTips;
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialCheckBox notifCheckbox;
-    Medicina currentTherapy;
+    Medicina currentTherapy, newTherapy;
     MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
@@ -56,7 +56,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
 
-        /* Intent per user */
+        /* Intent per therapy */
         Intent therapyIntent = getIntent();
         if (therapyIntent != null) {
             Bundle bundle = therapyIntent.getExtras();
@@ -69,8 +69,8 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                     medicineLinks.setText(currentTherapy.getLink());
                     medicineHour.setText(currentTherapy.getOra());
                     medicineTips.setText(currentTherapy.getConsigliSupervisore());
-                    Log.d("notifenabled", String.valueOf((Boolean) currentTherapy.isNotifEnabled()));
-                    notifCheckbox.setChecked(currentTherapy.isNotifEnabled());
+                    notifCheckbox.setChecked(!currentTherapy.isNotifEnabled()); // a quanto pare funziona
+                    newTherapy = currentTherapy;    // creo una copia della terapia corrente e mi preparo a modificarla
                 }
             }
         }
@@ -81,9 +81,14 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                 .setMessage("Stai per modificare la terapia, sicuro di voler procedere?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
+                    boolean succeded = editTherapy(newTherapy);
+                    if (succeded) {
+                        Toast.makeText(getBaseContext(), "Terapia modificata", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), "Errore durante la modifica della terapia", Toast.LENGTH_LONG).show();
+                    }
                     Intent backToManagement = new Intent(this, UserManagementActivity.class);
                     startActivity(backToManagement);
-                    Toast.makeText(getBaseContext(), "Terapia modificata", Toast.LENGTH_LONG).show();
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
                 })
@@ -91,6 +96,20 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                 })
                 .show());
 
+    }
+
+    private boolean editTherapy(Medicina newTherapy) {
+        newTherapy.setNome(String.valueOf(medicineName.getText()));
+        newTherapy.setDescrizione(String.valueOf(medicineDetails.getText()));
+        newTherapy.setDosaggio(String.valueOf(medicineStandardDosage.getText()));
+        newTherapy.setLink(String.valueOf(medicineLinks.getText()));
+        newTherapy.setOra(String.valueOf(medicineHour.getText()));
+        newTherapy.setConsigliSupervisore(String.valueOf(medicineTips.getText()));
+        newTherapy.setPresa(currentTherapy.isPresa());
+        newTherapy.setNotifEnabled(notifCheckbox.isChecked());
+
+        /* Sostituire primo campo con user */
+        return MedicinaFactory.getInstance().deleteMedicineFromCode(null, newTherapy);
     }
 
     /* Override pressione tasto back per cambiare l'animazione */
