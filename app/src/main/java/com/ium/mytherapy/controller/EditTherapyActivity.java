@@ -2,12 +2,14 @@ package com.ium.mytherapy.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
@@ -18,8 +20,9 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour;
+    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour, medicineTips;
     MaterialSpinner spinnerNum, spinnerFreq;
+    MaterialCheckBox notifCheckbox;
     Medicina currentTherapy;
     MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
@@ -33,12 +36,15 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
+        medicineTips = findViewById(R.id.consigli_paziente);
         medicineLinks = findViewById(R.id.link_utili);
         medicineHour = findViewById(R.id.orario_medicina);
 
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
         spinnerNum.setOnItemSelectedListener(this);
+
+        notifCheckbox = findViewById(R.id.checkbox_notifiche);
 
         saveEdits = findViewById(R.id.save_therapy_edits);
 
@@ -62,6 +68,9 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                     medicineStandardDosage.setText(currentTherapy.getDosaggio());
                     medicineLinks.setText(currentTherapy.getLink());
                     medicineHour.setText(currentTherapy.getOra());
+                    medicineTips.setText(currentTherapy.getConsigliSupervisore());
+                    Log.d("notifenabled", String.valueOf((Boolean) currentTherapy.isNotifEnabled()));
+                    notifCheckbox.setChecked(currentTherapy.isNotifEnabled());
                 }
             }
         }

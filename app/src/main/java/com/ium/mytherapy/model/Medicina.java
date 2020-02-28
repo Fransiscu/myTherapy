@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 public class Medicina implements Parcelable, Comparable<Medicina> {
 
-
     private int code;
     private String nome;
     private String descrizione;
@@ -30,12 +29,9 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         }
     };
 
-    public Medicina() {
-    }
-
-    private Medicina(Parcel in) {
-        nome = in.readString();
+    protected Medicina(Parcel in) {
         code = in.readInt();
+        nome = in.readString();
         descrizione = in.readString();
         frequenza = in.readString();
         frequenzaNum = in.readInt();
@@ -43,15 +39,52 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         consigliSupervisore = in.readString();
         dosaggio = in.readString();
         link = in.readString();
+        notifEnabled = in.readInt() == 0;
         presa = in.readByte() != 0;
     }
 
-    public boolean isNotifEnabled() {
-        return notifEnabled;
+    public Medicina() {
     }
 
-    public void setNotifEnabled(boolean notifEnabled) {
-        this.notifEnabled = notifEnabled;
+    public static Creator<Medicina> getCREATOR() {
+        return CREATOR;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(code);
+        parcel.writeString(nome);
+        parcel.writeString(descrizione);
+        parcel.writeString(frequenza);
+        parcel.writeInt(frequenzaNum);
+        parcel.writeString(ora);
+        parcel.writeString(consigliSupervisore);
+        parcel.writeString(dosaggio);
+        parcel.writeString(link);
+        parcel.writeInt(notifEnabled ? 1 : 0);
+        parcel.writeByte((byte) (presa ? 1 : 0));
+    }
+
+    @Override
+    public int compareTo(Medicina medicina) {
+        String oraEdited = ora.replace(":", "");    // workaround per confrontare le ore
+        String toOraEdited = medicina.ora.replace(":", "");
+        if (oraEdited.equals(toOraEdited)) {
+            return 0;
+        } else if (Integer.parseInt(oraEdited) > Integer.parseInt(toOraEdited)) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+
+    int getCode() {
+        return code;
     }
 
     public String getNome() {
@@ -118,6 +151,14 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         this.link = link;
     }
 
+    void setCode(int code) {
+        this.code = code;
+    }
+
+    public boolean isNotifEnabled() {
+        return notifEnabled;
+    }
+
     public boolean isPresa() {
         return presa;
     }
@@ -126,43 +167,7 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         this.presa = presa;
     }
 
-    int getCode() {
-        return code;
-    }
-
-    void setCode(int code) {
-        this.code = code;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(nome);
-        parcel.writeInt(code);
-        parcel.writeString(descrizione);
-        parcel.writeString(frequenza);
-        parcel.writeInt(frequenzaNum);
-        parcel.writeString(ora);
-        parcel.writeString(consigliSupervisore);
-        parcel.writeString(dosaggio);
-        parcel.writeString(link);
-        parcel.writeByte((byte) (presa ? 1 : 0));
-    }
-
-    @Override
-    public int compareTo(Medicina medicina) {
-        String oraEdited = ora.replace(":", "");    // workaround per confrontare le ore
-        String toOraEdited = medicina.ora.replace(":", "");
-        if (oraEdited.equals(toOraEdited)) {
-            return 0;
-        } else if (Integer.parseInt(oraEdited) > Integer.parseInt(toOraEdited)) {
-            return 1;
-        } else {
-            return -1;
-        }
+    public void setNotifEnabled(boolean notifEnabled) {
+        this.notifEnabled = notifEnabled;
     }
 }
