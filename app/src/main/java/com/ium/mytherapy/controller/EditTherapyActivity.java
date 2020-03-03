@@ -69,7 +69,7 @@ public class EditTherapyActivity extends AppCompatActivity implements AdapterVie
                     medicineLinks.setText(currentTherapy.getLink());
                     medicineHour.setText(currentTherapy.getOra());
                     medicineTips.setText(currentTherapy.getConsigliSupervisore());
-                    notifCheckbox.setChecked(!currentTherapy.isNotifEnabled()); // a quanto pare funziona
+                    notifCheckbox.setChecked(currentTherapy.isNotifEnabled()); // a quanto pare funziona
                     newTherapy = currentTherapy;    // creo una copia della terapia corrente e mi preparo a modificarla
                 }
             }
