@@ -28,11 +28,9 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
             return new Medicina[size];
         }
     };
+    public Medicina medicina;
 
-    public Medicina() {
-    }
-
-    protected Medicina(Parcel in) {
+    public Medicina(Parcel in) {
         code = in.readInt();
         nome = in.readString();
         descrizione = in.readString();
@@ -42,12 +40,12 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         consigliSupervisore = in.readString();
         dosaggio = in.readString();
         link = in.readString();
-        notifEnabled = in.readInt() == 0;
-        presa = in.readInt() == 0;
+        notifEnabled = in.readByte() != 0;
+        presa = in.readByte() != 0;
     }
 
-    public static Creator<Medicina> getCREATOR() {
-        return CREATOR;
+    public Medicina() {
+
     }
 
     int getCode() {
@@ -154,8 +152,8 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         parcel.writeString(consigliSupervisore);
         parcel.writeString(dosaggio);
         parcel.writeString(link);
-        parcel.writeInt(notifEnabled ? 1 : 0);
-        parcel.writeInt(presa ? 1 : 0);
+        parcel.writeByte((byte) (notifEnabled ? 1 : 0));
+        parcel.writeByte((byte) (presa ? 1 : 0));
     }
 
     @Override
