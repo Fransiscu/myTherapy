@@ -23,6 +23,7 @@ import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.NotificationReceiver;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
+import com.ium.mytherapy.views.fragments.MyScrollView;
 import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     MaterialButton logout, helpMe;
     List<Medicina> therapy;
     ArrayList<Medicina> medicineArrayList;
+    MyScrollView scrollView;
 
     public static final String MEDICINA = "MEDICINE_INTENT";
     TextView todaysDate, notifTitolo,
@@ -75,6 +77,10 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);
+
+        // Per far si che la barra del titolo di sopra non scrolli con il resto
+        scrollView = findViewById(R.id.myScroll);
+        scrollView.setScrolling(false);
 
         /* RecyclerView per le medicine */
         userTimelineRecyclerView = findViewById(R.id.userHomeTimelineRecyclerView);

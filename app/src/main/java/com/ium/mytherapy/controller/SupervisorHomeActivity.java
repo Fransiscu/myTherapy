@@ -17,6 +17,7 @@ import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
+import com.ium.mytherapy.views.fragments.MyScrollView;
 import com.ium.mytherapy.views.recycleviews.adapters.UserlistCardAdapter;
 
 import java.io.File;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SupervisorHomeActivity extends AppCompatActivity {
     RecyclerView userCardRecyclerView;
     UserlistCardAdapter userlistCardAdapter;
+    MyScrollView scrollView;
     TextView noUser;
     ImageView notifications;
     MaterialButton addUser, logout;
@@ -61,6 +63,10 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_supervisore);
+
+        // Per far si che la barra del titolo di sopra non scrolli con il resto
+        scrollView = findViewById(R.id.myScroll);
+        scrollView.setScrolling(false);
 
         notifications = findViewById(R.id.notifiche_supervisore);
         addUser = findViewById(R.id.aggiungi_utenti_button);
