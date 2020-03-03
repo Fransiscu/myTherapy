@@ -17,6 +17,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -140,6 +141,10 @@ public class MedicineStatusActivity extends AppCompatActivity {
     /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
     public void setPresa() {
         final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
+
+        medicina.setPresa(!medicina.isPresa());
+        MedicinaFactory.getInstance().changePresa(medicina);
+
         confirm.setClickable(false);
         confirm.setFocusable(false);
         confirm.setForeground(greyDrawable);
