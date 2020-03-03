@@ -132,6 +132,15 @@ public class MedicinaFactory {
         return true;
     }
 
+    /*Rimozione medicina singola */
+    public void removeMedicine(Medicina medicina) {
+        User user = new User();
+        user.setUserId(0);
+
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        fileToDelete.delete();
+    }
+
     /* Cambio status presa o meno */
     public void changePresa(Medicina medicina) {
         User user = new User();

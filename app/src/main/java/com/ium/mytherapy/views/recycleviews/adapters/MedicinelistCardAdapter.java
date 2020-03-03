@@ -14,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.EditTherapyActivity;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.views.recycleviews.holders.MedicinelistCardHolder;
 
 import java.util.ArrayList;
@@ -54,7 +55,10 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .setTitle("Rimozione terapia")
                 .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
                 .setCancelable(false)
-                .setPositiveButton("Rimuovi", (dialogInterface, i) -> Toast.makeText(context, "Terapia rimossa", Toast.LENGTH_LONG).show())
+                .setPositiveButton("Rimuovi", (dialogInterface, i) -> {
+                    MedicinaFactory.getInstance().removeMedicine(models.get(position));
+                    Toast.makeText(context, "Terapia rimossa", Toast.LENGTH_LONG).show();
+                })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                 .show());
