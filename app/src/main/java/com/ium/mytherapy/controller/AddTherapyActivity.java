@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -131,7 +132,9 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         medicine.setLink(Objects.requireNonNull(medicineLinks.getText()).toString());
         medicine.setConsigliSupervisore(Objects.requireNonNull(medicineTips.getText()).toString());
         medicine.setFrequenza(String.valueOf(spinnerFreq.getSelectedItem()));
-        medicine.setFrequenzaNum(Integer.parseInt(spinnerNum.getSelectedItem().toString()));
+        TextView textView = (TextView) spinnerNum.getSelectedView();    // per selezionare dallo spinner serve questo workaround
+        String result = textView.getText().toString();
+        medicine.setFrequenzaNum(Integer.parseInt(result));
         medicine.setNotifEnabled(checkbox.isChecked());
         medicine.setOra(Objects.requireNonNull(medicineHour.getText()).toString());
         medicine.setPresa(false);
@@ -145,6 +148,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
         String medName = Objects.requireNonNull(medicineName.getText()).toString();
         String medDetails = Objects.requireNonNull(medicineDetails.getText()).toString();
         String medStandardDosage = Objects.requireNonNull(medicineStandardDosage.getText()).toString();
+        String timeOfDay = Objects.requireNonNull(medicineHour.getText()).toString();
 
         if (medName.isEmpty()) {
             medicineName.setError("Inserisci una nome valido");
@@ -163,6 +167,12 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
             valid = false;
         } else {
             medicineStandardDosage.setError(null);
+        }
+        if (timeOfDay.isEmpty()) {
+            medicineHour.setError("Inserisci un orario");
+            valid = false;
+        } else {
+            medicineHour.setError(null);
         }
 
         return valid;

@@ -57,6 +57,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .setCancelable(false)
                 .setPositiveButton("Rimuovi", (dialogInterface, i) -> {
                     MedicinaFactory.getInstance().removeMedicine(models.get(position));
+                    medicineListCardHolder.itemView.setVisibility(View.INVISIBLE);
                     Toast.makeText(context, "Terapia rimossa", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
