@@ -36,7 +36,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
     @NonNull
     @Override
     public MedicinelistCardHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_supervisore_lista_terapie_card, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_supervisore_lista_medicine_card, null);
         return new MedicinelistCardHolder(view);
     }
 

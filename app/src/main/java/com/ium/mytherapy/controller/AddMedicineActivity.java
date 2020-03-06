@@ -47,7 +47,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiunta_terapia);
+        setContentView(R.layout.activity_aggiunta_medicina);
         AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);

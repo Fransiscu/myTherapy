@@ -31,7 +31,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modifica_terapia);
+        setContentView(R.layout.activity_modifica_medicina);
 
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);

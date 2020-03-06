@@ -37,7 +37,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stato_terapia);
+        setContentView(R.layout.activity_stato_medicina);
 
         medicineName = findViewById(R.id.dettagli_nome_medicina);
         medicineHour = findViewById(R.id.orario_sotto_titolo_dettagli);
