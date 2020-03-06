@@ -16,9 +16,9 @@
         android:windowSoftInputMode="adjustResize"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".controller.EditTherapyActivity" />
+        <activity android:name=".controller.EditMedicineActivity" />
         <activity android:name=".controller.MedicineDetailsActivity" />
-        <activity android:name=".controller.AddTherapyActivity" />
+        <activity android:name=".controller.AddMedicineActivity" />
         <activity android:name=".controller.MedicineStatusActivity" />
         <activity android:name=".controller.UserHomeActivity" />
         <activity

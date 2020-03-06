@@ -61,7 +61,6 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
             userTimelineCardHolder.layout.getLayoutParams().height = baseHeight / (models.size() + 2);
         }
 
-
         /* Listeners click sulla timeline */
         userTimelineCardHolder.setUserTimelineClickListener((v, position1) -> {
             v.setSelected(true);

@@ -70,7 +70,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 .setMessage("Sicuro di voler segnare la medicina come \"presa\"?")
                 .setCancelable(false)
                 .setPositiveButton("Continua", (dialogInterface, i) -> {
-                    setPresa();
+                    setPresa(true);
                     Toast.makeText(getBaseContext(), "Salvato", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
@@ -114,17 +114,9 @@ public class MedicineStatusActivity extends AppCompatActivity {
         });
 
         /* Preimposto i tasti se è già presa */
-        Runnable checkPresa = new Runnable() {
-            @Override
-            public void run() {
-                if (medicina.isPresa()) {
-                    setPresa();
-                }
-            }
-        };
-        checkPresa.run();
-
-
+        if (medicina.isPresa()) {
+            setPresa(false);
+        }
     }
 
     /* Override pressione tasto back per cambiare l'animazione */
@@ -139,11 +131,13 @@ public class MedicineStatusActivity extends AppCompatActivity {
     }
 
     /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
-    public void setPresa() {
+    public void setPresa(boolean changed) {
         final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
 
-        medicina.setPresa(!medicina.isPresa());
-        MedicinaFactory.getInstance().changePresa(medicina);
+        if (changed) {
+            medicina.setPresa(true);
+            MedicinaFactory.getInstance().changePresa(medicina);
+        }
 
         confirm.setClickable(false);
         confirm.setFocusable(false);

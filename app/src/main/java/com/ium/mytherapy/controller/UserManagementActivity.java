@@ -152,7 +152,7 @@ public class UserManagementActivity extends AppCompatActivity {
 
         /* Listener per tasto aggiunta terapia */
         addTherapy.setOnClickListener(view -> {
-            Intent addTherapyIntent = new Intent(getApplicationContext(), AddTherapyActivity.class);
+            Intent addTherapyIntent = new Intent(getApplicationContext(), AddMedicineActivity.class);
             startActivity(addTherapyIntent);
             finish();
             overridePendingTransition(R.anim.anim_slide_in_right,

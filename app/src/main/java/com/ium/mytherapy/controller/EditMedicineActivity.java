@@ -18,7 +18,7 @@ import com.ium.mytherapy.model.MedicinaFactory;
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class EditTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour, medicineTips;
     MaterialSpinner spinnerNum, spinnerFreq;

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.controller.EditTherapyActivity;
+import com.ium.mytherapy.controller.EditMedicineActivity;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.views.recycleviews.holders.MedicinelistCardHolder;
@@ -65,7 +65,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .show());
 
         medicineListCardHolder.edit.setOnClickListener(view -> {
-            Intent editTherapyIntent = new Intent(context, EditTherapyActivity.class);
+            Intent editTherapyIntent = new Intent(context, EditMedicineActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable("MEDICINA", models.get(position));
             editTherapyIntent.putExtras(bundle);

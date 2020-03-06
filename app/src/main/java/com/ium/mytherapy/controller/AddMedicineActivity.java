@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
-public class AddTherapyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
     public static SharedPreferences mPreferences;
@@ -91,7 +91,7 @@ public class AddTherapyActivity extends AppCompatActivity implements AdapterView
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
             /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
-            mTimePicker = new TimePickerDialog(AddTherapyActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(AddMedicineActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
             mTimePicker.setMessage("Seleziona l'orario");
             mTimePicker.show();
         });
