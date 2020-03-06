@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -24,6 +23,7 @@ import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.NotificationReceiver;
+import com.ium.mytherapy.utils.exceptions.NoMedicinesFoundException;
 import com.ium.mytherapy.views.fragments.EditedScrollView;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
 import com.ium.mytherapy.views.recycleviews.adapters.UserTimelineCardAdapter;
@@ -210,14 +210,17 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
             PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
 
-            Intent broadcastReminerActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
-            broadcastReminerActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
-            broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
-            PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminerActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent broadcastReminderActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastReminderActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
+            broadcastReminderActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
+            PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminderActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
             broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
             broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("medicine", therapy.get(rand));
+            broadcastMarkdoneActionIntent.putExtras(bundle);
             PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), DefaultValues.CHANNEL_ID);
@@ -233,8 +236,8 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
             notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), DefaultValues.NO_MEDICINES_IN_LIST, Toast.LENGTH_LONG).show();
+        } catch (RuntimeException e) { //
+            throw new NoMedicinesFoundException(e, getApplicationContext());
         }
     }
 
