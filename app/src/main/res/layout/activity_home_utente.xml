@@ -73,15 +73,26 @@
                 android:gravity="start"
                 android:textSize="24sp" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/nessuna_medicina"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="200dp"
+                android:text="@string/nessuna_terapia"
+                android:textSize="32sp"
+                android:visibility="gone" />
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="25sp" />
 
             <!-- Start timeline -->
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/mezzanotte_top"
                 android:paddingStart="10sp"
                 android:text="@string/inizio_giornata"
                 tools:ignore="RtlSymmetry" />
@@ -105,9 +116,10 @@
                 android:layout_height="12sp"
                 tools:ignore="SmallSp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/mezzanotte_bottom"
                 android:paddingStart="10sp"
                 android:text="@string/inizio_giornata"
                 tools:ignore="RtlSymmetry" />

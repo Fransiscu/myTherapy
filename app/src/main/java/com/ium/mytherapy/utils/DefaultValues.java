@@ -15,4 +15,5 @@ public class DefaultValues {
     /* Per le notifiche */
     public static final String CHANNEL_ID = "myThrapy";
     public static final int EXAMPLE_NOTIFICATION_ID = 1;
+    public static final String NO_MEDICINES_IN_LIST = "Non sono presenti alcune medicine, funzionalità disabilitata";
 }

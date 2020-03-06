@@ -71,6 +71,7 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
             for (Medicina medicina : list)
                 spinnerItems.add(medicina.getNome());
         }
+        spinnerItems.add("Richiesta di aiuto generica");     // da fare sempre in caso non ci siano terapie presenti nella lista
 
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()));
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -97,7 +98,6 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
             Toast.makeText(getActivity(), "Report inviato", Toast.LENGTH_LONG).show();
 
         });
-
         spinnerPick.setAdapter(adapterMedicines);
 
         return builder.create();

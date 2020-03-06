@@ -42,7 +42,7 @@
     <string name="timeline_ora_tre">Orario</string>
     <string name="visto_timeline">visto presa medicina</string>
     <string name="inizio_giornata">00:00</string>
-    <string name="richiedi_assistenza">Richiedi aiuto</string>
+    <string name="richiedi_assistenza">Richiedi supporto</string>
     <string name="titolo_stato_terapia">Stato terapia</string>
     <string name="nome_medicina">Medicina test</string>
     <string name="dettagli_nome_medicina_test">Nome medicina test</string>
@@ -72,4 +72,5 @@
     <string name="dettagli_terapia_domanda">Che problema si verifica?</string>
     <string name="consigli_paziente">Consigli per il paziente</string>
     <string name="orario">Orario</string>
+    <string name="nessuna_terapia">Nessuna terapia presente.</string>
 </resources>

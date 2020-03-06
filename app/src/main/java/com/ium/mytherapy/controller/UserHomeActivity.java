@@ -10,9 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textview.MaterialTextView;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
@@ -48,9 +50,10 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     View topLine, bottomLine;
     UserTimelineCardAdapter userTimelineCardAdapter;
     MaterialButton logout, helpMe;
-    List<Medicina> therapy;
+    List<Medicina> therapy = null;
     ArrayList<Medicina> medicineArrayList;
     EditedScrollView scrollView;
+    MaterialTextView noMedicine, topMidnight, bottomMidnight;
 
     public static final String MEDICINA = "MEDICINE_INTENT";
     TextView todaysDate, notifTitolo,
@@ -78,6 +81,10 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);
 
+        noMedicine = findViewById(R.id.nessuna_medicina);
+        topMidnight = findViewById(R.id.mezzanotte_top);
+        bottomMidnight = findViewById(R.id.mezzanotte_bottom);
+
         // Per far si che la barra del titolo di sopra non scrolli con il resto
         scrollView = findViewById(R.id.scrollView);
         scrollView.setScrolling(false);
@@ -91,16 +98,25 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
         /* Setto le linee orizzontali a seconda dello stato della terapia */
 
-        if (therapy.get(0).isPresa()) {
-            topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
-        } else {
-            topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+        if (!therapy.isEmpty() && therapy != null) {
+            if (therapy.get(0).isPresa()) {
+                topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
+            } else {
+                topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            }
+            if (therapy.get(therapy.size() - 1).isPresa()) {
+                bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
+            } else {
+                bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            }
+        } else {        // eseguito se non ci sono terapie per evitare un crash & che non venga mostrato niente all'utente
+            topLine.setVisibility(View.GONE);
+            bottomLine.setVisibility(View.GONE);
+            topMidnight.setVisibility(View.GONE);
+            bottomMidnight.setVisibility(View.GONE);
+            noMedicine.setVisibility(View.VISIBLE);
         }
-        if (therapy.get(therapy.size() - 1).isPresa()) {
-            bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
-        } else {
-            bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-        }
+
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
 
@@ -181,40 +197,45 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
     /* Mostra notifica di esempio */
     private void showNotificationExample() {
-        createNotificationChannel();
 
-        int rand = (int) (Math.random() * therapy.size()) + 0;
-        Medicina current = therapy.get(rand);
+        try {
+            createNotificationChannel();
 
-        Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-        landingIntent.putExtra(MEDICINA, current);
-        landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            int rand = (int) (Math.random() * therapy.size()) + 0;
+            Medicina current = therapy.get(rand);
 
-        PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
+            Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
+            landingIntent.putExtra(MEDICINA, current);
+            landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        Intent broadcastReminerActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        broadcastReminerActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
-        broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
-        PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminerActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);
 
-        Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
-        broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
-        broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
-        PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent broadcastReminerActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastReminerActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
+            broadcastReminerActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
+            PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminerActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), DefaultValues.CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.robot);
-        builder.setContentTitle("Promemoria");
-        builder.setAutoCancel(true);
-        builder.setContentText("Hey! Non dimenticare di prendere " + current.getNome() + " oggi alle " + current.getOra() + "!");
-        builder.setSubText("Promemoria");
-        builder.addAction(R.drawable.notification, "Rimanda di 10 minuti", remindActionIntent);
-        builder.addAction(R.drawable.notification, "Segna come presa", markDoneActionIntent);
-        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-        builder.setContentIntent(landingPendingIntent);
+            Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
+            broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
+            broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
+            PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), DefaultValues.CHANNEL_ID);
+            builder.setSmallIcon(R.drawable.robot);
+            builder.setContentTitle("Promemoria");
+            builder.setAutoCancel(true);
+            builder.setContentText("Hey! Non dimenticare di prendere " + current.getNome() + " oggi alle " + current.getOra() + "!");
+            builder.setSubText("Promemoria");
+            builder.addAction(R.drawable.notification, "Rimanda di 10 minuti", remindActionIntent);
+            builder.addAction(R.drawable.notification, "Segna come presa", markDoneActionIntent);
+            builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+            builder.setContentIntent(landingPendingIntent);
+
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+            notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), DefaultValues.NO_MEDICINES_IN_LIST, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
