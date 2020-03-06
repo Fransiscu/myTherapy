@@ -49,7 +49,6 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aggiunta_medicina);
         AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
-
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         userId = mPreferences.getInt(MainActivity.USER_ID, 0);
 

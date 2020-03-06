@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
@@ -181,7 +182,21 @@ public class SupervisorSignupActivity extends AppCompatActivity {
 
             /* Se passo tutti i check chiamo addSupervisor */
             if (valid) {
-                addSupervisor();
+                MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
+                materialAlertDialogBuilder.setTitle("REGISTRAZIONE");
+                materialAlertDialogBuilder.setMessage("Sicuro di voler confermare i dati inseriti?");
+                materialAlertDialogBuilder.setPositiveButton("Registrati", (dialogInterface, i) -> {
+                    addSupervisor();
+                    Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
+                    finish();
+                    overridePendingTransition(R.anim.anim_slide_in_left,
+                            R.anim.anim_slide_out_right);
+                });
+                materialAlertDialogBuilder.setNegativeButton("Cancella", (dialogInterface, i) -> {
+                    return;
+                });
+                materialAlertDialogBuilder.show();
+
             }
         });
     }
@@ -220,10 +235,6 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(getBaseContext(), "Utente registrato", Toast.LENGTH_LONG).show();
-            finish();
-            overridePendingTransition(R.anim.anim_slide_in_left,
-                    R.anim.anim_slide_out_right);
         };
         signUp.run();
     }
