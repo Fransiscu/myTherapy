@@ -150,6 +150,8 @@ public class MedicinaFactory {
 
         File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
+        medicina.setReminder("none");
+        medicina.setDelayed(false);
         addMedicine(user, medicina);
     }
 
@@ -160,6 +162,7 @@ public class MedicinaFactory {
 
         File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
+        medicina.setDelayed(true);
         addMedicine(user, medicina);
     }
 

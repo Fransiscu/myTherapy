@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -197,12 +198,21 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
     /* Mostra notifica di esempio */
     private void showNotificationExample() {
+        Medicina current;
+        int rand;
 
         try {
             createNotificationChannel();
 
-            int rand = (int) (Math.random() * therapy.size()) + 0;
-            Medicina current = therapy.get(rand);
+            if (noMoreUnfinishedTherapies(therapy)) {
+                Toast.makeText(getApplicationContext(), "Non ci sono più medicine non prese", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            do {        // voglio solo medicina non presa quindi ciclo finchè non la trovo
+                rand = (int) (Math.random() * therapy.size()) + 0;
+                current = therapy.get(rand);
+            } while (current.isPresa());
 
             Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
             landingIntent.putExtra(MEDICINA, current);
@@ -213,13 +223,18 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             Intent broadcastReminderActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
             broadcastReminderActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
             broadcastReminderActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("medicine", therapy.get(rand));
+            bundle.putInt("action", 1);
+            broadcastReminderActionIntent.putExtras(bundle);
             PendingIntent remindActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 1, broadcastReminderActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Intent broadcastMarkdoneActionIntent = new Intent(getApplicationContext(), NotificationReceiver.class);
             broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
             broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
-            Bundle bundle = new Bundle();
+            bundle = new Bundle();
             bundle.putParcelable("medicine", therapy.get(rand));
+            bundle.putInt("action", 2);
             broadcastMarkdoneActionIntent.putExtras(bundle);
             PendingIntent markDoneActionIntent = PendingIntent.getBroadcast(getApplicationContext(), 0, broadcastMarkdoneActionIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -239,6 +254,16 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         } catch (RuntimeException e) { //
             throw new NoMedicinesFoundException(e, getApplicationContext());
         }
+    }
+
+    /* Controllo se ci sono ancora medicine non prese, rendo false se ci sono o true se non ci sono */
+    private boolean noMoreUnfinishedTherapies(List<Medicina> therapy) {
+        for (Medicina medicina : therapy) {
+            if (!medicina.isPresa()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

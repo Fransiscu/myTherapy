@@ -1,10 +1,32 @@
 package com.ium.mytherapy.utils;
 
+import android.os.Build;
+
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import androidx.annotation.RequiresApi;
+
+import static java.util.Calendar.HOUR_OF_DAY;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.getInstance;
+
 public class Utility {
 
     /* Classe usata solo per creare funzioni di supporto e testarle */
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static void main(String[] args) {
+        Date date = new Date();
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTime(date);
+        System.out.println(LocalDateTime.now().getHour());
+        System.out.println(LocalDateTime.now().getMinute());
+
+        Calendar now = getInstance();
+        System.out.println(now.get(HOUR_OF_DAY) + ":" + now.get(MINUTE));
         // Tests qui
     }
 
