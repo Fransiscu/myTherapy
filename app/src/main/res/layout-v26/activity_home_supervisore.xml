@@ -60,8 +60,8 @@
 
     </RelativeLayout>
 
-    <com.ium.mytherapy.views.fragments.MyScrollView
-        android:id="@+id/myScroll"
+    <com.ium.mytherapy.views.fragments.EditedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -103,7 +103,7 @@
 
         </LinearLayout>
 
-    </com.ium.mytherapy.views.fragments.MyScrollView>
+    </com.ium.mytherapy.views.fragments.EditedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

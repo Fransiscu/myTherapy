@@ -8,23 +8,23 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-public class MyScrollView extends ScrollView {
+public class EditedScrollView extends ScrollView {
     private boolean enableScrolling = true;
 
-    public MyScrollView(Context context) {
+    public EditedScrollView(Context context) {
         super(context);
     }
 
-    public MyScrollView(Context context, AttributeSet attrs) {
+    public EditedScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EditedScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public MyScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public EditedScrollView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
