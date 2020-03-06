@@ -47,6 +47,8 @@ public class MedicinaFactory {
         medicina.setLink(strings.get(8));
         medicina.setPresa(Boolean.parseBoolean(strings.get(9)));
         medicina.setNotifEnabled(Boolean.parseBoolean(strings.get(10)));
+        medicina.setDelayed(Boolean.parseBoolean(strings.get(11)));
+        medicina.setReminder(strings.get(12));
 
         return medicina;
     }
@@ -79,7 +81,7 @@ public class MedicinaFactory {
             FileWriter fw = new FileWriter(file.toString(), true);
             fw.write(medicina.getCode() + "," + medicina.getNome() + "," + medicina.getDescrizione() + "," + medicina.getDosaggio() + "," +
                     medicina.getFrequenza() + "," + medicina.getFrequenzaNum() + "," + medicina.getOra() + "," + medicina.getConsigliSupervisore() + "," +
-                    medicina.getLink() + "," + medicina.isPresa() + "," + medicina.isNotifEnabled());
+                    medicina.getLink() + "," + medicina.isPresa() + "," + medicina.isNotifEnabled() + "," + medicina.isDelayed() + "," + medicina.getReminder());
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
@@ -148,6 +150,19 @@ public class MedicinaFactory {
 
         File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
+        medicina.setReminder("none");
+        medicina.setDelayed(false);
+        addMedicine(user, medicina);
+    }
+
+    /* Salvo l'orario per la nuova notifica */
+    public void setReminder(Medicina medicina) {
+        User user = new User();
+        user.setUserId(0);
+
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        fileToDelete.delete();
+        medicina.setDelayed(true);
         addMedicine(user, medicina);
     }
 

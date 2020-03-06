@@ -3,32 +3,23 @@ package com.ium.mytherapy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 public class Medicina implements Parcelable, Comparable<Medicina> {
 
     private int code;
     private String nome;
     private String descrizione;
     private String frequenza;
-    private int frequenzaNum;
     private String ora;
     private String consigliSupervisore;
     private String dosaggio;
     private String link;
+    private int frequenzaNum;
+    private String reminder;
+    private boolean delayed;
     private boolean notifEnabled;
     private boolean presa;
-
-    public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
-        @Override
-        public Medicina createFromParcel(Parcel in) {
-            return new Medicina(in);
-        }
-
-        @Override
-        public Medicina[] newArray(int size) {
-            return new Medicina[size];
-        }
-    };
-    public Medicina medicina;
 
     public Medicina(Parcel in) {
         code = in.readInt();
@@ -42,10 +33,54 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         link = in.readString();
         notifEnabled = in.readByte() != 0;
         presa = in.readByte() != 0;
+        delayed = in.readByte() != 0;
+        reminder = in.readString();
+    }
+
+    public static Creator<Medicina> getCREATOR() {
+        return CREATOR;
+    }
+
+    public Medicina getMedicina() {
+        return medicina;
+    }
+
+    public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
+        @Override
+        public Medicina createFromParcel(Parcel in) {
+            return new Medicina(in);
+        }
+
+        @Override
+        public Medicina[] newArray(int size) {
+            return new Medicina[size];
+        }
+    };
+
+    public Medicina medicina;
+
+    public void setMedicina(Medicina medicina) {
+        this.medicina = medicina;
+    }
+
+    public boolean isDelayed() {
+        return delayed;
+    }
+
+    public void setDelayed(boolean delayed) {
+        this.delayed = delayed;
     }
 
     public Medicina() {
 
+    }
+
+    public String getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(String reminder) {
+        this.reminder = reminder;
     }
 
     int getCode() {
@@ -154,6 +189,14 @@ public class Medicina implements Parcelable, Comparable<Medicina> {
         parcel.writeString(link);
         parcel.writeByte((byte) (notifEnabled ? 1 : 0));
         parcel.writeByte((byte) (presa ? 1 : 0));
+        parcel.writeByte((byte) (delayed ? 1 : 0));
+        parcel.writeString(reminder);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return code + " " + nome;
     }
 
     @Override

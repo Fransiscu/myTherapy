@@ -93,8 +93,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
                         confirmTime.setMessage("Impostare la notifica per le " + selectedHour + ":" + selectedMinute + "?");
                         confirmTime.setCancelable(false);
                         confirmTime.setPositiveButton("Ok", ((dialogInterface, i) -> {
-                            greyOutReminder(selectedHour, selectedMinute);
-                            Toast.makeText(getBaseContext(), "Notifica impostata per le " + selectedHour + ":" + selectedMinute, Toast.LENGTH_LONG).show();
+                            setDelayed(true, selectedHour, selectedMinute);
                         }));
                         confirmTime.setNegativeButton("Annulla", ((dialogInterface, i) -> {
                             return;
@@ -117,17 +116,29 @@ public class MedicineStatusActivity extends AppCompatActivity {
         if (medicina.isPresa()) {
             setPresa(false);
         }
+
+        if (medicina.isDelayed()) {
+            setDelayed(false, 0, 0);
+        }
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent userHome = new Intent(getApplicationContext(), UserHomeActivity.class);
-        startActivity(userHome);
-        finish();
-        overridePendingTransition(R.anim.anim_slide_in_left,
-                R.anim.anim_slide_out_right);
+    /* Tasto per confermare attivazione reminder + attivazione all'avvio della activity */
+    private void setDelayed(boolean changed, int selectedHour, int selectedMinute) {
+
+        if (changed) {
+            greyOutReminder(selectedHour, selectedMinute);
+            String timestamp = selectedHour + ":" + selectedMinute;
+            medicina.setDelayed(true);          // salvo il nuovo orario di notifica
+            medicina.setReminder(timestamp);
+            MedicinaFactory.getInstance().setReminder(medicina);
+            Toast.makeText(getBaseContext(), "Notifica impostata per le " + timestamp, Toast.LENGTH_LONG).show();
+        } else if (medicina.getReminder() == "none") {
+            // do nothing
+        } else {
+            String[] strings = medicina.getReminder().split(":");
+            greyOutReminder(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
+        }
+
     }
 
     /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
@@ -153,6 +164,17 @@ public class MedicineStatusActivity extends AppCompatActivity {
         remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey)); // non funziona come vorrei, il colore viene sbiadito e non cambia completamente
 
         confirmText.setVisibility(View.VISIBLE);
+    }
+
+    /* Override pressione tasto back per cambiare l'animazione */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent userHome = new Intent(getApplicationContext(), UserHomeActivity.class);
+        startActivity(userHome);
+        finish();
+        overridePendingTransition(R.anim.anim_slide_in_left,
+                R.anim.anim_slide_out_right);
     }
 
     /* Rendo non clickabile il tasto per rimandare la notifica e aggiungo l'orario appena scelto dall'utente */
