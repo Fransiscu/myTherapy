@@ -42,6 +42,9 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         UserReport userReport = new UserReport();
 
+        /* Per impedire la cancellazione della finestra in alcun modo serve settare il fragment come non cancelable oltre all'alert dialog */
+        this.setCancelable(false);
+
         /* Recupero userId dalle sharedPreferences */
         SharedPreferences mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         int userId = mPreferences.getInt(MainActivity.USER_ID, 0);
@@ -78,11 +81,9 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
         ArrayAdapter<String> adapterMedicines = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, spinnerItems);
         adapterMedicines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         builder.setView(view);
-        builder.setCancelable(false);
-        builder.setNegativeButton("Annulla", (dialogInterface, i) -> {
-        });
+        builder.setCancelable(false);   // in combinazione con this.setCancelable(false) per impedire la cancellazione della finestra
+        builder.setNegativeButton("Annulla", (dialogInterface, i) -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
         builder.setPositiveButton("OK", (dialogInterface, i) -> {
             if (Objects.requireNonNull(errorMessage.getText()).toString().matches("")) {
                 errorMessage.setText("Nessun messaggio di errore fornito");
@@ -96,9 +97,6 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
             Toast.makeText(getActivity(), "Report inviato", Toast.LENGTH_LONG).show();
 
         });
-
-        builder.setOnCancelListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
-        builder.setOnDismissListener(dialog -> Toast.makeText(getActivity(), "REPORT CANCELLATO", Toast.LENGTH_LONG).show());
 
         spinnerPick.setAdapter(adapterMedicines);
 
