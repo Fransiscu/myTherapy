@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
         userlistCardHolder.setUserlistItemClickListener((v, position1) -> {
             /* Mando a UserManagementActivity */
             user = models.get(position);
+            Log.d("user", user.toString());
             Intent intent = new Intent(context, UserManagementActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt(USER_KEY, user.getUserId());

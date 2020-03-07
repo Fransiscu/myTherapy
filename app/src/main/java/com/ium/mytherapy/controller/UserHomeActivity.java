@@ -148,7 +148,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                 .setPositiveButton("Logout", (dialogInterface, i) -> {
                     Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(backToHome);
-                    SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
                     preferencesEditor.clear();
                     preferencesEditor.apply();

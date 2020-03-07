@@ -15,6 +15,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.EditMedicineActivity;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.views.recycleviews.holders.MedicinelistCardHolder;
 
 import java.util.ArrayList;
@@ -27,10 +28,12 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
 
     private Context context;
     private ArrayList<Medicina> models;
+    private User user;
 
-    public MedicinelistCardAdapter(Context context, ArrayList<Medicina> models) {
+    public MedicinelistCardAdapter(Context context, User user, ArrayList<Medicina> models) {
         this.context = context;
         this.models = models;
+        this.user = user;
     }
 
     @NonNull
@@ -56,8 +59,8 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Rimuovi", (dialogInterface, i) -> {
-                    MedicinaFactory.getInstance().removeMedicine(models.get(position));
-                    medicineListCardHolder.itemView.setVisibility(View.INVISIBLE);
+                    MedicinaFactory.getInstance().removeMedicine(models.get(position), user);
+                    medicineListCardHolder.itemView.setVisibility(View.GONE);
                     Toast.makeText(context, "Terapia rimossa", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {

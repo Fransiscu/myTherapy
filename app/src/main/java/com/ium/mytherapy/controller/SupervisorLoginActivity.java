@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.ium.mytherapy.R;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,9 +28,9 @@ public class SupervisorLoginActivity extends AppCompatActivity {
         login.setOnClickListener(view -> {
             Intent supervisorHomeActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
             supervisorHomeActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(MainActivity.USER_TYPE, "supervisor"); // setto le sharedPreferences
+            editor.putString(DefaultValues.USER_TYPE, "supervisor"); // setto le sharedPreferences
             editor.apply();
             finish();
             startActivity(supervisorHomeActivity);

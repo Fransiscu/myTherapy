@@ -3,6 +3,8 @@ package com.ium.mytherapy.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 public class User implements Parcelable, Comparable<User> {
     private int userId;
     private String nome;
@@ -104,6 +106,12 @@ public class User implements Parcelable, Comparable<User> {
     @Override
     public int describeContents() {
         return 0;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return userId + " " + nome;
     }
 
     @Override

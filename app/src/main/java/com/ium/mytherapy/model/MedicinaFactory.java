@@ -135,11 +135,8 @@ public class MedicinaFactory {
     }
 
     /*Rimozione medicina singola */
-    public void removeMedicine(Medicina medicina) {
-        User user = new User();
-        user.setUserId(0);
-
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+    public void removeMedicine(Medicina medicina, User user) {
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
     }
 

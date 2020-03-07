@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.views.recycleviews.holders.MedicineTimelineCardHolder;
 
 import java.util.ArrayList;
@@ -22,10 +23,12 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
 
     private Context context;
     private ArrayList<Medicina> models;
+    private User user;
 
-    public MedicineTimelineCardAdapter(Context context, ArrayList<Medicina> models) {
+    public MedicineTimelineCardAdapter(Context context, User user, ArrayList<Medicina> models) {
         this.context = context;
         this.models = models;
+        this.user = user;
     }
 
     @NonNull

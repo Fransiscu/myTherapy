@@ -117,14 +117,14 @@ public class UserManagementActivity extends AppCompatActivity {
         /* Riempio timeline */
         MedicineTimelineCardRecyclerView = findViewById(R.id.userManagementMedicineTimelineRecycleView);
         MedicineTimelineCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, medicineArrayList);
+        medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, user, medicineArrayList);
         MedicineTimelineCardRecyclerView.setAdapter(medicineTimelineCardAdapter);
         /* Fine timeline */
 
         /* Riempio lista terapie */
         MedicinelistCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
         MedicinelistCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        medicinelistCardAdapter = new MedicinelistCardAdapter(this, medicineArrayList);
+        medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList);
         MedicinelistCardRecyclerView.setAdapter(medicinelistCardAdapter);
         /* Fine lista terapie */
 

@@ -20,6 +20,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -50,7 +51,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_aggiunta_medicina);
         AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+        userId = mPreferences.getInt(DefaultValues.USER_ID, 0);
 
         /* TextInputEditText */
         medicineName = findViewById(R.id.add_edit_medicine_name);
