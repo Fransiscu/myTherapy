@@ -1,5 +1,7 @@
 package com.ium.mytherapy.utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import java.time.LocalDateTime;
@@ -55,6 +57,11 @@ public class Utility {
         }
     }
 
+    /* Prendo userId da sharedPreferences */
+    public static int getUserIdFromSharedPreferences(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(DefaultValues.SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(DefaultValues.USER_ID, 0);
+    }
     /* Controllo che url inserito sia valido */
     public static boolean isUrlValid(String url) {
         if (url.length() < 4) {

@@ -28,11 +28,7 @@ public class MainActivity extends AppCompatActivity {
     final static int PERMISSION_REQUEST_CODE = 123;
     final static String USER_LIST = "DEFAULT_USER_LIST";
     ArrayList<User> userList = new ArrayList<>();
-    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";   // key per le shared preferences
-    public final static String USER_TYPE = "user_type";     // key per il tipo di utente salvato nelle shared preferences
     public static SharedPreferences mPreferences;
-    public static final String USER_ID = "user_id";
-    public static String sharedPrefFile = SHARED_PREFS;
     String userValue;
 
     @Override
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         /* Inizializzo sharedPreferences */
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        mPreferences = getSharedPreferences(DefaultValues.sharedPrefFile, MODE_PRIVATE);
 
         /* Riprendo stato passato dell'utente nell'app */
         Runnable loadData = this::loadData;
@@ -82,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
     /* Metodo per il caricamento dei dati dalle sharedPreferences */
     private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        userValue = sharedPreferences.getString(USER_TYPE, "");
+        SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
+        userValue = sharedPreferences.getString(DefaultValues.USER_TYPE, "");
     }
 
     /* Metodo di controllo dei permessi e aggiunta files di default */

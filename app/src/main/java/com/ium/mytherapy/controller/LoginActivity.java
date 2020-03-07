@@ -15,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -124,10 +125,10 @@ public class LoginActivity extends AppCompatActivity {
 //                    onLoginFailed();
                     progressDialog.dismiss();
                     Intent userLogin = new Intent(getApplicationContext(), UserHomeActivity.class);
-                    SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREFS, MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.USER_TYPE, "user");
-                    editor.putInt(MainActivity.USER_ID, userId);
+                    editor.putString(DefaultValues.USER_TYPE, "user");
+                    editor.putInt(DefaultValues.USER_ID, userId);
                     editor.apply();
                     finish();
                     startActivity(userLogin);
