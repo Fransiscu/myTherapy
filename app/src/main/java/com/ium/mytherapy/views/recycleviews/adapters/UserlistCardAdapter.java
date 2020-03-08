@@ -62,6 +62,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
             bundle.putParcelable(DefaultValues.USER_INTENT, user);
             intent.putExtras(bundle);
             context.startActivity(intent);
+            ((Activity) context).finish();
             ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right,
                     R.anim.anim_slide_out_left);
         });

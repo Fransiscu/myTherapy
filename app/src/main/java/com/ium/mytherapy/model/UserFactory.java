@@ -1,6 +1,10 @@
 package com.ium.mytherapy.model;
 
+import android.util.Log;
+
 import com.ium.mytherapy.utils.DefaultValues;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserFactory {
 
     private static UserFactory dummy;
@@ -127,4 +132,36 @@ public class UserFactory {
     }
 
 
+    public void changeAvatar(int userKey) {
+        File file = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
+        file.delete();
+        File from = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
+        File to = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
+        from.renameTo(to);
+    }
+
+    public void deleteUser(User user) throws IOException {
+        File toDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId());
+        Log.d("todelete", toDelete.toString());
+        FileUtils.forceDelete(new File(String.valueOf(toDelete)));
+    }
+
+    public void editUser(User user) throws IOException {
+        File userToEdit = new File(DefaultValues.usersDir.toString() + user.getUserId() + "/profile.txt");
+        userToEdit.delete();
+
+        FileOutputStream fos = new FileOutputStream(userToEdit);
+        fos.flush();
+
+        /* Aggiungo file profilo utente */
+        try {
+            FileWriter fw = new FileWriter(userToEdit, true);
+            fw.write(user.getUserId() + "," + user.getNome() + "," + user.getCognome() + "," + user.getEmail() + "," +
+                    user.getUsername() + "," + user.getPassword() + "," + user.getDataNascita());
+            fw.close();
+        } catch (IOException ioe) {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+
+    }
 }

@@ -136,12 +136,14 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Salva", (dialogInterface, i) -> {
                     if (avatarChanged) {
-                        File file = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
-                        file.delete();
-                        File from = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
-                        File to = new File(DefaultValues.dir, "avatar_" + userKey + ".jpeg");
-                        from.renameTo(to);
+                        UserFactory.getInstance().changeAvatar(userKey);
                     }
+                    try {
+                        UserFactory.getInstance().editUser(user);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left,
@@ -195,8 +197,17 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-//                    userList.remove(userKey);     //method per cancellare l'utente
+                    try {
+                        UserFactory.getInstance().deleteUser(user);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getBaseContext(), "Utente cancellato", Toast.LENGTH_LONG).show();
+                    Intent backToSupervisorHome = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+                    backToSupervisorHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(backToSupervisorHome);
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left,
                             R.anim.anim_slide_out_right);
