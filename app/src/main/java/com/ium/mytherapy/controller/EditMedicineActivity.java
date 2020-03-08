@@ -14,6 +14,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
+
+import java.io.IOException;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -27,6 +33,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,16 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
         saveEdits = findViewById(R.id.save_therapy_edits);
 
+        /* Devo portarlo da UserManagementActivirty */
+//        Intent therapyIntent = getIntent();
+//        if (therapyIntent != null) {
+//            Bundle bundle = therapyIntent.getExtras();
+//            if (bundle != null) {
+//                User user = bundle.getParcelable("user");
+//                userId = Objects.requireNonNull(user).getUserId();
+//            }
+//        }
+
         /* Setto valori e adapter degli spinner */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -57,9 +74,16 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         spinnerFreq.setAdapter(adapterString);
 
         /* Intent per therapy */
-        Intent therapyIntent = getIntent();
         if (therapyIntent != null) {
             Bundle bundle = therapyIntent.getExtras();
+            Intent therapyIntent = getIntent();
+            if (therapyIntent != null) {
+                Bundle bundle = therapyIntent.getExtras();
+                if (bundle != null) {
+                    User user = bundle.getParcelable("user");
+                    userId = Objects.requireNonNull(user).getUserId();
+                }
+            }
             if (bundle != null) {
                 currentTherapy = bundle.getParcelable("MEDICINA");
                 if (currentTherapy != null) {
@@ -116,6 +140,13 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Bundle bundle = new Bundle();
+        bundle.putInt(DefaultValues.USER_KEY, userId);
+        try {
+            bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Intent userManagementHome = new Intent(getApplicationContext(), UserManagementActivity.class);
         userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(userManagementHome);

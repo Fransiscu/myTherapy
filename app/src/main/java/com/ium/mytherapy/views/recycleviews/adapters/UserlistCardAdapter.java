@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,6 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
 
     private Context context;
     private ArrayList<User> models;
-    private static String USER_INTENT = "user";
-    public static String USER_KEY = "userKey";
     private User user;
 
     public UserlistCardAdapter(Context context, ArrayList<User> models) {
@@ -59,11 +56,10 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
         userlistCardHolder.setUserlistItemClickListener((v, position1) -> {
             /* Mando a UserManagementActivity */
             user = models.get(position);
-            Log.d("user", user.toString());
             Intent intent = new Intent(context, UserManagementActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt(USER_KEY, user.getUserId());
-            bundle.putParcelable(USER_INTENT, user);
+            bundle.putInt(DefaultValues.USER_KEY, user.getUserId());
+            bundle.putParcelable(DefaultValues.USER_INTENT, user);
             intent.putExtras(bundle);
             context.startActivity(intent);
             ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right,

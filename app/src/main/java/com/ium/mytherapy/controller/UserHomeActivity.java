@@ -24,6 +24,7 @@ import com.ium.mytherapy.model.UserReport;
 import com.ium.mytherapy.model.UserReportFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.NotificationReceiver;
+import com.ium.mytherapy.utils.Utility;
 import com.ium.mytherapy.utils.exceptions.NoMedicinesFoundException;
 import com.ium.mytherapy.views.fragments.EditedScrollView;
 import com.ium.mytherapy.views.fragments.HelpDialogFragment;
@@ -224,6 +225,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             broadcastReminderActionIntent.putExtra("toastMessage", "Rimandato di 10 minuti");
             broadcastReminderActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
             Bundle bundle = new Bundle();
+            bundle.putParcelable("user", UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
             bundle.putParcelable("medicine", therapy.get(rand));
             bundle.putInt("action", 1);
             broadcastReminderActionIntent.putExtras(bundle);
@@ -233,6 +235,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             broadcastMarkdoneActionIntent.putExtra("toastMessage", "Segnato come preso!");
             broadcastMarkdoneActionIntent.putExtra("NOTIFICATION_ID", DefaultValues.EXAMPLE_NOTIFICATION_ID);
             bundle = new Bundle();
+            bundle.putParcelable("user", UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
             bundle.putParcelable("medicine", therapy.get(rand));
             bundle.putInt("action", 2);
             broadcastMarkdoneActionIntent.putExtras(bundle);
@@ -251,7 +254,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
             notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
-        } catch (RuntimeException e) { //
+        } catch (RuntimeException | IOException e) { //
             throw new NoMedicinesFoundException(e, getApplicationContext());
         }
     }

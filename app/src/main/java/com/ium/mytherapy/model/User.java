@@ -15,6 +15,17 @@ public class User implements Parcelable, Comparable<User> {
     private String dataNascita;
     private String avatar;
 
+    public User(Parcel in) {
+        userId = in.readInt();
+        nome = in.readString();
+        cognome = in.readString();
+        username = in.readString();
+        email = in.readString();
+        password = in.readString();
+        dataNascita = in.readString();
+        avatar = in.readString();
+    }
+
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
@@ -27,28 +38,38 @@ public class User implements Parcelable, Comparable<User> {
         }
     };
 
-    public String getUsername() {
-        return username;
+    public User() {
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public static Creator<User> getCREATOR() {
+        return CREATOR;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(userId);
+        parcel.writeString(nome);
+        parcel.writeString(cognome);
+        parcel.writeString(username);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(dataNascita);
+        parcel.writeString(avatar);
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int id) {
-        this.userId = id;
-    }
-
-    String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @NonNull
+    @Override
+    public String toString() {
+        return userId + " " + nome;
     }
 
     public String getNome() {
@@ -67,12 +88,20 @@ public class User implements Parcelable, Comparable<User> {
         this.cognome = cognome;
     }
 
-    public String getDataNascita() {
-        return dataNascita;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setDataNascita(String dataNascita) {
-        this.dataNascita = dataNascita;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -83,6 +112,14 @@ public class User implements Parcelable, Comparable<User> {
         this.password = password;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDataNascita() {
+        return dataNascita;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -91,37 +128,8 @@ public class User implements Parcelable, Comparable<User> {
         this.avatar = avatar;
     }
 
-    public User() {
-    }
-
-    private User(Parcel in) {
-        nome = in.readString();
-        cognome = in.readString();
-        email = in.readString();
-        password = in.readString();
-        dataNascita = in.readString();
-        avatar = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return userId + " " + nome;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(nome);
-        parcel.writeString(cognome);
-        parcel.writeString(email);
-        parcel.writeString(password);
-        parcel.writeString(dataNascita);
-        parcel.writeString(avatar);
+    public void setDataNascita(String dataNascita) {
+        this.dataNascita = dataNascita;
     }
 
     @Override

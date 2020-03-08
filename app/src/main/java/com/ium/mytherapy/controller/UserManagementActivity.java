@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,6 @@ import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.recycleviews.adapters.MedicineTimelineCardAdapter;
 import com.ium.mytherapy.views.recycleviews.adapters.MedicinelistCardAdapter;
-import com.ium.mytherapy.views.recycleviews.adapters.UserlistCardAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,7 +78,8 @@ public class UserManagementActivity extends AppCompatActivity {
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
             if (bundle != null) {
-                userKey = bundle.getInt(UserlistCardAdapter.USER_KEY);
+                userKey = bundle.getInt(DefaultValues.USER_KEY);
+                Log.d("user id", String.valueOf(userKey));
             }
         }
         try {
@@ -153,6 +154,9 @@ public class UserManagementActivity extends AppCompatActivity {
         /* Listener per tasto aggiunta terapia */
         addTherapy.setOnClickListener(view -> {
             Intent addTherapyIntent = new Intent(getApplicationContext(), AddMedicineActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("user", user);
+            addTherapyIntent.putExtras(bundle);
             startActivity(addTherapyIntent);
             finish();
             overridePendingTransition(R.anim.anim_slide_in_right,

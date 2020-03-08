@@ -77,14 +77,14 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
     private void changeNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
         models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
         setNotif(medicineTimelineCardHolder, position);
-        MedicinaFactory.getInstance().changeNotif(models.get(position));
+        MedicinaFactory.getInstance().changeNotif(models.get(position), user);
         Toast.makeText(context, "Notifiche modificate", Toast.LENGTH_LONG).show();
     }
 
     private void changeStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
         models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
         setStatus(medicineTimelineCardHolder, position);
-        MedicinaFactory.getInstance().changePresa(models.get(position));
+        MedicinaFactory.getInstance().changePresa(models.get(position), user);
         Toast.makeText(context, "Stato modificato", Toast.LENGTH_LONG).show();
     }
 

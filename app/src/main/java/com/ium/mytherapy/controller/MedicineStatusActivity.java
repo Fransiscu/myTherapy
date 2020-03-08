@@ -18,7 +18,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.Utility;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -70,7 +73,11 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 .setMessage("Sicuro di voler segnare la medicina come \"presa\"?")
                 .setCancelable(false)
                 .setPositiveButton("Continua", (dialogInterface, i) -> {
-                    setPresa(true);
+                    try {
+                        setPresa(true);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     Toast.makeText(getBaseContext(), "Salvato", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
@@ -93,7 +100,11 @@ public class MedicineStatusActivity extends AppCompatActivity {
                         confirmTime.setMessage("Impostare la notifica per le " + selectedHour + ":" + selectedMinute + "?");
                         confirmTime.setCancelable(false);
                         confirmTime.setPositiveButton("Ok", ((dialogInterface, i) -> {
-                            setDelayed(true, selectedHour, selectedMinute);
+                            try {
+                                setDelayed(true, selectedHour, selectedMinute);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }));
                         confirmTime.setNegativeButton("Annulla", ((dialogInterface, i) -> {
                             return;
@@ -114,23 +125,31 @@ public class MedicineStatusActivity extends AppCompatActivity {
 
         /* Preimposto i tasti se è già presa */
         if (medicina.isPresa()) {
-            setPresa(false);
+            try {
+                setPresa(false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         if (medicina.isDelayed()) {
-            setDelayed(false, 0, 0);
+            try {
+                setDelayed(false, 0, 0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     /* Tasto per confermare attivazione reminder + attivazione all'avvio della activity */
-    private void setDelayed(boolean changed, int selectedHour, int selectedMinute) {
+    private void setDelayed(boolean changed, int selectedHour, int selectedMinute) throws IOException {
 
         if (changed) {
             greyOutReminder(selectedHour, selectedMinute);
             String timestamp = selectedHour + ":" + selectedMinute;
             medicina.setDelayed(true);          // salvo il nuovo orario di notifica
             medicina.setReminder(timestamp);
-            MedicinaFactory.getInstance().setReminder(medicina);
+            MedicinaFactory.getInstance().setReminder(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
             Toast.makeText(getBaseContext(), "Notifica impostata per le " + timestamp, Toast.LENGTH_LONG).show();
         } else if (medicina.getReminder() == "none") {
             // do nothing
@@ -142,12 +161,12 @@ public class MedicineStatusActivity extends AppCompatActivity {
     }
 
     /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
-    public void setPresa(boolean changed) {
+    public void setPresa(boolean changed) throws IOException {
         final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
 
         if (changed) {
             medicina.setPresa(true);
-            MedicinaFactory.getInstance().changePresa(medicina);
+            MedicinaFactory.getInstance().changePresa(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
         }
 
         confirm.setClickable(false);
