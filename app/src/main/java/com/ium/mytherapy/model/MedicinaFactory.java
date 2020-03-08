@@ -135,20 +135,15 @@ public class MedicinaFactory {
     }
 
     /*Rimozione medicina singola */
-    public void removeMedicine(Medicina medicina) {
-        User user = new User();
-        user.setUserId(0);
-
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+    public void removeMedicine(Medicina medicina, User user) {
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
     }
 
     /* Cambio status presa o meno */
-    public void changePresa(Medicina medicina) {
-        User user = new User();
-        user.setUserId(0);
+    public void changePresa(Medicina medicina, User user) {
 
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
         medicina.setReminder("none");
         medicina.setDelayed(false);
@@ -156,22 +151,18 @@ public class MedicinaFactory {
     }
 
     /* Salvo l'orario per la nuova notifica */
-    public void setReminder(Medicina medicina) {
-        User user = new User();
-        user.setUserId(0);
+    public void setReminder(Medicina medicina, User user) {
 
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
         medicina.setDelayed(true);
         addMedicine(user, medicina);
     }
 
     /* Cambio notifiche abilitate o meno */
-    public void changeNotif(Medicina medicina) {
-        User user = new User();
-        user.setUserId(0);
+    public void changeNotif(Medicina medicina, User user) {
 
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + medicina.getCode());
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + medicina.getCode());
         fileToDelete.delete();
         addMedicine(user, medicina);
     }

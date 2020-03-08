@@ -5,13 +5,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.exceptions.NoMedicinesFoundException;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -27,6 +29,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         try {
             Bundle bundle = intent.getExtras();
             Medicina medicina = Objects.requireNonNull(bundle).getParcelable("medicine");
+            User user = Objects.requireNonNull(bundle).getParcelable("user");
             int action = intent.getIntExtra("action", 0);
 
             switch (action) {
@@ -37,17 +40,16 @@ public class NotificationReceiver extends BroadcastReceiver {
                     now.add(Calendar.MINUTE, 10);
                     now.getTime();
                     Objects.requireNonNull(medicina).setReminder(now.get(HOUR_OF_DAY) + ":" + now.get(MINUTE));
-                    Log.d("ora", medicina.getReminder());
-                    MedicinaFactory.getInstance().setReminder(medicina);
+                    MedicinaFactory.getInstance().setReminder(medicina, Objects.requireNonNull(user));
                     break;
                 case 2:
                     Objects.requireNonNull(medicina).setPresa(true);
-                    MedicinaFactory.getInstance().changePresa(medicina);
+                    MedicinaFactory.getInstance().changePresa(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(context)));
                     break;
                 default:
                     break;
             }
-        } catch (NoMedicinesFoundException e) {
+        } catch (NoMedicinesFoundException | IOException e) {
             throw new NoMedicinesFoundException(e, context);
         }
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();

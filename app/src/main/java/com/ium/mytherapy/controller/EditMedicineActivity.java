@@ -14,6 +14,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
+import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
+
+import java.io.IOException;
+import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -27,6 +33,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+    int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +79,8 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                     notifCheckbox.setChecked(currentTherapy.isNotifEnabled()); // a quanto pare funziona
                     newTherapy = currentTherapy;    // creo una copia della terapia corrente e mi preparo a modificarla
                 }
+                User user = bundle.getParcelable("user");
+                userId = Objects.requireNonNull(user).getUserId();
             }
         }
 
@@ -88,6 +97,14 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                         Toast.makeText(getBaseContext(), "Errore durante la modifica della terapia", Toast.LENGTH_LONG).show();
                     }
                     Intent backToManagement = new Intent(this, UserManagementActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(DefaultValues.USER_KEY, userId);
+                    try {
+                        bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    backToManagement.putExtras(bundle);
                     startActivity(backToManagement);
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -112,13 +129,21 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         return MedicinaFactory.getInstance().deleteMedicineFromCode(null, newTherapy);
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent userManagementHome = new Intent(getApplicationContext(), UserManagementActivity.class);
-        userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(userManagementHome);
+        Bundle bundle = new Bundle();
+        bundle.putInt(DefaultValues.USER_KEY, userId);
+        try {
+            bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Intent backToManagement = new Intent(this, UserManagementActivity.class);
+        bundle.putInt(DefaultValues.USER_KEY, userId);
+        backToManagement.putExtras(bundle);
+        startActivity(backToManagement);
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }

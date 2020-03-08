@@ -19,7 +19,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -50,7 +52,15 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         setContentView(R.layout.activity_aggiunta_medicina);
         AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+
+        Intent therapyIntent = getIntent();
+        if (therapyIntent != null) {
+            Bundle bundle = therapyIntent.getExtras();
+            if (bundle != null) {
+                User user = bundle.getParcelable("user");
+                userId = Objects.requireNonNull(user).getUserId();
+            }
+        }
 
         /* TextInputEditText */
         medicineName = findViewById(R.id.add_edit_medicine_name);
@@ -109,8 +119,15 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(DefaultValues.USER_KEY, userId);
+                            try {
+                                bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            backToManagement.putExtras(bundle);
                             startActivity(backToManagement);
-
                             Toast.makeText(getBaseContext(), "Terapia aggiunta", Toast.LENGTH_LONG).show();
                             finish();
                             overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -177,11 +194,19 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         return valid;
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent userManagementHome = new Intent(getApplicationContext(), UserManagementActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(DefaultValues.USER_KEY, userId);
+        try {
+            bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Intent userManagementHome = new Intent(this, UserManagementActivity.class);
+        userManagementHome.putExtras(bundle);
         userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(userManagementHome);
         finish();

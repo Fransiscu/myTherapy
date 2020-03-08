@@ -14,12 +14,12 @@ import android.widget.Toast;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.controller.MainActivity;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class HelpDialogFragment extends AppCompatDialogFragment {
 
         /* Recupero userId dalle sharedPreferences */
         SharedPreferences mPreferences = Objects.requireNonNull(this.getActivity()).getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        int userId = mPreferences.getInt(MainActivity.USER_ID, 0);
+        int userId = mPreferences.getInt(DefaultValues.USER_ID, 0);
         User user = new User();
 
         /* Recupero user dati userId */

@@ -23,4 +23,8 @@ public class DefaultValues {
     public static final String USER_ID = "user_id";
     public final static String USER_TYPE = "user_type";     // key per il tipo di utente salvato nelle shared preferences
 
+    /* Per intents */
+    public static final String USER_INTENT = "user";
+    public static final String USER_KEY = "userKey";
+
 }
