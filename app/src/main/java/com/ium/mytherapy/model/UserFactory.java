@@ -147,7 +147,7 @@ public class UserFactory {
     }
 
     public void editUser(User user) throws IOException {
-        File userToEdit = new File(DefaultValues.usersDir.toString() + user.getUserId() + "/profile.txt");
+        File userToEdit = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/profile.txt");
         userToEdit.delete();
 
         FileOutputStream fos = new FileOutputStream(userToEdit);

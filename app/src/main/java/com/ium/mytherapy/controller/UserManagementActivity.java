@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -139,12 +140,17 @@ public class UserManagementActivity extends AppCompatActivity {
                         UserFactory.getInstance().changeAvatar(userKey);
                     }
                     try {
-                        UserFactory.getInstance().editUser(user);
+                        User editedUser = updateUser(user);
+                        UserFactory.getInstance().editUser(editedUser);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                     Toast.makeText(getBaseContext(), "Salvataggio effettuato", Toast.LENGTH_LONG).show();
+                    Intent backToSupervisorHome = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+                    backToSupervisorHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(backToSupervisorHome);
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left,
                             R.anim.anim_slide_out_right);
@@ -217,14 +223,28 @@ public class UserManagementActivity extends AppCompatActivity {
                 .show());
     }
 
+    /* Raccolgo tutti i campi per aggiornare l'utente */
+    private User updateUser(User user) {
+        User editedUser = new User();
+        editedUser.setUserId(user.getUserId());
+        editedUser.setNome(Objects.requireNonNull(profileName.getText()).toString());
+        editedUser.setCognome(Objects.requireNonNull(profileSurname.getText()).toString());
+        editedUser.setUsername(Objects.requireNonNull(profileUsername.getText()).toString());
+        editedUser.setEmail(Objects.requireNonNull(user.getEmail()));
+        editedUser.setDataNascita(Objects.requireNonNull(birthdateInput.getText()).toString());
+        editedUser.setPassword(Objects.requireNonNull(profilePassword.getText()).toString());
+        return editedUser;
+    }
+
     /* Override pressione tasto back per cambiare l'animazione */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent returnIntent = new Intent();
+        Intent returnIntent = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
         setResult(Activity.RESULT_CANCELED, returnIntent);
         File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
         file.delete();  // annullo eventuale cambiamento avatar non salvato
+        startActivity(returnIntent);
         overridePendingTransition(R.anim.anim_slide_in_left,
                 R.anim.anim_slide_out_right);
     }
