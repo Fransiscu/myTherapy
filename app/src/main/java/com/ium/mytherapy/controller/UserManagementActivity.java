@@ -185,7 +185,7 @@ public class UserManagementActivity extends AppCompatActivity {
                     (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
                 pickImage();
             } else {    // se non ho i permessi li chiedo
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
             }
         });
 
@@ -261,7 +261,7 @@ public class UserManagementActivity extends AppCompatActivity {
     /* Controllo permessi prima di aprire selector dell'immagine */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
+        if (requestCode == DefaultValues.PERMISSION_REQUEST_CODE) {
             if ((grantResults.length > 0)
                     && (grantResults[0] +
                     grantResults[1]

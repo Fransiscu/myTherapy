@@ -33,9 +33,8 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class AddMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public final static String SHARED_PREFS = "com.ium.mytherapy.controller";
     public static SharedPreferences mPreferences;
-    public static String sharedPrefFile = SHARED_PREFS;
+    public static String sharedPrefFile = DefaultValues.SHARED_PREFS;
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialButton addTherapy;
     String[] itemsNumber = new String[]{"1", "2", "3"};

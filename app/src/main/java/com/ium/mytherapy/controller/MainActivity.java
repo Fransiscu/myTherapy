@@ -25,8 +25,6 @@ import androidx.core.content.ContextCompat;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static int PERMISSION_REQUEST_CODE = 123;
-    final static String USER_LIST = "DEFAULT_USER_LIST";
     ArrayList<User> userList = new ArrayList<>();
     public static SharedPreferences mPreferences;
     String userValue;
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity alla login se non c'è alcun utente salvata
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(USER_LIST, userList); // passo la lista di utenti in intent
+            bundle.putParcelableArrayList(DefaultValues.USER_LIST, userList); // passo la lista di utenti in intent
             loginActivity.putExtras(bundle);
             startActivity(loginActivity);
             finish();
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private void permissions() {
         if (!(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
             addDefaultItems();
         } else {
             addDefaultItems();
@@ -125,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {    // altrimenti richiedo i permessi e continuo ricorsivamente :) - fuck you utente
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, MainActivity.PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
             addDefaultItems();
         }
     }
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     /* Controllo che i permessi siano stati accettati */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == MainActivity.PERMISSION_REQUEST_CODE) {
+        if (requestCode == DefaultValues.PERMISSION_REQUEST_CODE) {
             if ((grantResults.length > 0)
                     && (grantResults[0] +
                     grantResults[1]

@@ -56,11 +56,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     ArrayList<Medicina> medicineArrayList;
     EditedScrollView scrollView;
     MaterialTextView noMedicine, topMidnight, bottomMidnight;
-
-    public static final String MEDICINA = "MEDICINE_INTENT";
-    TextView todaysDate, notifTitolo,
-            medName1, medName2, medName3,
-            medTime1, medTime2, medTime3;
+    TextView todaysDate, notifTitolo, medName1, medName2, medName3, medTime1, medTime2, medTime3;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -216,7 +212,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             } while (current.isPresa());
 
             Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
-            landingIntent.putExtra(MEDICINA, current);
+            landingIntent.putExtra(DefaultValues.MEDICINA, current);
             landingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
             PendingIntent landingPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, landingIntent, PendingIntent.FLAG_ONE_SHOT);

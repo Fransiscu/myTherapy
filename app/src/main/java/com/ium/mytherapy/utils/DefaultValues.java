@@ -26,5 +26,12 @@ public class DefaultValues {
     /* Per intents */
     public static final String USER_INTENT = "user";
     public static final String USER_KEY = "userKey";
+    public static final String USER_LIST = "DEFAULT_USER_LIST";
+    public static final String MEDICINA = "MEDICINE_INTENT";
+
+    /* Per i permessi */
+    public static final int PERMISSION_REQUEST_CODE = 123;
+
+
 
 }
