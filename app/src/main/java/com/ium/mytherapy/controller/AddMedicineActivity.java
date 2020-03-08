@@ -194,7 +194,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         return valid;
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

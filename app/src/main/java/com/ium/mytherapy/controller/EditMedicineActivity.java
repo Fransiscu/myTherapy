@@ -55,16 +55,6 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
         saveEdits = findViewById(R.id.save_therapy_edits);
 
-        /* Devo portarlo da UserManagementActivirty */
-//        Intent therapyIntent = getIntent();
-//        if (therapyIntent != null) {
-//            Bundle bundle = therapyIntent.getExtras();
-//            if (bundle != null) {
-//                User user = bundle.getParcelable("user");
-//                userId = Objects.requireNonNull(user).getUserId();
-//            }
-//        }
-
         /* Setto valori e adapter degli spinner */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -74,16 +64,9 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         spinnerFreq.setAdapter(adapterString);
 
         /* Intent per therapy */
+        Intent therapyIntent = getIntent();
         if (therapyIntent != null) {
             Bundle bundle = therapyIntent.getExtras();
-            Intent therapyIntent = getIntent();
-            if (therapyIntent != null) {
-                Bundle bundle = therapyIntent.getExtras();
-                if (bundle != null) {
-                    User user = bundle.getParcelable("user");
-                    userId = Objects.requireNonNull(user).getUserId();
-                }
-            }
             if (bundle != null) {
                 currentTherapy = bundle.getParcelable("MEDICINA");
                 if (currentTherapy != null) {
@@ -96,6 +79,8 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                     notifCheckbox.setChecked(currentTherapy.isNotifEnabled()); // a quanto pare funziona
                     newTherapy = currentTherapy;    // creo una copia della terapia corrente e mi preparo a modificarla
                 }
+                User user = bundle.getParcelable("user");
+                userId = Objects.requireNonNull(user).getUserId();
             }
         }
 
@@ -112,6 +97,14 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                         Toast.makeText(getBaseContext(), "Errore durante la modifica della terapia", Toast.LENGTH_LONG).show();
                     }
                     Intent backToManagement = new Intent(this, UserManagementActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(DefaultValues.USER_KEY, userId);
+                    try {
+                        bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    backToManagement.putExtras(bundle);
                     startActivity(backToManagement);
                     finish();
                     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
@@ -136,7 +129,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         return MedicinaFactory.getInstance().deleteMedicineFromCode(null, newTherapy);
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -147,9 +140,10 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent userManagementHome = new Intent(getApplicationContext(), UserManagementActivity.class);
-        userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(userManagementHome);
+        Intent backToManagement = new Intent(this, UserManagementActivity.class);
+        bundle.putInt(DefaultValues.USER_KEY, userId);
+        backToManagement.putExtras(bundle);
+        startActivity(backToManagement);
         finish();
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }

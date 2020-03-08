@@ -71,6 +71,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
             Intent editTherapyIntent = new Intent(context, EditMedicineActivity.class);
             Bundle bundle = new Bundle();
             bundle.putParcelable("MEDICINA", models.get(position));
+            bundle.putParcelable("user", user);
             editTherapyIntent.putExtras(bundle);
             context.startActivity(editTherapyIntent);
             ((Activity) context).finish();
