@@ -113,11 +113,8 @@ public class MedicinaFactory {
 
     public boolean deleteMedicineFromCode(User user, Medicina med) {
 
-        user = new User();
-        user.setUserId(0);
-
         // impongo userid == 0
-        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + 0 + "/medicine/" + med.getCode());
+        File fileToDelete = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine/" + med.getCode());
         boolean succeded = fileToDelete.delete();
 
         if (!succeded) {

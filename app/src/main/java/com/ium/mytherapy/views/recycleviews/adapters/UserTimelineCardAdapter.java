@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.MedicineStatusActivity;
-import com.ium.mytherapy.controller.UserHomeActivity;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.recycleviews.holders.UserTimelineCardHolder;
 
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
         userTimelineCardHolder.setUserTimelineClickListener((v, position1) -> {
             v.setSelected(true);
             Bundle bundle = new Bundle();
-            bundle.putParcelable(UserHomeActivity.MEDICINA, models.get(position));
+            bundle.putParcelable(DefaultValues.MEDICINA, models.get(position));
             Intent therapy = new Intent(context.getApplicationContext(), MedicineStatusActivity.class);
             therapy.putExtras(bundle);
             context.startActivity(therapy);

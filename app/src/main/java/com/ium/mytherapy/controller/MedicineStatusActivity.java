@@ -19,6 +19,7 @@ import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
 import com.ium.mytherapy.model.UserFactory;
+import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.Utility;
 
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();
             if (bundle != null) {
-                medicina = bundle.getParcelable(UserHomeActivity.MEDICINA);
+                medicina = bundle.getParcelable(DefaultValues.MEDICINA);
                 if (medicina != null) {
                     medicineName.setText(Objects.requireNonNull(medicina).getNome().toUpperCase());
                     medicineHour.setText(medicina.getOra());
@@ -119,7 +120,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
         /* Listener tasto dettagli medicina */
         medicineDetailsButton.setOnClickListener(view -> {
             Intent medicineDetailsActivity = new Intent(getApplicationContext(), MedicineDetailsActivity.class);
-            medicineDetailsActivity.putExtra(UserHomeActivity.MEDICINA, medicina);
+            medicineDetailsActivity.putExtra(DefaultValues.MEDICINA, medicina);
             startActivity(medicineDetailsActivity);
         });
 

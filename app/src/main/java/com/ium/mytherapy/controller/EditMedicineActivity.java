@@ -90,7 +90,12 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                 .setMessage("Stai per modificare la terapia, sicuro di voler procedere?")
                 .setCancelable(false)
                 .setPositiveButton("Procedi", (dialogInterface, i) -> {
-                    boolean succeded = editTherapy(newTherapy);
+                    boolean succeded = false;
+                    try {
+                        succeded = editTherapy(newTherapy);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (succeded) {
                         Toast.makeText(getBaseContext(), "Terapia modificata", Toast.LENGTH_LONG).show();
                     } else {
@@ -115,7 +120,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-    private boolean editTherapy(Medicina newTherapy) {
+    private boolean editTherapy(Medicina newTherapy) throws IOException {
         newTherapy.setNome(String.valueOf(medicineName.getText()));
         newTherapy.setDescrizione(String.valueOf(medicineDetails.getText()));
         newTherapy.setDosaggio(String.valueOf(medicineStandardDosage.getText()));
@@ -126,7 +131,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         newTherapy.setNotifEnabled(notifCheckbox.isChecked());
 
         /* Sostituire primo campo con user */
-        return MedicinaFactory.getInstance().deleteMedicineFromCode(null, newTherapy);
+        return MedicinaFactory.getInstance().deleteMedicineFromCode(UserFactory.getInstance().getUser(userId), newTherapy);
     }
 
     /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.utils.DefaultValues;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -39,7 +40,7 @@ public class MedicineDetailsActivity extends AppCompatActivity {
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();
             if (bundle != null) {
-                medicine = bundle.getParcelable(UserHomeActivity.MEDICINA);
+                medicine = bundle.getParcelable(DefaultValues.MEDICINA);
                 if (medicine != null) {
                     pageTitle.setText(medicine.getNome());
                     medicineDetails.setText(medicine.getDescrizione());
