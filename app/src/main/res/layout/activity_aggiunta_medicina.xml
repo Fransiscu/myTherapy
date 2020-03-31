@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="12sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/titolo_aggiunta_modifica_medicina"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

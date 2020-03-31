@@ -73,4 +73,5 @@
     <string name="consigli_paziente">Consigli per il paziente</string>
     <string name="orario">Orario</string>
     <string name="nessuna_terapia">Nessuna terapia presente.</string>
+    <string name="ora_test">16:00</string>
 </resources>
