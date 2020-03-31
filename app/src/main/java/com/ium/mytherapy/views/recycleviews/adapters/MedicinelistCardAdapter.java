@@ -29,11 +29,14 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
     private Context context;
     private ArrayList<Medicina> models;
     private User user;
+    private MedicineTimelineCardAdapter medicineTimelineCardAdapter;
+    // passo questo adapter in modo da poter aggiornare la timeline del giorno quando chiamo la medicineListCardHolder.delete
 
-    public MedicinelistCardAdapter(Context context, User user, ArrayList<Medicina> models) {
+    public MedicinelistCardAdapter(Context context, User user, ArrayList<Medicina> models, MedicineTimelineCardAdapter medicineTimelineCardAdapter) {
         this.context = context;
         this.models = models;
         this.user = user;
+        this.medicineTimelineCardAdapter = medicineTimelineCardAdapter;
     }
 
     @NonNull
@@ -60,7 +63,11 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .setCancelable(false)
                 .setPositiveButton("Rimuovi", (dialogInterface, i) -> {
                     MedicinaFactory.getInstance().removeMedicine(models.get(position), user);
-                    medicineListCardHolder.itemView.setVisibility(View.GONE);
+                    models.remove(position);
+                    this.notifyItemRemoved(position);
+                    this.notifyItemRangeRemoved(0, models.size() - 1);
+                    medicineTimelineCardAdapter.notifyItemRemoved(position);
+                    medicineTimelineCardAdapter.notifyItemRangeChanged(0, models.size() - 1);
                     Toast.makeText(context, "Terapia rimossa", Toast.LENGTH_LONG).show();
                 })
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {

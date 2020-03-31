@@ -46,8 +46,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
     RecyclerView MedicineTimelineCardRecyclerView, MedicinelistCardRecyclerView;
-    MedicineTimelineCardAdapter medicineTimelineCardAdapter;
-    MedicinelistCardAdapter medicinelistCardAdapter;
+    public MedicineTimelineCardAdapter medicineTimelineCardAdapter;
+    public MedicinelistCardAdapter medicinelistCardAdapter;
     CircleImageView profileImage, editPicture;
     MaterialButton deleteUser, save, addTherapy;
     TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
@@ -126,7 +126,7 @@ public class UserManagementActivity extends AppCompatActivity {
         /* Riempio lista terapie */
         MedicinelistCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
         MedicinelistCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList);
+        medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList, medicineTimelineCardAdapter);
         MedicinelistCardRecyclerView.setAdapter(medicinelistCardAdapter);
         /* Fine lista terapie */
 
@@ -221,6 +221,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 .setNegativeButton("Annulla", (dialogInterface, i) -> {
                 })
                 .show());
+
     }
 
     /* Raccolgo tutti i campi per aggiornare l'utente */

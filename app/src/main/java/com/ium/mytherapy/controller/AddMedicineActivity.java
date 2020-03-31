@@ -16,6 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.model.Medicina;
 import com.ium.mytherapy.model.MedicinaFactory;
@@ -39,7 +40,10 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
     MaterialButton addTherapy;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+    final static String test = "test";
+    int tapsCount = 0;
 
+    MaterialTextView title;
     TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips, medicineHour;
     MaterialCheckBox checkbox;
     int userId;
@@ -62,6 +66,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         }
 
         /* TextInputEditText */
+        title = findViewById(R.id.titolo_aggiunta_modifica_medicina);
         medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
@@ -91,6 +96,14 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         medicineHour.setShowSoftInputOnFocus(false);
         medicineHour.setInputType(InputType.TYPE_NULL);
         medicineHour.setFocusable(false);
+
+        /* Al secondo tap del titolo riempie i campi di valori test */
+        title.setOnClickListener(view -> {
+            tapsCount++;
+            if (tapsCount > 1) {
+                setTestFields();
+            }
+        });
 
         medicineHour.setOnClickListener(view -> {
             /* Apro datePicker per selezionare l'ora della notifica */
@@ -137,6 +150,16 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
+    }
+
+    /* Per settare i campi automaticamente e rendere più veloce la creazione di una medicina test */
+    private void setTestFields() {
+        medicineName.setText(test);
+        medicineDetails.setText(test);
+        medicineStandardDosage.setText("1");
+        medicineLinks.setText(test);
+        medicineTips.setText(test);
+        medicineHour.setText(R.string.ora_test);
     }
 
     private Medicina getMedicine() {
