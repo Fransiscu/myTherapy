@@ -126,7 +126,7 @@ public class UserManagementActivity extends AppCompatActivity {
         /* Riempio lista terapie */
         MedicinelistCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
         MedicinelistCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList);
+        medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList, medicineTimelineCardAdapter);
         MedicinelistCardRecyclerView.setAdapter(medicinelistCardAdapter);
         /* Fine lista terapie */
 
@@ -223,11 +223,6 @@ public class UserManagementActivity extends AppCompatActivity {
                 .show());
 
     }
-
-//    public static void refreshRecyclerViews(int position) {
-//        medicinelistCardAdapter.notifyItemRemoved(position);
-//        medicineTimelineCardAdapter.notifyItemRemoved(position);
-//    }
 
     /* Raccolgo tutti i campi per aggiornare l'utente */
     private User updateUser(User user) {
