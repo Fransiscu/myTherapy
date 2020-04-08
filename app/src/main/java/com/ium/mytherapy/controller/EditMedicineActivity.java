@@ -1,5 +1,7 @@
 package com.ium.mytherapy.controller;
 
+import android.annotation.SuppressLint;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +38,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
     int userId;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,19 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
                 userId = Objects.requireNonNull(user).getUserId();
             }
         }
+
+        /* Listener per campo orario */
+        medicineHour.setOnClickListener(view -> {
+            /* Apro datePicker per selezionare l'ora della notifica */
+            Calendar mcurrentTime = Calendar.getInstance();
+            int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = mcurrentTime.get(Calendar.MINUTE);
+            TimePickerDialog mTimePicker;
+            /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
+            mTimePicker = new TimePickerDialog(EditMedicineActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
+            mTimePicker.setMessage("Seleziona l'orario");
+            mTimePicker.show();
+        });
 
         /* Listener tasto per confermare l'aggiunta della terapia */
         saveEdits.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)

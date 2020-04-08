@@ -18,16 +18,24 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="q">
-        <activity android:name=".controller.EditMedicineActivity" />
-        <activity android:name=".controller.MedicineDetailsActivity" />
-        <activity android:name=".controller.AddMedicineActivity" />
+        <activity
+            android:name=".controller.EditMedicineActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".controller.MedicineDetailsActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".controller.AddMedicineActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".controller.MedicineStatusActivity" />
         <activity android:name=".controller.UserHomeActivity" />
         <activity
             android:name=".controller.UserManagementActivity"
             android:parentActivityName=".controller.SupervisorHomeActivity" />
         <activity android:name=".controller.SupervisorHomeActivity" />
-        <activity android:name=".controller.AddUserActivity" />
+        <activity
+            android:name=".controller.AddUserActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".controller.SupervisorSignupActivity"
             android:windowSoftInputMode="adjustResize" />
