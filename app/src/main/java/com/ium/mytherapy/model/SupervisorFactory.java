@@ -70,7 +70,7 @@ public class SupervisorFactory {
         return null;
     }
 
-    /* Da file a object in java */
+    /* Supervisor da file a object in java */
     private Supervisor getSupervisorFromFile(String filePath) throws IOException {
         Supervisor supervisor = new Supervisor();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
