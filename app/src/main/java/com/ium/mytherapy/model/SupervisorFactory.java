@@ -1,7 +1,5 @@
 package com.ium.mytherapy.model;
 
-import android.os.Environment;
-
 import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.BufferedReader;
@@ -54,6 +52,24 @@ public class SupervisorFactory {
 
     }
 
+    /* Verifico esistenza supervisor */
+    public Supervisor verifySueprvisor(String username, String password) throws IOException {
+        ArrayList<Supervisor> supervisors = this.getSupervisors();
+
+        if (supervisors == null) {
+            return null;
+        }
+
+        for (Supervisor supervisor : Objects.requireNonNull(supervisors)) {
+
+            if (supervisor.getUsername().equals(username) && supervisor.getPassword().equals(password)) {
+                return supervisor;
+            }
+        }
+
+        return null;
+    }
+
     /* Da file a object in java */
     private Supervisor getSupervisorFromFile(String filePath) throws IOException {
         Supervisor supervisor = new Supervisor();
@@ -91,7 +107,7 @@ public class SupervisorFactory {
     }
 
     private ArrayList<Supervisor> getSupervisors() throws IOException {
-        File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myTherapy/supervisors/");
+        File f = new File(DefaultValues.supervisorDir.toString());
         ArrayList<Supervisor> supervisors = new ArrayList<>();
 
         /* Scorro tutte le cartelle */
@@ -99,7 +115,7 @@ public class SupervisorFactory {
         if (files != null) {
             for (File inFile : files) {
                 if (inFile.isDirectory()) {
-                    supervisors.add(getSupervisorFromFile(inFile.toString()));
+                    supervisors.add(getSupervisorFromFile(inFile.toString() + "/profile.txt"));
                 }
             }
         } else {

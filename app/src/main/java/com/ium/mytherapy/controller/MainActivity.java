@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(supervisorIntent);
             finish();
         } else {
-            Intent loginActivity = new Intent(this, LoginActivity.class);    // cambio subito activity alla login se non c'è alcun utente salvata
+            Intent loginActivity = new Intent(this, UserLoginActivity.class);    // cambio subito activity alla login se non c'è alcun utente salvata
             Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(DefaultValues.USER_LIST, userList); // passo la lista di utenti in intent
             loginActivity.putExtras(bundle);

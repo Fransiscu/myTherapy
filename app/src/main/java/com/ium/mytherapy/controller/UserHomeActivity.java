@@ -143,7 +143,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                 .setMessage("Sei sicuro di voler fare il logout?")
                 .setCancelable(false)
                 .setPositiveButton("Logout", (dialogInterface, i) -> {
-                    Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent backToHome = new Intent(getApplicationContext(), UserLoginActivity.class);
                     startActivity(backToHome);
                     SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();

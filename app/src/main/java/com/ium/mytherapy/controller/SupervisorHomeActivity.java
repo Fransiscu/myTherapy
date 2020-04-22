@@ -43,6 +43,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     public static ArrayList<User> getUsers() throws IOException {
         ArrayList<User> users;
 
+        // TODO: aggiungi logica che permetta di distinguere utenti di supervisori diversi
+
         users = UserFactory.getInstance().getUsers();
         Collections.sort(users);
 
@@ -137,7 +139,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
                 .setMessage("Sei sicuro di voler fare il logout?")
                 .setCancelable(false)
                 .setPositiveButton("Logout", (dialogInterface, i) -> {
-                    Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent backToHome = new Intent(getApplicationContext(), UserLoginActivity.class);
                     startActivity(backToHome);
                     SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();
