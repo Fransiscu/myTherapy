@@ -41,6 +41,7 @@ public class SupervisorFactory {
         fos.flush();
         fos = new FileOutputStream(newSupervisor + "/utenti.txt");
         fos.flush();
+
         try {
             FileWriter fw = new FileWriter(newSupervisor + "/profile.txt", true);
             fw.write(supervisor.getSupervisorId() + "," + supervisor.getNome() + "," + supervisor.getCognome() + "," + supervisor.getEmail() + "," +
