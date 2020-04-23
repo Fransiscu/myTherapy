@@ -86,7 +86,6 @@ public class MedicinaFactory {
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
-
     }
 
     /* Raccolgo medicine per utente */

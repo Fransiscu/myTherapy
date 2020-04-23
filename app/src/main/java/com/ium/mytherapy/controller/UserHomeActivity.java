@@ -57,6 +57,8 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
     EditedScrollView scrollView;
     MaterialTextView noMedicine, topMidnight, bottomMidnight;
     TextView todaysDate, notifTitolo, medName1, medName2, medName3, medTime1, medTime2, medTime3;
+    SharedPreferences mPreferences;
+    int userId;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -64,9 +66,12 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_utente);
 
+        mPreferences = getSharedPreferences(DefaultValues.sharedPrefFile, MODE_PRIVATE);
+        userId = mPreferences.getInt(DefaultValues.USER_ID, 0);
+
         User user = new User();
         try {
-            user = UserFactory.getInstance().getUser(0);
+            user = UserFactory.getInstance().getUser(userId);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,7 +100,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         userTimelineRecyclerView.setAdapter(userTimelineCardAdapter);
 
         /* Setto le linee orizzontali a seconda dello stato della terapia */
-
         if (!therapy.isEmpty() && therapy != null) {
             if (therapy.get(0).isPresa()) {
                 topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
@@ -117,7 +121,6 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
 
         notifTitolo = findViewById(R.id.titolo_home_utente);
-
         logout = findViewById(R.id.user_logout_button);
         helpMe = findViewById(R.id.user_help);
 
