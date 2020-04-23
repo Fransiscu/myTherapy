@@ -27,7 +27,7 @@ public class UserReportFactory {
     public static void addReport(UserReport report) {
         try {
             FileWriter fw = new FileWriter(DefaultValues.path + "/myTherapy/supervisors/report.txt", false);
-            fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage());
+            fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage() + "," + report.getUserId());
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
@@ -81,6 +81,7 @@ public class UserReportFactory {
         userReport.setChecked(Boolean.getBoolean(strings.get(0)));
         userReport.setMedicina(strings.get(1));
         userReport.setErrorMessage(strings.get(2));
+        userReport.setUserId(Integer.parseInt(strings.get(3)));
 
         return userReport;
     }
