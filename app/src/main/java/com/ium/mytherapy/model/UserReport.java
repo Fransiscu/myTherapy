@@ -1,9 +1,18 @@
 package com.ium.mytherapy.model;
 
 public class UserReport {
+    private int userId;
     private boolean checked;
     private String medicina;
     private String errorMessage;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     boolean isChecked() {
         return checked;

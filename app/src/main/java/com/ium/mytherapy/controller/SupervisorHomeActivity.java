@@ -96,22 +96,29 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
             /* Listener per l'icona delle notifiche */
             /* Apro una finestrella con l'ultima non letta */
-            notifications.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
-                    .setTitle("Richiesta di supporto")
-                    .setMessage(report.getMedicina() + "\n\n" + report.getErrorMessage())
-                    .setCancelable(false)
-                    .setPositiveButton("Segna come letto", (dialogInterface, i) -> {
-                        try {
-                            UserReportFactory.getInstance().setChecked();
-                            notifications.setVisibility(View.INVISIBLE);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(getBaseContext(), "Report segnato come letto", Toast.LENGTH_LONG).show();
-                    })
-                    .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                    })
-                    .show());
+            notifications.setOnClickListener(view -> {
+                try {
+                    new MaterialAlertDialogBuilder(this)
+                            .setTitle("Richiesta di supporto")
+                            .setMessage(UserFactory.getInstance().getUser(report.getUserId()).toString() + "\n\n" +
+                                    report.getMedicina() + "\n\n" + report.getErrorMessage())
+                            .setCancelable(false)
+                            .setPositiveButton("Segna come letto", (dialogInterface, i) -> {
+                                try {
+                                    UserReportFactory.getInstance().setChecked();
+                                    notifications.setVisibility(View.INVISIBLE);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                Toast.makeText(getBaseContext(), "Report segnato come letto", Toast.LENGTH_LONG).show();
+                            })
+                            .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                            })
+                            .show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
             try {
                 list = getUsers();
@@ -137,7 +144,7 @@ public class SupervisorHomeActivity extends AppCompatActivity {
                 .setMessage("Sei sicuro di voler fare il logout?")
                 .setCancelable(false)
                 .setPositiveButton("Logout", (dialogInterface, i) -> {
-                    Intent backToHome = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent backToHome = new Intent(getApplicationContext(), UserLoginActivity.class);
                     startActivity(backToHome);
                     SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor preferencesEditor = sharedPreferences.edit();

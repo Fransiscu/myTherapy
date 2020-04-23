@@ -22,7 +22,7 @@ import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class UserLoginActivity extends AppCompatActivity {
     TextInputEditText usernameInput, passwordText;
     MaterialButton loginButton, supervisorButton;
     TextInputLayout passwordInputLayout;
@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login_utente);
 
         passwordInputLayout = findViewById(R.id.password_input_toggle);
         usernameInput = findViewById(R.id.login_username);
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setEnabled(false);  // disabilito tasto
 
         /* Mostro finestrella di caricamento giusto per scena */
-        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(UserLoginActivity.this,
                 R.style.AppCompatAlertDialogStyle);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Login in corso");
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /* Da chiamare se il login non va a buon fine */
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Login fallito", Toast.LENGTH_LONG).show();
         loginButton.setEnabled(true);
     }
 

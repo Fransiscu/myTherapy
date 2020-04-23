@@ -40,7 +40,7 @@
             android:name=".controller.SupervisorSignupActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".controller.SupervisorLoginActivity" />
-        <activity android:name=".controller.LoginActivity" />
+        <activity android:name=".controller.UserLoginActivity" />
         <activity
             android:name=".views.SplashActivity"
             android:theme="@style/SplashTheme">

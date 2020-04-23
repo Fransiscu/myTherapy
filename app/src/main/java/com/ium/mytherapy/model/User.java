@@ -69,7 +69,7 @@ public class User implements Parcelable, Comparable<User> {
     @NonNull
     @Override
     public String toString() {
-        return userId + " " + nome;
+        return userId + " - " + nome + " " + cognome;
     }
 
     public String getNome() {

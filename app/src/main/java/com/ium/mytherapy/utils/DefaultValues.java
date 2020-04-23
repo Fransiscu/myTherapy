@@ -32,6 +32,4 @@ public class DefaultValues {
     /* Per i permessi */
     public static final int PERMISSION_REQUEST_CODE = 123;
 
-
-
 }

@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+
 public class Supervisor implements Parcelable {
     private String nome;
     private String cognome;
@@ -27,7 +29,13 @@ public class Supervisor implements Parcelable {
         }
     };
 
-    int getSupervisorId() {
+    @NonNull
+    @Override
+    public String toString() {
+        return "Supervisore = " + this.username;
+    }
+
+    public int getSupervisorId() {
         return supervisorId;
     }
 
