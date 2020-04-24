@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class AddUserActivity extends AppCompatActivity {
     TextView closeAlert;
     MaterialCardView alertCard;
     MaterialButton addUserButton;
+    ScrollView addUserScrollView;
     private int mYear, mMonth, mDay;
 
     @SuppressWarnings("deprecation")
@@ -54,6 +56,7 @@ public class AddUserActivity extends AppCompatActivity {
         alertCard = findViewById(R.id.adduser_alert_card);
         closeAlert = findViewById(R.id.x_chiudi_alert);
         passwordInputLayout = findViewById(R.id.user_password_toggle);
+        addUserScrollView = findViewById(R.id.aggiunta_utente_scrollview);
 
         /* Per nascondere la carta di "ATTENZIONE" */
         closeAlert.setOnClickListener(view -> alertCard.setVisibility(View.GONE));
