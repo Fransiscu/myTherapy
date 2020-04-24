@@ -7,7 +7,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="BorderGrey">#a4a4a4</color>
-    <color name="light_green_background">#32E7FFDA</color>
-    <color name="light_red_background">#22F7D4D4</color>
-
+    <color name="lightRedBackground">#1BF66B6B</color>
+    <color name="lightGreenBackground">#4675FD73</color>
+    <color name="medicineTaken">#2E78FF6F</color>
+    <color name="greyText">#6C6868</color>
 </resources>

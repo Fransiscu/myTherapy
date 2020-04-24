@@ -31,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 @SuppressWarnings("ALL")
 public class MedicineStatusActivity extends AppCompatActivity {
 
-    TextView medicineName, medicineHour, confirmText, medicineDetails, reminderCardTitle;
+    TextView medicineName, medicineHour, confirmText, medicineDetails, reminderCardTitle, doneCardTitle;
     ImageView doneCardDrawable, remindCardDrawable;
     MaterialCardView confirm, remindLater;
     MaterialButton medicineDetailsButton;
@@ -52,6 +52,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
         doneCardDrawable = findViewById(R.id.stato_terapia_done);
         remindCardDrawable = findViewById(R.id.stato_terapia_notifica);
         reminderCardTitle = findViewById(R.id.titolo_carta_non_preso);
+        doneCardTitle = findViewById(R.id.titolo_carta_preso);
         medicineDetailsButton = findViewById(R.id.dettagli_medicina_button);
 
         /* Recupero intent della medicina e setto i vari campi */
@@ -131,6 +132,8 @@ public class MedicineStatusActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            setNonPresa();
         }
 
         if (medicina.isDelayed()) {
@@ -161,27 +164,39 @@ public class MedicineStatusActivity extends AppCompatActivity {
 
     }
 
+    /* Setto i colori delle cards in caso la medicina non sia presa */
+    private void setNonPresa() {
+        final Drawable redBackground = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.lightRedBackground));
+        final Drawable greenBackground = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.lightGreenBackground));
+
+        confirm.setBackground(greenBackground);
+        remindLater.setBackground(redBackground);
+    }
+
     /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
     public void setPresa(boolean changed) throws IOException {
-        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
+        final Drawable colorAccentDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
 
         if (changed) {
             medicina.setPresa(true);
             MedicinaFactory.getInstance().changePresa(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
         }
 
+        doneCardTitle.setText("Presa");
+        doneCardTitle.setTextColor(getResources().getColor(R.color.greyText));
         confirm.setClickable(false);
         confirm.setFocusable(false);
-        confirm.setForeground(greyDrawable);
-        confirm.setBackgroundColor(getResources().getColor(R.color.white));
-        doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));  // non funziona come vorrei, il colore viene sbiadito e non cambia completamente
+        confirm.setStrokeWidth(0);
+        confirm.setBackgroundColor(getResources().getColor(R.color.medicineTaken));
+        doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));
 
-        reminderCardTitle.setText("Rimanda");   // in caso abbia prima premuto su rimanda lo risetto normale
+        reminderCardTitle.setText("Non rimandabile");   // in caso abbia prima premuto su rimanda lo risetto normale
+        reminderCardTitle.setTextColor(getResources().getColor(R.color.greyText));
         remindLater.setClickable(false);
         remindLater.setFocusable(false);
-        remindLater.setForeground(greyDrawable);
-        remindLater.setBackgroundColor(getResources().getColor(R.color.white));
-        remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey)); // non funziona come vorrei, il colore viene sbiadito e non cambia completamente
+        remindLater.setStrokeWidth(0);
+        remindLater.setBackgroundColor(getResources().getColor(R.color.lightRedBackground));
+        remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
 
         confirmText.setVisibility(View.VISIBLE);
     }
@@ -199,10 +214,10 @@ public class MedicineStatusActivity extends AppCompatActivity {
 
     /* Rendo non clickabile il tasto per rimandare la notifica e aggiungo l'orario appena scelto dall'utente */
     public void greyOutReminder(int hour, int minute) {
-        final Drawable greyDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
+        final Drawable colorAccentDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
         remindLater.setClickable(false);
         remindLater.setFocusable(false);
-        remindLater.setForeground(greyDrawable);
+        remindLater.setForeground(colorAccentDrawable);
         remindLater.setBackgroundColor(getResources().getColor(R.color.white));
         remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
         reminderCardTitle.setText("Rimandato alle " + hour + ":" + minute);

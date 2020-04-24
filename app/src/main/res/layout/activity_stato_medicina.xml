@@ -86,21 +86,18 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20sp" />
+                android:layout_height="12sp" />
 
             <!-- Prima carta -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/carta_conferma_pagina_dettagli"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:backgroundTint="@color/light_green_background"
                 android:clickable="true"
                 android:elevation="20dp"
                 android:focusable="true"
                 android:layout_marginBottom="10dp"
-                android:foregroundTint="@color/light_green_background"
                 app:cardCornerRadius="4sp"
-                app:cardUseCompatPadding="true"
                 app:shapeAppearanceOverlay="@color/colorAccent"
                 app:strokeColor="@android:color/holo_green_dark"
                 app:strokeWidth="1dp">
@@ -143,13 +140,11 @@
                 android:id="@+id/carta_rimanda_pagina_dettagli"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:backgroundTint="@color/light_red_background"
                 android:clickable="true"
                 android:elevation="20dp"
                 android:focusable="true"
-                android:foregroundTint="@color/light_red_background"
+                android:foregroundTint="@color/lightRedBackground"
                 app:cardCornerRadius="4sp"
-                app:cardUseCompatPadding="true"
                 app:shapeAppearanceOverlay="@color/colorAccent"
                 app:strokeColor="@android:color/holo_red_dark"
                 app:strokeWidth="1dp">
