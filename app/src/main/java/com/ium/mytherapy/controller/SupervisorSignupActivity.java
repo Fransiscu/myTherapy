@@ -166,7 +166,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             if (password.isEmpty() || password.length() < 4 || password.length() > 10 || !password.equals(passwordConfirmation)) {
                 passwordInputLayout.setPasswordVisibilityToggleEnabled(false);
                 passwordInputConfirmationLayout.setPasswordVisibilityToggleEnabled(false);
-                passwordInput.setError("Inserisci password valida");
+                passwordInput.setError("Inserisci una password valida");
                 passwordConfirmationInput.setError("Inserisci una password valida");
                 valid = false;
             } else {
@@ -197,6 +197,8 @@ public class SupervisorSignupActivity extends AppCompatActivity {
                 });
                 materialAlertDialogBuilder.show();
 
+            } else {
+                Toast.makeText(getBaseContext(), "Errore - Controlla i campi evidenziati", Toast.LENGTH_LONG).show();
             }
         });
     }
