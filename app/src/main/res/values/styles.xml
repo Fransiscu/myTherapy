@@ -8,6 +8,7 @@
         <item name="colorPrimaryDark">@color/white</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="fontFamily">@font/opensans_regular</item>
     </style>
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Dialog">
@@ -16,10 +17,12 @@
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:background">@color/white</item>
         <item name="android:textSize">16sp</item>
+        <item name="fontFamily">@font/opensans_regular</item>
     </style>
 
     <style name="AppCompatCardsStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:color">@color/colorAccent</item>
+        <item name="fontFamily">@font/opensans_regular</item>
     </style>
 
     <!-- Splash Screen theme -->
@@ -28,6 +31,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowAnimationStyle">@null</item>
         <item name="colorPrimaryDark">@color/white</item>
+        <item name="fontFamily">@font/opensans_regular</item>
     </style>
 
 </resources>
