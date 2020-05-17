@@ -103,6 +103,8 @@ public class UserLoginActivity extends AppCompatActivity {
         /* Se non è valido */
         if (validation == null) {
             Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show();
+            usernameInput.setError("Username o password non corretti");
+            passwordText.setError("Username o password non corretti");
             new android.os.Handler().postDelayed(
                     progressDialog::dismiss, 1000); // simulo un mini delay
 
