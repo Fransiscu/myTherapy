@@ -22,9 +22,11 @@ import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -33,6 +35,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialCheckBox notifCheckbox;
     Medicina currentTherapy, newTherapy;
+    MaterialDayPicker materialDayPicker;
     MaterialButton saveEdits;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
@@ -58,6 +61,10 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         notifCheckbox = findViewById(R.id.checkbox_notifiche);
 
         saveEdits = findViewById(R.id.save_therapy_edits);
+
+        /* Week day picker */
+        materialDayPicker = findViewById(R.id.day_picker);
+        materialDayPicker.setLocale(Locale.ITALIAN);
 
         /* Setto valori e adapter degli spinner */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
