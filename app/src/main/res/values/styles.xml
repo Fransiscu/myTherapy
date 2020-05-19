@@ -2,7 +2,6 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:windowActionBarOverlay">true</item>
         <item name="colorPrimary">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/white</item>
@@ -23,20 +22,6 @@
     <style name="AppCompatCardsStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:color">@color/colorAccent</item>
         <item name="fontFamily">@font/opensans_regular</item>
-    </style>
-
-    <style name="myMaterialWeekDay">
-        <color name="dayPressed">@color/colorPrimaryDark</color>
-        <color name="daySelected">@color/colorPrimary</color>
-        <color name="daySelectedTextColor">@android:color/white</color>
-        <color name="dayDeselected">#FAFAFA</color>
-        <color name="dayDeselectedTextColor">@android:color/black</color>
-
-        <!-- Customizing colors for disabled days-->
-        <color name="daySelectedAndDisabled">#43444F</color>
-        <color name="daySelectedAndDisabledTextColor">@color/daySelectedTextColor</color>
-        <color name="dayDeselectedAndDisabled">@color/dayDeselected</color>
-        <color name="dayDeselectedAndDisabledTextColor">@android:color/darker_gray</color>
     </style>
 
     <!-- Splash Screen theme -->

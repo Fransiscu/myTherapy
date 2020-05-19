@@ -218,8 +218,7 @@
                 <ca.antonious.materialdaypicker.MaterialDayPicker
                     android:id="@+id/day_picker"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:theme="@style/myMaterialWeekDay" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
