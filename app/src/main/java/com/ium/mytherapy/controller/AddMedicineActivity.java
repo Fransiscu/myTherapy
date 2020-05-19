@@ -26,6 +26,7 @@ import com.ium.mytherapy.utils.DefaultValues;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -89,6 +90,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
 
         /* Week day picker */
         materialDayPicker = findViewById(R.id.day_picker);
+        materialDayPicker.setLocale(Locale.ITALIAN);
 
         /* Setto i valori degli spinners + adapters */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
