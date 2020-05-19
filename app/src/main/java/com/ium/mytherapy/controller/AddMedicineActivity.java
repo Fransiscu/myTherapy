@@ -30,6 +30,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import androidx.appcompat.app.AppCompatActivity;
+import ca.antonious.materialdaypicker.MaterialDayPicker;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class AddMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -38,6 +39,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
     public static String sharedPrefFile = DefaultValues.SHARED_PREFS;
     MaterialSpinner spinnerNum, spinnerFreq;
     MaterialButton addTherapy;
+    MaterialDayPicker materialDayPicker;
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
     final static String test = "test";
@@ -84,6 +86,9 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
 
         /* Checkbox */
         checkbox = findViewById(R.id.checkbox_notifiche);
+
+        /* Week day picker */
+        materialDayPicker = findViewById(R.id.day_picker);
 
         /* Setto i valori degli spinners + adapters */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
