@@ -43,7 +43,7 @@
                         android:paddingBottom="20sp">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profileImage"
+                            android:id="@+id/profile_image"
                             android:layout_width="180sp"
                             android:layout_height="180sp"
                             android:layout_centerHorizontal="true"
@@ -53,12 +53,12 @@
                             app:civ_border_width="1dp" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/editProfileImage"
+                            android:id="@+id/edit_profile_image"
                             android:layout_width="40sp"
                             android:layout_height="40sp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="30sp"
-                            android:layout_toEndOf="@id/profileImage"
+                            android:layout_toEndOf="@id/profile_image"
                             android:src="@android:drawable/ic_menu_edit"
                             app:civ_border_color="@color/colorAccent"
                             app:civ_border_width="1sp" />
@@ -67,12 +67,12 @@
                             android:id="@+id/profileTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/profileImage"
+                            android:layout_below="@id/profile_image"
                             android:layout_marginTop="5sp"
                             android:paddingLeft="30sp"
                             android:paddingTop="10sp"
                             android:paddingRight="30sp"
-                            android:text="@string/suggerimento_nome"
+                            android:text="@string/name_hint"
                             android:textAlignment="center"
                             android:textColor="@color/cardview_dark_background"
                             android:textSize="48sp"
@@ -82,7 +82,7 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <!-- Card cancellazione utente -->
+                <!-- User deletion card -->
 
                 <LinearLayout
                     android:id="@+id/delete_card_layout"
@@ -113,7 +113,7 @@
                             android:layout_height="70dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginRight="8dp"
-                            android:text="@string/cancella_utente"
+                            android:text="@string/delete_user_text"
                             android:textAlignment="center"
                             android:textColor="@android:color/holo_red_dark"
                             android:textSize="18sp" />
@@ -122,7 +122,7 @@
 
                 </LinearLayout>
 
-                <!-- Card modifica dati -->
+                <!-- Data edit card -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="12sp" />
 
-                    <!-- Inizio modifica dati -->
+                    <!-- Start edit -->
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/profile_details"
@@ -167,7 +167,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:hint="@string/suggerimento_nome"
+                                    android:hint="@string/name_hint"
                                     android:paddingStart="0sp"
                                     android:paddingEnd="5sp"
                                     tools:ignore="TooDeepLayout">
@@ -185,7 +185,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:hint="@string/suggerimento_cognome"
+                                    android:hint="@string/surname_hint"
                                     android:paddingStart="5sp"
                                     android:paddingEnd="0sp">
 
@@ -209,7 +209,7 @@
                                 android:layout_marginBottom="0sp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:hint="@string/suggerimento_data">
+                                android:hint="@string/date_hint">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/profile_date"
@@ -229,7 +229,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:hint="@string/suggerimento_username">
+                                android:hint="@string/username_tip">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/profile_username"
@@ -248,7 +248,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
-                                android:hint="@string/suggerimento_password"
+                                android:hint="@string/password_hint"
                                 app:passwordToggleEnabled="true">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -268,14 +268,14 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Card timeline -->
+                    <!-- Timeline card -->
 
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="12sp" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/timeline_utente"
+                        android:id="@+id/user_timeline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/statusBarColor"
@@ -290,11 +290,11 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/terapie_giorno_titolo"
+                                android:id="@+id/day_therapies_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="10sp"
-                                android:text="@string/timeline_terapia_utente"
+                                android:text="@string/user_therapy_timeline_title"
                                 android:textSize="24sp" />
 
                             <!-- Mini timeline -->
@@ -313,14 +313,14 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <!-- Card modifica terapie -->
+                    <!-- Edit therapies card -->
 
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="12sp" />
 
                     <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/terapie_dettagli"
+                        android:id="@+id/therapies_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/statusBarColor"
@@ -341,11 +341,11 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:id="@+id/terapie_titolo"
+                                    android:id="@+id/therapies_title"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:padding="10sp"
-                                    android:text="@string/terapie_utente"
+                                    android:text="@string/user_therapies_text"
                                     android:textSize="24sp" />
 
                                 <View
@@ -354,7 +354,7 @@
                                     android:layout_weight="1" />
 
                                 <com.google.android.material.button.MaterialButton
-                                    android:id="@+id/aggiungi_terapia_button"
+                                    android:id="@+id/add_therapy_button_id"
                                     style="@style/Widget.MaterialComponents.Button.TextButton"
                                     android:layout_width="30dp"
                                     android:layout_height="40dp"
@@ -369,7 +369,7 @@
 
                             </LinearLayout>
 
-                            <!-- Lista generale terapie e aggiunta -->
+                            <!-- General therapies list and addition -->
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
@@ -378,7 +378,7 @@
 
                                 <androidx.recyclerview.widget.RecyclerView
                                         android:layout_width="match_parent"
-                                    android:id="@+id/userManagementMedicineListRecycleView"
+                                    android:id="@+id/user_management_medicine_list_recycleview"
                                     android:layout_height="wrap_content" />
 
                             </RelativeLayout>
@@ -424,7 +424,7 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/salva_modifiche_utente"
+                android:text="@string/save_user_edits"
                 android:textSize="18sp" />
 
         </GridLayout>

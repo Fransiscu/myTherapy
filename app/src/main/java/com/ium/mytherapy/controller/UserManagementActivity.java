@@ -19,8 +19,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -45,36 +45,38 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class UserManagementActivity extends AppCompatActivity {
+
+    TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
     RecyclerView MedicineTimelineCardRecyclerView, MedicinelistCardRecyclerView;
     public MedicineTimelineCardAdapter medicineTimelineCardAdapter;
     public MedicinelistCardAdapter medicinelistCardAdapter;
-    CircleImageView profileImage, editPicture;
     MaterialButton deleteUser, save, addTherapy;
-    TextInputEditText profileName, profileSurname, profileUsername, profilePassword, birthdateInput;
-    List<Medicina> medicineList;
+    CircleImageView profileImage, editPicture;
     TextView nome;
+
     private int mYear, mMonth, mDay, userKey;
+    List<Medicine> medicineList;
     boolean avatarChanged;
     User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) throws NullPointerException {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gestione_utente);
+        setContentView(R.layout.user_management_activity);
 
         nome = findViewById(R.id.profileTitle);
-        profileImage = findViewById(R.id.profileImage);
-        editPicture = findViewById(R.id.editProfileImage);
+        profileImage = findViewById(R.id.profile_image);
+        editPicture = findViewById(R.id.edit_profile_image);
         deleteUser = findViewById(R.id.deleteUser);
         save = findViewById(R.id.saveUserEdits);
-        addTherapy = findViewById(R.id.aggiungi_terapia_button);
+        addTherapy = findViewById(R.id.add_therapy_button_id);
         birthdateInput = findViewById(R.id.profile_date);
         profileName = findViewById(R.id.profile_name);
         profileSurname = findViewById(R.id.profile_surname);
         profileUsername = findViewById(R.id.profile_username);
         profilePassword = findViewById(R.id.profile_password);
 
-        /* Intent per user */
+        /* User intent */
         Intent usersIntent = getIntent();
         if (usersIntent != null) {
             Bundle bundle = usersIntent.getExtras();
@@ -89,24 +91,24 @@ public class UserManagementActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        /* Lista per le recyclerviews */
+        /* List for recyclerview */
         try {
-            medicineList = MedicinaFactory.getInstance().getMedicinesForUser(user);
+            medicineList = MedicineFactory.getInstance().getMedicinesForUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ArrayList<Medicina> medicineArrayList;
+        ArrayList<Medicine> medicineArrayList;
         medicineArrayList = new ArrayList<>(medicineList);
 
-        /* Riempio i campi base */
-        profileName.setText(user.getNome());
-        profileSurname.setText(user.getCognome());
+        /* Filling base fields */
+        profileName.setText(user.getName());
+        profileSurname.setText(user.getSurname());
         profileUsername.setText(user.getUsername());
-        birthdateInput.setText(user.getDataNascita());
+        birthdateInput.setText(user.getBirthDate());
         profilePassword.setText(user.getPassword());
-        nome.setText(String.format("%s %s", user.getNome(), user.getCognome()));
+        nome.setText(String.format("%s %s", user.getName(), user.getSurname()));
 
-        /* Immagine profilo */
+        /* Profile picture */
         File profilePicture = new File(DefaultValues.dir + "/avatar_" + user.getUserId() + ".jpeg");
         File defaultAvatar = new File(DefaultValues.dir + "/default.jpg");
         if (profilePicture.exists()) {
@@ -116,21 +118,19 @@ public class UserManagementActivity extends AppCompatActivity {
 
         }
 
-        /* Riempio timeline */
+        /* Filling timeline */
         MedicineTimelineCardRecyclerView = findViewById(R.id.userManagementMedicineTimelineRecycleView);
         MedicineTimelineCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicineTimelineCardAdapter = new MedicineTimelineCardAdapter(this, user, medicineArrayList);
         MedicineTimelineCardRecyclerView.setAdapter(medicineTimelineCardAdapter);
-        /* Fine timeline */
 
-        /* Riempio lista terapie */
-        MedicinelistCardRecyclerView = findViewById(R.id.userManagementMedicineListRecycleView);
+        /* Filling therapy list */
+        MedicinelistCardRecyclerView = findViewById(R.id.user_management_medicine_list_recycleview);
         MedicinelistCardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicinelistCardAdapter = new MedicinelistCardAdapter(this, user, medicineArrayList, medicineTimelineCardAdapter);
         MedicinelistCardRecyclerView.setAdapter(medicinelistCardAdapter);
-        /* Fine lista terapie */
 
-        /* Listener tasto salvataggio dati utente */
+        /* save user data on click listener */
         save.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("SALVATAGGIO")
                 .setMessage("Salvare i cambiamenti?")
@@ -159,7 +159,7 @@ public class UserManagementActivity extends AppCompatActivity {
                 })
                 .show());
 
-        /* Listener per tasto aggiunta terapia */
+        /* addTherapy on click listener */
         addTherapy.setOnClickListener(view -> {
             Intent addTherapyIntent = new Intent(getApplicationContext(), AddMedicineActivity.class);
             Bundle bundle = new Bundle();
@@ -171,7 +171,7 @@ public class UserManagementActivity extends AppCompatActivity {
                     R.anim.anim_slide_out_left);
         });
 
-        /* Calendario al tocco del campo data */
+        /* Open calendar on date field click */
         birthdateInput.setShowSoftInputOnFocus(false);
         birthdateInput.setInputType(InputType.TYPE_NULL);
         birthdateInput.setFocusable(false);
@@ -187,17 +187,17 @@ public class UserManagementActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        /* Listener tasto edit immagine */
-        editPicture.setOnClickListener(v -> {
+        /* editPicture on click listener */
+        editPicture.setOnClickListener(v -> {   // check if app has the permissions
             if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
                     (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
                 pickImage();
-            } else {    // se non ho i permessi li chiedo
+            } else {    // if not, ask for them
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
             }
         });
 
-        /* Listener tasto cancellazione utente */
+        /* deleteUser on click listener */
         deleteUser.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("CANCELLAZIONE")
                 .setMessage("Sei sicuro di voler cancellare l'utente?")
@@ -224,33 +224,20 @@ public class UserManagementActivity extends AppCompatActivity {
 
     }
 
-    /* Raccolgo tutti i campi per aggiornare l'utente */
+    /* Gather data from all fields */
     private User updateUser(User user) {
         User editedUser = new User();
         editedUser.setUserId(user.getUserId());
-        editedUser.setNome(Objects.requireNonNull(profileName.getText()).toString());
-        editedUser.setCognome(Objects.requireNonNull(profileSurname.getText()).toString());
+        editedUser.setName(Objects.requireNonNull(profileName.getText()).toString());
+        editedUser.setSurname(Objects.requireNonNull(profileSurname.getText()).toString());
         editedUser.setUsername(Objects.requireNonNull(profileUsername.getText()).toString());
         editedUser.setEmail(Objects.requireNonNull(user.getEmail()));
-        editedUser.setDataNascita(Objects.requireNonNull(birthdateInput.getText()).toString());
+        editedUser.setBirthDate(Objects.requireNonNull(birthdateInput.getText()).toString());
         editedUser.setPassword(Objects.requireNonNull(profilePassword.getText()).toString());
         return editedUser;
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent returnIntent = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
-        setResult(Activity.RESULT_CANCELED, returnIntent);
-        File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
-        file.delete();  // annullo eventuale cambiamento avatar non salvato
-        startActivity(returnIntent);
-        overridePendingTransition(R.anim.anim_slide_in_left,
-                R.anim.anim_slide_out_right);
-    }
-
-    /* Uso per ottenere l'immagine selezionata dall'utente */
+    /* Get picture from user */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -266,7 +253,6 @@ public class UserManagementActivity extends AppCompatActivity {
                     success = DefaultValues.dir.mkdir();
                 }
                 if (success) {
-                    /* Salva nella cartella */
                     File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
@@ -281,7 +267,7 @@ public class UserManagementActivity extends AppCompatActivity {
         }
     }
 
-    /* Apro image picker */
+    /* Open image picker */
     @SuppressLint("IntentReset")
     public void pickImage() {
         Intent intent = new Intent();
@@ -290,7 +276,7 @@ public class UserManagementActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Seleziona la foto"), 1000);
     }
 
-    /* Controllo permessi prima di aprire selector dell'immagine */
+    /* Checking for permissions result */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == DefaultValues.PERMISSION_REQUEST_CODE) {
@@ -305,4 +291,16 @@ public class UserManagementActivity extends AppCompatActivity {
         }
     }
 
+    /* Override on back pressed in order to change the animation */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent returnIntent = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        File file = new File(DefaultValues.dir, "avatar_" + userKey + "t.jpeg");
+        file.delete();  // annullo eventuale cambiamento avatar non salvato
+        startActivity(returnIntent);
+        overridePendingTransition(R.anim.anim_slide_in_left,
+                R.anim.anim_slide_out_right);
+    }
 }

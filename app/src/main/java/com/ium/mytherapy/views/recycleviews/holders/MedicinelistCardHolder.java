@@ -25,11 +25,14 @@ public class MedicinelistCardHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onClick(View view) {
-//        do nothing
-//        this.medicineTimelineClickListener.onItemClickListener(view, getLayoutPosition());
+        // do nothing
     }
 
     void setMedicineListClickListener(MedicineListClickListener itemClick) {
         this.medicineListClickListener = itemClick;
+    }
+
+    public MedicineListClickListener getMedicineListClickListener() {
+        return medicineListClickListener;
     }
 }

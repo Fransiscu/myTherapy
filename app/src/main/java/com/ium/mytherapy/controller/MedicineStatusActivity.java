@@ -16,8 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.utils.Utility;
@@ -35,13 +35,13 @@ public class MedicineStatusActivity extends AppCompatActivity {
     ImageView doneCardDrawable, remindCardDrawable;
     MaterialCardView confirm, remindLater;
     MaterialButton medicineDetailsButton;
-    Medicina medicina;
+    Medicine medicine;
 
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stato_medicina);
+        setContentView(R.layout.medicine_status_activity);
 
         medicineName = findViewById(R.id.dettagli_nome_medicina);
         medicineHour = findViewById(R.id.orario_sotto_titolo_dettagli);
@@ -55,21 +55,21 @@ public class MedicineStatusActivity extends AppCompatActivity {
         doneCardTitle = findViewById(R.id.titolo_carta_preso);
         medicineDetailsButton = findViewById(R.id.dettagli_medicina_button);
 
-        /* Recupero intent della medicina e setto i vari campi */
+        /* Getting medicine intent and filling the different fields */
         Intent medicineIntent = getIntent();
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();
             if (bundle != null) {
-                medicina = bundle.getParcelable(DefaultValues.MEDICINA);
-                if (medicina != null) {
-                    medicineName.setText(Objects.requireNonNull(medicina).getNome().toUpperCase());
-                    medicineHour.setText(medicina.getOra());
-                    medicineDetails.setText(medicina.getConsigliSupervisore());
+                medicine = bundle.getParcelable(DefaultValues.MEDICINA);
+                if (medicine != null) {
+                    medicineName.setText(Objects.requireNonNull(medicine).getName().toUpperCase());
+                    medicineHour.setText(medicine.getTimeHour());
+                    medicineDetails.setText(medicine.getSupervisorTips());
                 }
             }
         }
 
-        /* Listener tasto conferma medicina persa */
+        /* confirm button on click listener */
         confirm.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("Conferma")
                 .setMessage("Sicuro di voler segnare la medicina come \"presa\"?")
@@ -86,15 +86,13 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 })
                 .show());
 
-        /* Listener tasto rimanda notifica */
+        /* remindLater notification on click listener */
         remindLater.setOnClickListener(view -> {
-            /* Apro datePicker per selezionare l'ora della notifica */
-                Calendar mcurrentTime = Calendar.getInstance();
+                Calendar mcurrentTime = Calendar.getInstance(); // opening datepicker
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(MedicineStatusActivity.this, new TimePickerDialog.OnTimeSetListener() {
-                    /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         MaterialAlertDialogBuilder confirmTime = new MaterialAlertDialogBuilder(MedicineStatusActivity.this);
@@ -118,15 +116,15 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 mTimePicker.show();
         });
 
-        /* Listener tasto dettagli medicina */
+        /* medicineDetails on click listener */
         medicineDetailsButton.setOnClickListener(view -> {
             Intent medicineDetailsActivity = new Intent(getApplicationContext(), MedicineDetailsActivity.class);
-            medicineDetailsActivity.putExtra(DefaultValues.MEDICINA, medicina);
+            medicineDetailsActivity.putExtra(DefaultValues.MEDICINA, medicine);
             startActivity(medicineDetailsActivity);
         });
 
-        /* Preimposto i tasti se è già presa */
-        if (medicina.isPresa()) {
+        /* Prefilling data if already taken */
+        if (medicine.isTaken()) {
             try {
                 setPresa(false);
             } catch (IOException e) {
@@ -136,7 +134,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
             setNonPresa();
         }
 
-        if (medicina.isDelayed()) {
+        if (medicine.isDelayed()) {
             try {
                 setDelayed(false, 0, 0);
             } catch (IOException e) {
@@ -145,26 +143,26 @@ public class MedicineStatusActivity extends AppCompatActivity {
         }
     }
 
-    /* Tasto per confermare attivazione reminder + attivazione all'avvio della activity */
+    /* Reminder activation button */
     private void setDelayed(boolean changed, int selectedHour, int selectedMinute) throws IOException {
 
         if (changed) {
             greyOutReminder(selectedHour, selectedMinute);
             String timestamp = selectedHour + ":" + selectedMinute;
-            medicina.setDelayed(true);          // salvo il nuovo orario di notifica
-            medicina.setReminder(timestamp);
-            MedicinaFactory.getInstance().setReminder(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
+            medicine.setDelayed(true);          // saving new notification time
+            medicine.setReminder(timestamp);
+            MedicineFactory.getInstance().setReminder(medicine, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
             Toast.makeText(getBaseContext(), "Notifica impostata per le " + timestamp, Toast.LENGTH_LONG).show();
-        } else if (medicina.getReminder() == "none") {
+        } else if (medicine.getReminder() == "none") {
             // do nothing
         } else {
-            String[] strings = medicina.getReminder().split(":");
+            String[] strings = medicine.getReminder().split(":");
             greyOutReminder(Integer.parseInt(strings[0]), Integer.parseInt(strings[1]));
         }
 
     }
 
-    /* Setto i colori delle cards in caso la medicina non sia presa */
+    /* If medifine not taken, sett colors */
     private void setNonPresa() {
         final Drawable redBackground = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.lightRedBackground));
         final Drawable greenBackground = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.lightGreenBackground));
@@ -173,13 +171,13 @@ public class MedicineStatusActivity extends AppCompatActivity {
         remindLater.setBackground(redBackground);
     }
 
-    /* Tasto per confermare medicina presa + cambio colore dei tasti ad un grigiastro */
+    /* Medicine confirmation button and color changing after */
     public void setPresa(boolean changed) throws IOException {
         final Drawable colorAccentDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
 
         if (changed) {
-            medicina.setPresa(true);
-            MedicinaFactory.getInstance().changePresa(medicina, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
+            medicine.setTaken(true);
+            MedicineFactory.getInstance().changeTaken(medicine, UserFactory.getInstance().getUser(Utility.getUserIdFromSharedPreferences(getApplicationContext())));
         }
 
         doneCardTitle.setText("Presa");
@@ -190,7 +188,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
         confirm.setBackgroundColor(getResources().getColor(R.color.medicineTaken));
         doneCardDrawable.setImageDrawable(getDrawable(R.drawable.timeline_done_grey));
 
-        reminderCardTitle.setText("Non rimandabile");   // in caso abbia prima premuto su rimanda lo risetto normale
+        reminderCardTitle.setText("Non rimandabile");   // if notification postponed
         reminderCardTitle.setTextColor(getResources().getColor(R.color.greyText));
         remindLater.setClickable(false);
         remindLater.setFocusable(false);
@@ -201,7 +199,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
         confirmText.setVisibility(View.VISIBLE);
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override on back pressed in order to change the animation */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -212,7 +210,7 @@ public class MedicineStatusActivity extends AppCompatActivity {
                 R.anim.anim_slide_out_right);
     }
 
-    /* Rendo non clickabile il tasto per rimandare la notifica e aggiungo l'orario appena scelto dall'utente */
+    /* Making postpone button not clickable - adding new time chosen by user */
     public void greyOutReminder(int hour, int minute) {
         final Drawable colorAccentDrawable = new ColorDrawable(getApplicationContext().getResources().getColor(R.color.colorAccent));
         remindLater.setClickable(false);
@@ -222,5 +220,4 @@ public class MedicineStatusActivity extends AppCompatActivity {
         remindCardDrawable.setImageDrawable(getDrawable(R.drawable.notification_grey));
         reminderCardTitle.setText("Rimandato alle " + hour + ":" + minute);
     }
-
 }

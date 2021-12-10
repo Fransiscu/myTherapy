@@ -8,14 +8,15 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 
 public class Supervisor implements Parcelable {
-    private String nome;
-    private String cognome;
+
+    private String name;
+    private String surname;
     private String email;
     private String username;
     private String password;
-    private String dataNascita;
+    private String birthDate;
     private int supervisorId;
-    private ArrayList<User> pazienti;
+    private ArrayList<User> patients;
 
     public static final Creator<Supervisor> CREATOR = new Creator<Supervisor>() {
         @Override
@@ -29,42 +30,60 @@ public class Supervisor implements Parcelable {
         }
     };
 
+    private Supervisor(Parcel in) {
+        name = in.readString();
+        surname = in.readString();
+        email = in.readString();
+        username = in.readString();
+        password = in.readString();
+        birthDate = in.readString();
+        supervisorId = in.readInt();
+        patients = in.createTypedArrayList(User.CREATOR);
+    }
+
+    public Supervisor() {
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(surname);
+        dest.writeString(email);
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(birthDate);
+        dest.writeInt(supervisorId);
+        dest.writeTypedList(patients);
+    }
+
     @NonNull
     @Override
     public String toString() {
-        return "Supervisore = " + this.username;
+        return "Supervisor = " + this.username;
     }
 
     public int getSupervisorId() {
         return supervisorId;
     }
 
-    public ArrayList<User> getPazienti() {
-        return pazienti;
-    }
-
-    public void setPazienti(ArrayList<User> pazienti) {
-        this.pazienti = pazienti;
-    }
-
     public void setSupervisorId(int supervisorId) {
         this.supervisorId = supervisorId;
     }
 
-    String getNome() {
-        return nome;
+    String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    String getCognome() {
-        return cognome;
+    String getSurname() {
+        return surname;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     String getEmail() {
@@ -91,38 +110,12 @@ public class Supervisor implements Parcelable {
         this.password = password;
     }
 
-    String getDataNascita() {
-        return dataNascita;
+    String getBirthDate() {
+        return birthDate;
     }
 
-    public void setDataNascita(String dataNascita) {
-        this.dataNascita = dataNascita;
-    }
-
-    public Supervisor() {
-    }
-
-    private Supervisor(Parcel in) {
-        nome = in.readString();
-        cognome = in.readString();
-        email = in.readString();
-        username = in.readString();
-        password = in.readString();
-        dataNascita = in.readString();
-        supervisorId = in.readInt();
-        pazienti = in.createTypedArrayList(User.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(nome);
-        dest.writeString(cognome);
-        dest.writeString(email);
-        dest.writeString(username);
-        dest.writeString(password);
-        dest.writeString(dataNascita);
-        dest.writeInt(supervisorId);
-        dest.writeTypedList(pazienti);
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override

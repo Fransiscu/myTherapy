@@ -1,5 +1,6 @@
 package com.ium.mytherapy.views;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,9 +8,8 @@ import com.ium.mytherapy.controller.MainActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
-
-    private static final String TAG = "asd";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

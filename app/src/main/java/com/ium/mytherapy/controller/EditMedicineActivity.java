@@ -14,8 +14,8 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -32,27 +32,30 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class EditMedicineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineHour, medicineTips;
+
     MaterialSpinner spinnerNum, spinnerFreq;
-    MaterialCheckBox notifCheckbox;
-    Medicina currentTherapy, newTherapy;
     MaterialDayPicker materialDayPicker;
+    MaterialCheckBox notifCheckbox;
     MaterialButton saveEdits;
+
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+
+    Medicine currentTherapy, newTherapy;
     int userId;
 
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modifica_medicina);
+        setContentView(R.layout.edit_medicine_activity);
 
-        medicineName = findViewById(R.id.add_edit_medicine_name);
-        medicineDetails = findViewById(R.id.add_edit_medicine_details);
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
+        medicineDetails = findViewById(R.id.add_edit_medicine_details);
+        medicineName = findViewById(R.id.add_edit_medicine_name);
         medicineTips = findViewById(R.id.consigli_paziente);
-        medicineLinks = findViewById(R.id.link_utili);
         medicineHour = findViewById(R.id.orario_medicina);
+        medicineLinks = findViewById(R.id.link_utili);
 
         spinnerNum = findViewById(R.id.spinner_quantita);
         spinnerFreq = findViewById(R.id.spinner_freq);
@@ -66,7 +69,7 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         materialDayPicker = findViewById(R.id.day_picker);
         materialDayPicker.setLocale(Locale.ITALIAN);
 
-        /* Setto valori e adapter degli spinner */
+        /* Setting spinners' values and adapters */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ArrayAdapter<String> adapterString = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
@@ -74,41 +77,39 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
 
-        /* Intent per therapy */
+        /* Intent for therapy */
         Intent therapyIntent = getIntent();
         if (therapyIntent != null) {
             Bundle bundle = therapyIntent.getExtras();
             if (bundle != null) {
                 currentTherapy = bundle.getParcelable("MEDICINA");
                 if (currentTherapy != null) {
-                    medicineName.setText(currentTherapy.getNome());
-                    medicineDetails.setText(currentTherapy.getDescrizione());
-                    medicineStandardDosage.setText(currentTherapy.getDosaggio());
+                    medicineName.setText(currentTherapy.getName());
+                    medicineDetails.setText(currentTherapy.getDescription());
+                    medicineStandardDosage.setText(currentTherapy.getDosage());
                     medicineLinks.setText(currentTherapy.getLink());
-                    medicineHour.setText(currentTherapy.getOra());
-                    medicineTips.setText(currentTherapy.getConsigliSupervisore());
-                    notifCheckbox.setChecked(currentTherapy.isNotifEnabled()); // a quanto pare funziona
-                    newTherapy = currentTherapy;    // creo una copia della terapia corrente e mi preparo a modificarla
+                    medicineHour.setText(currentTherapy.getTimeHour());
+                    medicineTips.setText(currentTherapy.getSupervisorTips());
+                    notifCheckbox.setChecked(currentTherapy.isNotificationEnabled());
+                    newTherapy = currentTherapy;    // copying current therapy for future editing
                 }
                 User user = bundle.getParcelable("user");
                 userId = Objects.requireNonNull(user).getUserId();
             }
         }
 
-        /* Listener per campo orario */
+        /* medicineHour on click listener */
         medicineHour.setOnClickListener(view -> {
-            /* Apro datePicker per selezionare l'ora della notifica */
-            Calendar mcurrentTime = Calendar.getInstance();
+            Calendar mcurrentTime = Calendar.getInstance(); // opening datepicker to set notification hour
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
-            /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
             mTimePicker = new TimePickerDialog(EditMedicineActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
             mTimePicker.setMessage("Seleziona l'orario");
             mTimePicker.show();
         });
 
-        /* Listener tasto per confermare l'aggiunta della terapia */
+        /* saveEdits on click listener */
         saveEdits.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("MODIFICA TERAPIA")
                 .setMessage("Stai per modificare la terapia, sicuro di voler procedere?")
@@ -144,21 +145,20 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
     }
 
-    private boolean editTherapy(Medicina newTherapy) throws IOException {
-        newTherapy.setNome(String.valueOf(medicineName.getText()));
-        newTherapy.setDescrizione(String.valueOf(medicineDetails.getText()));
-        newTherapy.setDosaggio(String.valueOf(medicineStandardDosage.getText()));
+    private boolean editTherapy(Medicine newTherapy) throws IOException {
+        newTherapy.setName(String.valueOf(medicineName.getText()));
+        newTherapy.setDescription(String.valueOf(medicineDetails.getText()));
+        newTherapy.setDosage(String.valueOf(medicineStandardDosage.getText()));
         newTherapy.setLink(String.valueOf(medicineLinks.getText()));
-        newTherapy.setOra(String.valueOf(medicineHour.getText()));
-        newTherapy.setConsigliSupervisore(String.valueOf(medicineTips.getText()));
-        newTherapy.setPresa(currentTherapy.isPresa());
-        newTherapy.setNotifEnabled(notifCheckbox.isChecked());
+        newTherapy.setTimeHour(String.valueOf(medicineHour.getText()));
+        newTherapy.setSupervisorTips(String.valueOf(medicineTips.getText()));
+        newTherapy.setTaken(currentTherapy.isTaken());
+        newTherapy.setNotificationEnabled(notifCheckbox.isChecked());
 
-        /* Sostituire primo campo con user */
-        return MedicinaFactory.getInstance().deleteMedicineFromCode(UserFactory.getInstance().getUser(userId), newTherapy);
+        return MedicineFactory.getInstance().deleteMedicineFromCode(UserFactory.getInstance().getUser(userId), newTherapy);
     }
 
-    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
+    /* Override on back pressed in order to change the animation */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -179,11 +179,11 @@ public class EditMedicineActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        // non serve ancora
+        // do nothing
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        // non serve ancora
+        // do nothing
     }
 }

@@ -6,7 +6,7 @@ import android.widget.Toast;
 import com.ium.mytherapy.utils.DefaultValues;
 
 public class NoMedicinesFoundException extends RuntimeException {
-    public NoMedicinesFoundException(Exception e, Context context) {
+    public NoMedicinesFoundException(Context context) {
         Toast.makeText(context, DefaultValues.NO_MEDICINES_IN_LIST, Toast.LENGTH_LONG).show();
     }
 }

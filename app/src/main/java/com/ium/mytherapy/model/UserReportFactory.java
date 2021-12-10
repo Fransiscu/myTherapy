@@ -23,33 +23,29 @@ public class UserReportFactory {
         return dummy;
     }
 
-    /* Aggiungo report al file di testo */
     public static void addReport(UserReport report) {
         try {
             FileWriter fw = new FileWriter(DefaultValues.path + "/myTherapy/supervisors/report.txt", false);
-            fw.write(report.isChecked() + "," + report.getMedicina() + "," + report.getErrorMessage() + "," + report.getUserId());
+            fw.write(report.isChecked() + "," + report.getMedicine() + "," + report.getErrorMessage() + "," + report.getUserId());
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
     }
 
-    /* Setto il report come già letto */
     public void setChecked() throws IOException {
         UserReport userReport = new UserReport();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
-        /* Leggo dal file e assegno ogni valore al report, per ora solo un report alla volta */
         String line = bufferedReader.readLine();
         List<String> strings = Arrays.asList(line.split(","));
-        userReport.setChecked(true);    // cambio a true
-        userReport.setMedicina(strings.get(1));
+        userReport.setChecked(true);
+        userReport.setMedicine(strings.get(1));
         userReport.setErrorMessage(strings.get(2));
 
         addReport(userReport);
     }
 
-    /* Controllo se il report è già letto */
     public boolean checkRead() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
@@ -58,7 +54,7 @@ public class UserReportFactory {
         return Boolean.parseBoolean(strings.get(0));
     }
 
-    public boolean checkReports() throws IOException {     // rende true se ci sono reports
+    public boolean checkReports() throws IOException {  // returns true if there are reports
         return this.countReports() != 0;
     }
 
@@ -70,16 +66,14 @@ public class UserReportFactory {
         return lines;
     }
 
-    /* Prendo il report dal file di testo */
     public UserReport getReportFromFile() throws IOException {
         UserReport userReport = new UserReport();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(DefaultValues.defaultReportFile));
 
-        /* Leggo dal file e assegno ogni valore al report, per ora solo un report alla volta */
         String line = bufferedReader.readLine();
         List<String> strings = Arrays.asList(line.split(","));
         userReport.setChecked(Boolean.getBoolean(strings.get(0)));
-        userReport.setMedicina(strings.get(1));
+        userReport.setMedicine(strings.get(1));
         userReport.setErrorMessage(strings.get(2));
         userReport.setUserId(Integer.parseInt(strings.get(3)));
 

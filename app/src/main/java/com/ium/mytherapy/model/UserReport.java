@@ -3,7 +3,7 @@ package com.ium.mytherapy.model;
 public class UserReport {
     private int userId;
     private boolean checked;
-    private String medicina;
+    private String medicine;
     private String errorMessage;
 
     public int getUserId() {
@@ -22,12 +22,12 @@ public class UserReport {
         this.checked = checked;
     }
 
-    public String getMedicina() {
-        return medicina;
+    public String getMedicine() {
+        return medicine;
     }
 
-    public void setMedicina(String medicina) {
-        this.medicina = medicina;
+    public void setMedicine(String medicine) {
+        this.medicine = medicine;
     }
 
     public String getErrorMessage() {

@@ -20,10 +20,10 @@
                 tools:ignore="ExtraText">
 
                 <TextView
-                    android:id="@+id/titolo_home_utente"
+                    android:id="@+id/user_home_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/titolo_user_home"
+                    android:text="@string/user_home_title"
                     android:textSize="48sp" />
 
                 <com.google.android.material.button.MaterialButton
@@ -31,7 +31,7 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="@id/titolo_home_utente"
+                    android:layout_alignParentEnd="@id/user_home_title"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="8dp"
                     android:height="48sp"
@@ -74,12 +74,12 @@
                 android:textSize="24sp" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/nessuna_medicina"
+                android:id="@+id/no_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="200dp"
-                android:text="@string/nessuna_terapia"
+                android:text="@string/no_therapy"
                 android:textSize="32sp"
                 android:visibility="gone" />
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/mezzanotte_top"
                 android:paddingStart="10sp"
-                android:text="@string/inizio_giornata"
+                android:text="@string/day_start"
                 tools:ignore="RtlSymmetry" />
 
             <Space
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/mezzanotte_bottom"
                 android:paddingStart="10sp"
-                android:text="@string/inizio_giornata"
+                android:text="@string/day_start"
                 tools:ignore="RtlSymmetry" />
 
             <!-- End timeline -->
@@ -159,12 +159,11 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/richiedi_assistenza"
+                android:text="@string/ask_for_assistance_text"
                 android:textSize="18sp" />
 
         </GridLayout>
 
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

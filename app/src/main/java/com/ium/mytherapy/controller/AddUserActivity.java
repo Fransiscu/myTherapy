@@ -38,35 +38,40 @@ public class AddUserActivity extends AppCompatActivity {
     MaterialCardView alertCard;
     MaterialButton addUserButton;
     ScrollView addUserScrollView;
+
     private int mYear, mMonth, mDay;
 
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiunta_utente);
+        setContentView(R.layout.add_user_activity);
 
-        nameInput = findViewById(R.id.user_name);
-        surnameInput = findViewById(R.id.user_surname);
-        dateInput = findViewById(R.id.user_data);
-        emailInput = findViewById(R.id.user_email);
+        addUserButton = findViewById(R.id.conferma_aggiunta_utente_button);
+
         usernameInput = findViewById(R.id.user_username);
         passwordInput = findViewById(R.id.user_password);
-        addUserButton = findViewById(R.id.conferma_aggiunta_utente_button);
+        surnameInput = findViewById(R.id.user_surname);
+        emailInput = findViewById(R.id.user_email);
+        nameInput = findViewById(R.id.user_name);
+        dateInput = findViewById(R.id.user_data);
+
         alertCard = findViewById(R.id.adduser_alert_card);
         closeAlert = findViewById(R.id.x_chiudi_alert);
-        passwordInputLayout = findViewById(R.id.user_password_toggle);
+
         addUserScrollView = findViewById(R.id.aggiunta_utente_scrollview);
 
-        /* Per nascondere la carta di "ATTENZIONE" */
+        passwordInputLayout = findViewById(R.id.user_password_toggle);
+
+        /* Hiding "ATTENZIONE" card */
         closeAlert.setOnClickListener(view -> alertCard.setVisibility(View.GONE));
 
-        /* Calendario al tocco del campo data */
+        /* Showing calender on date input field tap */
         dateInput.setShowSoftInputOnFocus(false);
         dateInput.setInputType(InputType.TYPE_NULL);
         dateInput.setFocusable(false);
 
-        /* Resetto errore per birthdate in caso venga assegnato un valore sbagliato */
+        /* Resetting errors in case of wrong fields during the previous attempt */
         dateInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -84,19 +89,19 @@ public class AddUserActivity extends AppCompatActivity {
             }
         });
 
-        /* Popup calendario al tocco del campo */
+        /* Calendar Popup */
         dateInput.setOnClickListener(v -> {
             final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
             mDay = c.get(Calendar.DAY_OF_MONTH);
+            mMonth = c.get(Calendar.MONTH);
+            mYear = c.get(Calendar.YEAR);
 
             @SuppressLint("SetTextI18n") DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     (view, year, monthOfYear, dayOfMonth) -> dateInput.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year), mYear, mMonth, mDay);
             datePickerDialog.show();
         });
 
-        /* Listener tasto aggiunta utente */
+        /* addUser on click listener */
         addUserButton.setOnClickListener(view -> {
             boolean valid = true;
             String name = Objects.requireNonNull(nameInput.getText()).toString();
@@ -106,7 +111,7 @@ public class AddUserActivity extends AppCompatActivity {
             String password = Objects.requireNonNull(passwordInput.getText()).toString();
             String birthdate = Objects.requireNonNull(dateInput.getText()).toString();
 
-            /* Controllo validità di tutti i campi */
+            /* Checking for mistakes in input fields */
             if (email.isEmpty()) {
                 emailInput.setError("Inserisci una email valida");
                 valid = false;
@@ -145,9 +150,8 @@ public class AddUserActivity extends AppCompatActivity {
                 dateInput.setError(null);
             }
 
-            /* Se tutto ok */
-            if (valid) {
-                new MaterialAlertDialogBuilder(this)
+            if (valid) {    // if everything is fine
+                new MaterialAlertDialogBuilder(this)    // open this material alert for confirmation
                         .setTitle("AGGIUNTA UTENTE")
                         .setMessage("Aggiungere il nuovo account?")
                         .setCancelable(false)
@@ -163,24 +167,23 @@ public class AddUserActivity extends AppCompatActivity {
                         .setNegativeButton("Annulla", (dialogInterface, i) -> {
                         })
                         .show();
-            } else {
+            }
+            else { // if not valid
                 Toast.makeText(getBaseContext(), "Errore - Controlla i campi evidenziati", Toast.LENGTH_LONG).show();
             }
-
         });
-
-
     }
 
+    /* addUser thread method */
     private void addUser() {
         Runnable signUp = () -> {
             User user = new User();
-            Supervisor test = new Supervisor(); // per ora è solo un valore di default a 0
+            Supervisor test = new Supervisor();
             test.setSupervisorId(0);
             int max = 0;
             File f = new File(DefaultValues.usersDir.toString());
 
-            /* Setto id supervisore a seconda di quante cartelle ho */
+            /* Setting supervisor id  */
             File[] files = f.listFiles();
             if (files != null) {
                 for (File inFile : files) {
@@ -196,9 +199,9 @@ public class AddUserActivity extends AppCompatActivity {
                 user.setUserId(0);
             }
 
-            user.setNome(Objects.requireNonNull(nameInput.getText()).toString());
-            user.setCognome(Objects.requireNonNull(surnameInput.getText()).toString());
-            user.setDataNascita(Objects.requireNonNull(dateInput.getText()).toString());
+            user.setName(Objects.requireNonNull(nameInput.getText()).toString());
+            user.setSurname(Objects.requireNonNull(surnameInput.getText()).toString());
+            user.setBirthDate(Objects.requireNonNull(dateInput.getText()).toString());
             user.setEmail(Objects.requireNonNull(emailInput.getText()).toString());
             user.setUsername(Objects.requireNonNull(usernameInput.getText()).toString());
             user.setPassword(Objects.requireNonNull(passwordInput.getText()).toString());

@@ -35,33 +35,33 @@ public class SupervisorSignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_supervisore);
+        setContentView(R.layout.supervisor_signup_activity);
 
         passwordInputLayout = findViewById(R.id.signup_password_toggle);
         passwordInputConfirmationLayout = findViewById(R.id.signup_password_confirm_toggle);
 
-        nameInput = findViewById(R.id.signup_name);
-        surnameInput = findViewById(R.id.signup_surname);
-        emailInput = findViewById(R.id.signup_email);
-        usernameInput = findViewById(R.id.signup_username);
-        passwordInput = findViewById(R.id.signup_password);
         passwordConfirmationInput = findViewById(R.id.signup_password_confirm);
         birthdateInput = findViewById(R.id.signup_birthdate);
+        passwordInput = findViewById(R.id.signup_password);
+        usernameInput = findViewById(R.id.signup_username);
+        surnameInput = findViewById(R.id.signup_surname);
         signupButton = findViewById(R.id.signup_button);
+        emailInput = findViewById(R.id.signup_email);
+        nameInput = findViewById(R.id.signup_name);
 
-        /* Calendario al tocco del campo data */
-        birthdateInput.setShowSoftInputOnFocus(false);
+        /* Open calendar on date input click */
         birthdateInput.setInputType(InputType.TYPE_NULL);
+        birthdateInput.setShowSoftInputOnFocus(false);
         birthdateInput.setFocusable(false);
 
-        /* Resetto il punto esclamativo rosso qunado riprende a scrivere */
+        /* Reset notification badge */
         passwordConfirmationInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
-            /* Per ricambiare il simbolo di errore a occhio per mostrare la password una volta che si riprende a scrivere */
+            /* Reset errors in fields */
             @SuppressWarnings("deprecation")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -75,14 +75,14 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
         });
 
-        /* Resetto il punto esclamativo rosso qunado riprende a scrivere */
+        /* Reset errors in fields */
         passwordInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
-            /* Per ricambiare il simbolo di errore a occhio per mostrare la password una volta che si riprende a scrivere */
+            /* Reset errors in fields */
             @SuppressWarnings("deprecation")
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -96,7 +96,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
         });
 
-        /* Resetto errore per birthdate*/
+        /* Resetting error for birthdate */
         birthdateInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -114,7 +114,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             }
         });
 
-        /* Popup calendario al tocco del campo */
+        /* Calendar popup on date field click */
         birthdateInput.setOnClickListener(v -> {
             final Calendar c = Calendar.getInstance();
             mYear = c.get(Calendar.YEAR);
@@ -126,7 +126,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        /* Aggiunta Supervisore */
+        /* Adding supervisor */
         signupButton.setOnClickListener(view -> {
             boolean valid = true;
 
@@ -138,7 +138,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
             String passwordConfirmation = Objects.requireNonNull(passwordConfirmationInput.getText()).toString();
             String birthdate = Objects.requireNonNull(birthdateInput.getText()).toString();
 
-            /* Controllo che tutti i campi siano validi */
+            /* Checking validity of all data */
             if (email.isEmpty()) {
                 emailInput.setError("Inserisci una email valida");
                 valid = false;
@@ -180,7 +180,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
                 birthdateInput.setError(null);
             }
 
-            /* Se passo tutti i check chiamo addSupervisor */
+            /* If validity checks passed, call addSupervisor */
             if (valid) {
                 MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this);
                 materialAlertDialogBuilder.setTitle("REGISTRAZIONE");
@@ -203,14 +203,14 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         });
     }
 
-    /* Aggiungo supervisore */
+    /* Adding supervisor */
     public void addSupervisor() {
         Runnable signUp = () -> {
             Supervisor newSupervisor = new Supervisor();
             int max = 0;
             File f = new File(DefaultValues.supervisorDir.toString());
 
-            /* Setto id supervisore a seconda di quante cartelle ho */
+            /* Setting supervisor depending on folder's number */
             File[] files = f.listFiles();
             if (files != null) {
                 for (File inFile : files) {
@@ -226,12 +226,12 @@ public class SupervisorSignupActivity extends AppCompatActivity {
                 newSupervisor.setSupervisorId(0);
             }
 
-            newSupervisor.setNome(Objects.requireNonNull(nameInput.getText()).toString());
-            newSupervisor.setCognome(Objects.requireNonNull(surnameInput.getText()).toString());
+            newSupervisor.setName(Objects.requireNonNull(nameInput.getText()).toString());
+            newSupervisor.setSurname(Objects.requireNonNull(surnameInput.getText()).toString());
             newSupervisor.setEmail(Objects.requireNonNull(emailInput.getText()).toString());
             newSupervisor.setUsername(Objects.requireNonNull(usernameInput.getText()).toString());
             newSupervisor.setPassword(Objects.requireNonNull(passwordInput.getText()).toString());
-            newSupervisor.setDataNascita(Objects.requireNonNull(birthdateInput.getText()).toString());
+            newSupervisor.setBirthDate(Objects.requireNonNull(birthdateInput.getText()).toString());
             try {
                 SupervisorFactory.getInstance().addSupervisor(newSupervisor);
             } catch (IOException e) {
@@ -241,7 +241,7 @@ public class SupervisorSignupActivity extends AppCompatActivity {
         signUp.run();
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override on back pressed in order to change the animation */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.EditMedicineActivity;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.views.recycleviews.holders.MedicinelistCardHolder;
 
@@ -26,13 +26,12 @@ import androidx.recyclerview.widget.RecyclerView;
 @SuppressWarnings("deprecation")
 public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCardHolder> {
 
-    private Context context;
-    private ArrayList<Medicina> models;
-    private User user;
-    private MedicineTimelineCardAdapter medicineTimelineCardAdapter;
-    // passo questo adapter in modo da poter aggiornare la timeline del giorno quando chiamo la medicineListCardHolder.delete
+    private final Context context;
+    private final ArrayList<Medicine> models;
+    private final User user;
+    private final MedicineTimelineCardAdapter medicineTimelineCardAdapter;  // adapter needed to be able to update the daily timeline
 
-    public MedicinelistCardAdapter(Context context, User user, ArrayList<Medicina> models, MedicineTimelineCardAdapter medicineTimelineCardAdapter) {
+    public MedicinelistCardAdapter(Context context, User user, ArrayList<Medicine> models, MedicineTimelineCardAdapter medicineTimelineCardAdapter) {
         this.context = context;
         this.models = models;
         this.user = user;
@@ -48,8 +47,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
 
     @Override
     public void onBindViewHolder(@NonNull MedicinelistCardHolder medicineListCardHolder, int position) {
-        medicineListCardHolder.medicineName.setText(models.get(position).getNome());
-        /* Qui posso cambiare le icone se necessario */
+        medicineListCardHolder.medicineName.setText(models.get(position).getName());
 
         medicineListCardHolder.delete.setBackgroundResource(0);
         medicineListCardHolder.delete.setImageDrawable(context.getResources().getDrawable(R.drawable.delete));
@@ -62,7 +60,7 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
                 .setMessage("Sicuro di voler rimuovere la terapia associata all'utente?")
                 .setCancelable(false)
                 .setPositiveButton("Rimuovi", (dialogInterface, i) -> {
-                    MedicinaFactory.getInstance().removeMedicine(models.get(position), user);
+                    MedicineFactory.getInstance().removeMedicine(models.get(position), user);
                     models.remove(position);
                     this.notifyItemRemoved(position);
                     this.notifyItemRangeRemoved(0, models.size() - 1);
@@ -84,7 +82,6 @@ public class MedicinelistCardAdapter extends RecyclerView.Adapter<MedicinelistCa
             ((Activity) context).finish();
             ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_left);
         });
-
     }
 
     @Override
