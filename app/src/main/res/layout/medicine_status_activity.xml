@@ -25,12 +25,12 @@
 
 
             <TextView
-                android:id="@+id/titolo_home_utente"
+                android:id="@+id/user_home_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10sp"
                 android:paddingBottom="0sp"
-                android:text="@string/titolo_stato_terapia"
+                android:text="@string/therapy_status_title"
                 android:textSize="48sp" />
 
             <Space
@@ -41,7 +41,7 @@
                 android:id="@+id/dettagli_nome_medicina"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/dettagli_nome_medicina_test"
+                android:text="@string/test_medicine_name_details"
                 android:textAlignment="center"
                 android:textSize="30sp" />
 
@@ -53,7 +53,7 @@
                 android:id="@+id/orario_sotto_titolo_dettagli"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/timeline_ora_uno"
+                android:text="@string/timeline_hour_one"
                 android:textAlignment="center"
                 android:textSize="25sp" />
 
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/appunti_medicina_da_supervisore"
                     android:layout_margin="15sp"
-                    android:text="@string/appunti_medicina"
+                    android:text="@string/medicine_notes"
                     android:textColor="@android:color/holo_red_dark"
                     android:textSize="20sp"
                     android:visibility="visible" />
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingStart="30sp"
-                        android:text="@string/segna_preso"
+                        android:text="@string/mark_taken"
                         android:textAlignment="center"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="30sp"
@@ -162,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingLeft="30sp"
-                        android:text="@string/segna_rimanda"
+                        android:text="@string/mark_postponed"
                         android:textAlignment="center"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="30sp"
@@ -191,7 +191,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/presa"
+                android:text="@string/taken"
                 android:textColor="@android:color/holo_green_dark"
                 android:textSize="48sp"
                 android:visibility="gone" />
@@ -229,7 +229,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/dettagli_medicina"
+                android:text="@string/medicine_details"
                 android:textSize="18sp" />
 
         </GridLayout>

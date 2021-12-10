@@ -1,5 +1,6 @@
 package com.ium.mytherapy.controller;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,16 +31,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SupervisorHomeActivity extends AppCompatActivity {
-    RecyclerView userCardRecyclerView;
+
     UserlistCardAdapter userlistCardAdapter;
-    EditedScrollView scrollView;
-    TextView noUser;
-    ImageView notifications;
+    RecyclerView userCardRecyclerView;
     MaterialButton addUser, logout;
     ArrayList<User> list, check;
+    EditedScrollView scrollView;
+    ImageView notifications;
     UserReport report;
+    TextView noUser;
 
-    /* Prendo lista degli utenti */
+    /* Grabbing user list */
     public static ArrayList<User> getUsers() throws IOException {
         ArrayList<User> users;
 
@@ -62,18 +64,18 @@ public class SupervisorHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_supervisore);
+        setContentView(R.layout.supervisor_home_activity);
 
-        // Per far si che la barra del titolo di sopra non scrolli con il resto
+        // Making top bar not scroll
         scrollView = findViewById(R.id.scrollView);
         scrollView.setScrolling(false);
 
-        notifications = findViewById(R.id.notifiche_supervisore);
-        addUser = findViewById(R.id.aggiungi_utenti_button);
-        logout = findViewById(R.id.supervisore_logout_button);
+        notifications = findViewById(R.id.supervisor_notifications);
+        addUser = findViewById(R.id.add_users_button);
+        logout = findViewById(R.id.supervisor_logout_button);
 
         try {
-            check = getUsers();    // controllo che la mia lista utenti presa da getUsers() non sia null
+            check = getUsers();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,14 +96,13 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             };
             checkNotifications.run();
 
-            /* Listener per l'icona delle notifiche */
-            /* Apro una finestrella con l'ultima non letta */
+            /* Notifications button on click listener */
             notifications.setOnClickListener(view -> {
                 try {
                     new MaterialAlertDialogBuilder(this)
                             .setTitle("Richiesta di supporto")
                             .setMessage(UserFactory.getInstance().getUser(report.getUserId()).toString() + "\n\n" +
-                                    report.getMedicina() + "\n\n" + report.getErrorMessage())
+                                    report.getMedicine() + "\n\n" + report.getErrorMessage())
                             .setCancelable(false)
                             .setPositiveButton("Segna come letto", (dialogInterface, i) -> {
                                 try {
@@ -132,13 +133,13 @@ public class SupervisorHomeActivity extends AppCompatActivity {
             noUser.setVisibility(View.VISIBLE);
         }
 
-        /* Listener tasto aggiunta utenti */
+        /* addUser on click listener */
         addUser.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), AddUserActivity.class);
             startActivityForResult(newActivity, 11);
         });
 
-        /* Listener tasto logout */
+        /* logout on click listener */
         logout.setOnClickListener(view -> new MaterialAlertDialogBuilder(this)
                 .setTitle("LOGOUT")
                 .setMessage("Sei sicuro di voler fare il logout?")
@@ -158,7 +159,8 @@ public class SupervisorHomeActivity extends AppCompatActivity {
 
     }
 
-    @Override     // non serve tornando indietro ma solo confermando
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
     public void onResume() {
         super.onResume();
         if (check != null && check.size() != 0) {
@@ -168,13 +170,14 @@ public class SupervisorHomeActivity extends AppCompatActivity {
         }
     }
 
-    /* Aggiorno schede utenti quando torno da AddUserACtivity */
+    /* Updating user cards when back in AddUserACtivity */
+    @SuppressLint("NotifyDataSetChanged")
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 11 && resultCode == Activity.RESULT_OK) {
             super.onActivityResult(requestCode, resultCode, data);
             userlistCardAdapter = new UserlistCardAdapter(this, list);
             userCardRecyclerView.setAdapter(userlistCardAdapter);
-            userlistCardAdapter.notifyDataSetChanged(); // aggiorno con questa method
+            userlistCardAdapter.notifyDataSetChanged();
         }
     }
 

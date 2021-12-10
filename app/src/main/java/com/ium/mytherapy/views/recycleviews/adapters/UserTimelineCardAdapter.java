@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.ium.mytherapy.R;
 import com.ium.mytherapy.controller.MedicineStatusActivity;
-import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.Medicine;
 import com.ium.mytherapy.utils.DefaultValues;
 import com.ium.mytherapy.views.recycleviews.holders.UserTimelineCardHolder;
 
@@ -22,12 +22,13 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+@SuppressWarnings("deprecation")
 public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCardHolder> {
 
-    private Context context;
-    private ArrayList<Medicina> models;
+    private final Context context;
+    private final ArrayList<Medicine> models;
 
-    public UserTimelineCardAdapter(Context context, ArrayList<Medicina> models) {
+    public UserTimelineCardAdapter(Context context, ArrayList<Medicine> models) {
         this.context = context;
         this.models = models;
     }
@@ -41,27 +42,27 @@ public class UserTimelineCardAdapter extends RecyclerView.Adapter<UserTimelineCa
 
     @Override
     public void onBindViewHolder(@NonNull UserTimelineCardHolder userTimelineCardHolder, int position) {
-        userTimelineCardHolder.medicineTime.setText(models.get(position).getOra());
-        userTimelineCardHolder.medicineName.setText(models.get(position).getNome());
+        userTimelineCardHolder.medicineTime.setText(models.get(position).getTimeHour());
+        userTimelineCardHolder.medicineName.setText(models.get(position).getName());
 
-        /* Calcolo dimensione schermo per poi decidere la grandezza del singolo item */
+        /* Calculating screen size to pick best card size */
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int baseHeight = displayMetrics.heightPixels;
 
-        /* Setto colori a seconda se prese o no */
-        if (models.get(position).isPresa()) {
+        /* Setting colors for taken or not */
+        if (models.get(position).isTaken()) {
             setDone(userTimelineCardHolder);
         } else {
             setNotDone(userTimelineCardHolder);
         }
 
-        /* Cambio l'altezza della scheda singola a seconda di quante medicine sono presenti il giorno */
+        /* Changing card's height depending on how many medicines per day */
         if (models.size() >= 3) {
             userTimelineCardHolder.layout.getLayoutParams().height = baseHeight / (models.size() + 2);
         }
 
-        /* Listeners click sulla timeline */
+        /* timeline item click listener */
         userTimelineCardHolder.setUserTimelineClickListener((v, position1) -> {
             v.setSelected(true);
             Bundle bundle = new Bundle();

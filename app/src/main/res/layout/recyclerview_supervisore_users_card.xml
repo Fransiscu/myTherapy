@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/titleIv"
-            android:text="@string/suggerimento_nome"
+            android:text="@string/name_hint"
             android:paddingTop="14sp"
             android:textSize="30sp"
             android:paddingLeft="30sp"

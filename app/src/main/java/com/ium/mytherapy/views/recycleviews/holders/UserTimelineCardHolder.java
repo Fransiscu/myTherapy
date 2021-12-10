@@ -21,9 +21,9 @@ public class UserTimelineCardHolder extends RecyclerView.ViewHolder implements V
 
     public UserTimelineCardHolder(@NonNull View itemView) {
         super(itemView);
-        this.layout = itemView.findViewById(R.id.usertimeline_layout);
-        this.medicineName = itemView.findViewById(R.id.timeline_nome_medicina);
-        this.medicineTime = itemView.findViewById(R.id.timeline_ora_medicina);
+        this.layout = itemView.findViewById(R.id.user_timeline_layout);
+        this.medicineName = itemView.findViewById(R.id.timeline_medicine_name);
+        this.medicineTime = itemView.findViewById(R.id.timeline_medicine_time);
         this.verticalLine = itemView.findViewById(R.id.timeline_vertical_line);
         this.timelineDot = itemView.findViewById(R.id.timeline_dot);
         this.medicineStatus = itemView.findViewById(R.id.timeline_status);

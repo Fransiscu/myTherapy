@@ -6,7 +6,7 @@
     android:focusable="true">
 
     <RelativeLayout
-        android:id="@+id/usertimeline_layout"
+        android:id="@+id/user_timeline_layout"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:background="@drawable/bg_key"
@@ -30,25 +30,25 @@
             android:background="@drawable/dot_ok" />
 
         <TextView
-            android:id="@+id/timeline_ora_medicina"
+            android:id="@+id/timeline_medicine_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toEndOf="@id/timeline_dot"
             android:gravity="center"
             android:paddingLeft="10sp"
             android:paddingRight="10sp"
-            android:text="@string/timeline_ora_uno" />
+            android:text="@string/timeline_hour_one" />
 
         <TextView
-            android:id="@+id/timeline_nome_medicina"
+            android:id="@+id/timeline_medicine_name"
             android:layout_width="245dp"
             android:layout_height="match_parent"
             android:layout_marginStart="3dp"
-            android:layout_toEndOf="@id/timeline_ora_medicina"
+            android:layout_toEndOf="@id/timeline_medicine_time"
             android:gravity="center"
             android:paddingLeft="15sp"
             android:paddingRight="10sp"
-            android:text="@string/nome_medicina_uno"
+            android:text="@string/medicine_one_name"
             android:textColor="@color/cardview_dark_background"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -62,9 +62,10 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_margin="25sp"
-            android:layout_toEndOf="@id/timeline_nome_medicina"
-            android:contentDescription="@string/visto_timeline"
+            android:layout_toEndOf="@id/timeline_medicine_name"
+            android:contentDescription="@string/timeline_check"
             android:src="@drawable/timeline_done" />
 
     </RelativeLayout>
+
 </LinearLayout>

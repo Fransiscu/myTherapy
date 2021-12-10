@@ -1,5 +1,7 @@
 package com.ium.mytherapy.controller;
 
+import static java.lang.String.format;
+
 import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -18,8 +20,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.utils.DefaultValues;
@@ -38,27 +40,31 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
 
     public static SharedPreferences mPreferences;
     public static String sharedPrefFile = DefaultValues.SHARED_PREFS;
+
+    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips, medicineTime;
+
     MaterialSpinner spinnerNum, spinnerFreq;
-    MaterialButton addTherapy;
     MaterialDayPicker materialDayPicker;
+    MaterialCheckBox checkbox;
+    MaterialButton addTherapy;
+    MaterialTextView title;
+
     String[] itemsNumber = new String[]{"1", "2", "3"};
     String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", "Una tantum"};
+
     final static String test = "test";
     int tapsCount = 0;
-
-    MaterialTextView title;
-    TextInputEditText medicineName, medicineDetails, medicineStandardDosage, medicineLinks, medicineTips, medicineHour;
-    MaterialCheckBox checkbox;
     int userId;
 
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aggiunta_medicina);
-        AtomicReference<Medicina> medicine = new AtomicReference<>(new Medicina());
+        setContentView(R.layout.add_medicine_activity);
+        AtomicReference<Medicine> medicine = new AtomicReference<>(new Medicine());
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
+        /* Getting user sharedPreferences if they exist */
         Intent therapyIntent = getIntent();
         if (therapyIntent != null) {
             Bundle bundle = therapyIntent.getExtras();
@@ -75,7 +81,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         medicineStandardDosage = findViewById(R.id.add_edit_medicine_dosage);
         medicineLinks = findViewById(R.id.link_utili);
         medicineTips = findViewById(R.id.consigli_paziente);
-        medicineHour = findViewById(R.id.orario_medicina);
+        medicineTime = findViewById(R.id.orario_medicina);
 
         /* Spinners */
         spinnerNum = findViewById(R.id.spinner_quantita);
@@ -85,26 +91,28 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
         /* Buttons */
         addTherapy = findViewById(R.id.add_therapy_button);
 
-        /* Checkbox */
+        /* Checkboxes */
         checkbox = findViewById(R.id.checkbox_notifiche);
 
         /* Week day picker */
         materialDayPicker = findViewById(R.id.day_picker);
         materialDayPicker.setLocale(Locale.ITALIAN);
 
-        /* Setto i valori degli spinners + adapters */
+        /* Setting spinners + adapters values */
         ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
         adapterInt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         ArrayAdapter<String> adapterString = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
         adapterString.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinnerNum.setAdapter(adapterInt);
         spinnerFreq.setAdapter(adapterString);
 
-        medicineHour.setShowSoftInputOnFocus(false);
-        medicineHour.setInputType(InputType.TYPE_NULL);
-        medicineHour.setFocusable(false);
+        medicineTime.setShowSoftInputOnFocus(false);
+        medicineTime.setInputType(InputType.TYPE_NULL);
+        medicineTime.setFocusable(false);
 
-        /* Al secondo tap del titolo riempie i campi di valori test */
+        /* Double tapping the title fills the interface with test values */
         title.setOnClickListener(view -> {
             tapsCount++;
             if (tapsCount > 1) {
@@ -112,18 +120,18 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
-        medicineHour.setOnClickListener(view -> {
-            /* Apro datePicker per selezionare l'ora della notifica */
-            Calendar mcurrentTime = Calendar.getInstance();
+        /* medicineTime on click listener*/
+        medicineTime.setOnClickListener(view -> {
+            Calendar mcurrentTime = Calendar.getInstance(); // Opening datepicker to select medicine time
             int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
             int minute = mcurrentTime.get(Calendar.MINUTE);
             TimePickerDialog mTimePicker;
-            /* Alla selezione del tempo faccio comparire una finestra di conferma + toast */
-            mTimePicker = new TimePickerDialog(AddMedicineActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineHour.setText(String.format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);//Yes 24 hour time
+            mTimePicker = new TimePickerDialog(AddMedicineActivity.this, (timePicker, selectedHour, selectedMinute) -> medicineTime.setText(format("%d:%d", selectedHour, selectedMinute)), hour, minute, true);    //Yes 24 hour time
             mTimePicker.setMessage("Seleziona l'orario");
-            mTimePicker.show();
+            mTimePicker.show(); // Confirmation window + toast
         });
 
+        /* addTherapy button on click listener */
         addTherapy.setOnClickListener(view -> {
             if (checkInput()) {
                 new MaterialAlertDialogBuilder(this)
@@ -134,7 +142,7 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
                             Intent backToManagement = new Intent(getApplicationContext(), UserManagementActivity.class);
                             medicine.set(getMedicine());
                             try {
-                                MedicinaFactory.getInstance().addMedicine(UserFactory.getInstance().getUser(userId), medicine.get());
+                                MedicineFactory.getInstance().addMedicine(UserFactory.getInstance().getUser(userId), medicine.get());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -156,44 +164,46 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
                         .show();
             }
         });
-
     }
 
-    /* Per settare i campi automaticamente e rendere più veloce la creazione di una medicina test */
+    /* Setting automatic test fields */
     private void setTestFields() {
         medicineName.setText(test);
         medicineDetails.setText(test);
         medicineStandardDosage.setText("1");
         medicineLinks.setText(test);
         medicineTips.setText(test);
-        medicineHour.setText(R.string.ora_test);
+        medicineTime.setText(R.string.test_hour);
     }
 
-    private Medicina getMedicine() {
-        Medicina medicine = new Medicina();
-        medicine.setNome(Objects.requireNonNull(medicineName.getText()).toString());
-        medicine.setDescrizione(Objects.requireNonNull(medicineDetails.getText()).toString());
-        medicine.setDosaggio(Objects.requireNonNull(medicineStandardDosage.getText()).toString());
+    /* get new medicine from input fields*/
+    private Medicine getMedicine() {
+        Medicine medicine = new Medicine();
+        medicine.setSupervisorTips(Objects.requireNonNull(medicineTips.getText()).toString());
+        medicine.setDosage(Objects.requireNonNull(medicineStandardDosage.getText()).toString());
+        medicine.setDescription(Objects.requireNonNull(medicineDetails.getText()).toString());
         medicine.setLink(Objects.requireNonNull(medicineLinks.getText()).toString());
-        medicine.setConsigliSupervisore(Objects.requireNonNull(medicineTips.getText()).toString());
-        medicine.setFrequenza(String.valueOf(spinnerFreq.getSelectedItem()));
-        TextView textView = (TextView) spinnerNum.getSelectedView();    // per selezionare dallo spinner serve questo workaround
+        medicine.setName(Objects.requireNonNull(medicineName.getText()).toString());
+        medicine.setTimeHour(Objects.requireNonNull(medicineTime.getText()).toString());
+        medicine.setFrequency(String.valueOf(spinnerFreq.getSelectedItem()));
+        TextView textView = (TextView) spinnerNum.getSelectedView();    // needed to select item from spinner
+        medicine.setNotificationEnabled(checkbox.isChecked());
+        medicine.setTaken(false);
+
         String result = textView.getText().toString();
-        medicine.setFrequenzaNum(Integer.parseInt(result));
-        medicine.setNotifEnabled(checkbox.isChecked());
-        medicine.setOra(Objects.requireNonNull(medicineHour.getText()).toString());
-        medicine.setPresa(false);
+        medicine.setFrequencyNumber(Integer.parseInt(result));
+
         return medicine;
     }
 
-    /* Controllo che i valori inseriti siano validi */
+    /* Checking input values */
     private boolean checkInput() {
-        boolean valid = true;
-
         String medName = Objects.requireNonNull(medicineName.getText()).toString();
         String medDetails = Objects.requireNonNull(medicineDetails.getText()).toString();
         String medStandardDosage = Objects.requireNonNull(medicineStandardDosage.getText()).toString();
-        String timeOfDay = Objects.requireNonNull(medicineHour.getText()).toString();
+        String timeOfDay = Objects.requireNonNull(medicineTime.getText()).toString();
+
+        boolean valid = true;
 
         if (medName.isEmpty()) {
             medicineName.setError("Inserisci una nome valido");
@@ -214,41 +224,45 @@ public class AddMedicineActivity extends AppCompatActivity implements AdapterVie
             medicineStandardDosage.setError(null);
         }
         if (timeOfDay.isEmpty()) {
-            medicineHour.setError("Inserisci un orario");
+            medicineTime.setError("Inserisci un orario");
             valid = false;
         } else {
-            medicineHour.setError(null);
+            medicineTime.setError(null);
         }
 
         return valid;
     }
 
-    /* Override pressione tasto back per cambiare l'animazione e tornare indietro alla schermata corretta */
+    /* Override on back pressed in order to change the animation */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         Bundle bundle = new Bundle();
         bundle.putInt(DefaultValues.USER_KEY, userId);
+
         try {
             bundle.putParcelable(DefaultValues.USER_INTENT, UserFactory.getInstance().getUser(userId));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         Intent userManagementHome = new Intent(this, UserManagementActivity.class);
         userManagementHome.putExtras(bundle);
         userManagementHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(userManagementHome);
         finish();
+
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        // niente, è solo per scena - da modificare in caso di tasti presenti sulle carte
+        // do nothing
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        // niente, è solo per scena - da modificare in caso di tasti presenti sulle carte
+        // do nothing
     }
 }

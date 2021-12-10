@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.UserLoginActivity"
-    tools:ignore="Labelfor" >
+    tools:context=".controller.SupervisorLoginActivity"
+    tools:ignore="Labelfor">
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:orientation="vertical"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingTop="56dp"
+        android:paddingRight="24dp"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <Space
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
             android:layout_height="107dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:contentDescription="@string/descrizione_logo"
+            android:contentDescription="@string/logo_description"
             android:src="@drawable/logo" />
 
         <Space
@@ -37,10 +37,10 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/suggerimento_username">
+            android:hint="@string/username_tip">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_username"
+                android:id="@+id/supervisor_login_username_input"
                 android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
                 android:inputType="textFilter"
                 android:layout_width="match_parent"
@@ -54,18 +54,18 @@
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:id="@+id/password_input_toggle"
-            app:passwordToggleEnabled="true"
+            android:id="@+id/supervisor_password_input_toggle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/suggerimento_password">
+            android:hint="@string/password_hint"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_password"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
-                android:inputType="textPassword"
+                android:id="@+id/supervisor_login_password_input"
                 android:layout_width="match_parent"
-                android:layout_height="70sp" />
+                android:layout_height="70sp"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,12 +79,24 @@
             android:paddingTop="15sp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_button"
+                android:id="@+id/supervisor_login_button"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
-                android:layout_height="70sp"
-                android:text="@string/login"
+                android:layout_height="60dp"
+                android:text="@string/supervisor_login"
                 android:textSize="18sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <TextView
+                android:id="@+id/signup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_text"
+                android:textAlignment="center"
+                android:textSize="16sp" />
 
         </GridLayout>
 
@@ -93,45 +105,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
         android:layout_marginBottom="14sp"
-        android:orientation="vertical">
-
-        <GridLayout
-            android:id="@+id/login_supervisore_grid"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:layout_gravity="center"
-            android:paddingTop="15sp"
-            android:clipToPadding="false"
-            android:columnCount="1">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/login_supervisore_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/login_supervisore"
-                android:textSize="18sp" />
-
-        </GridLayout>
-        
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20sp" />
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingTop="56dp"
+        android:paddingRight="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20sp"
-            android:textAlignment="center"
-            android:text="@string/footer" />
+            android:text="@string/footer"
+            android:textAlignment="center" />
 
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

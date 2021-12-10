@@ -57,7 +57,6 @@ public class UserFactory {
         File f = new File(DefaultValues.usersDir.toString());
         ArrayList<User> users = new ArrayList<>();
 
-        /* Scorro tutte le cartelle */
         File[] files = f.listFiles();
         if (files != null) {
             for (File inFile : files) {
@@ -71,21 +70,19 @@ public class UserFactory {
         return users;
     }
 
-    /* User da file a java object */
     private User getUserFromFile(String filePath) throws IOException {
         User user = new User();
         BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
 
-        /* Leggo dal file e assegno ogni valore al supervisore */
         String line = bufferedReader.readLine();
         List<String> strings = Arrays.asList(line.split(","));
         user.setUserId(Integer.parseInt(strings.get(0)));
-        user.setNome(strings.get(1));
-        user.setCognome(strings.get(2));
+        user.setName(strings.get(1));
+        user.setSurname(strings.get(2));
         user.setEmail(strings.get(3));
         user.setUsername(strings.get(4));
         user.setPassword(strings.get(5));
-        user.setDataNascita(strings.get(6));
+        user.setBirthDate(strings.get(6));
 
         return user;
     }
@@ -100,19 +97,17 @@ public class UserFactory {
         }
 
         FileOutputStream fos = new FileOutputStream(newUser + "/profile.txt");
-        fos.flush();
+        fos.flush();    // flushing file stream
 
-        /* Aggiungo file profilo utente */
         try {
             FileWriter fw = new FileWriter(newUser + "/profile.txt", true);
-            fw.write(user.getUserId() + "," + user.getNome() + "," + user.getCognome() + "," + user.getEmail() + "," +
-                    user.getUsername() + "," + user.getPassword() + "," + user.getDataNascita());
+            fw.write(user.getUserId() + "," + user.getName() + "," + user.getSurname() + "," + user.getEmail() + "," +
+                    user.getUsername() + "," + user.getPassword() + "," + user.getBirthDate());
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
 
-        /* Aggiungo file al profilo del supervisore */
         try {
             FileWriter fw = new FileWriter(DefaultValues.supervisorDir + "/" + supervisor.getSupervisorId() + "/utenti.txt");
             fw.write(user.getUserId() + ",");
@@ -121,14 +116,12 @@ public class UserFactory {
             System.err.println("IOException: " + ioe.getMessage());
         }
 
-        /* Aggiungo cartella delle medicine */
         File newMedicine = new File(DefaultValues.usersDir.toString() + "/" + user.getUserId() + "/medicine");
         wasSuccessful = newMedicine.mkdirs();
 
         if (!wasSuccessful) {
             System.out.println("was not successful.");
         }
-
     }
 
 
@@ -153,15 +146,13 @@ public class UserFactory {
         FileOutputStream fos = new FileOutputStream(userToEdit);
         fos.flush();
 
-        /* Aggiungo file profilo utente */
         try {
             FileWriter fw = new FileWriter(userToEdit, true);
-            fw.write(user.getUserId() + "," + user.getNome() + "," + user.getCognome() + "," + user.getEmail() + "," +
-                    user.getUsername() + "," + user.getPassword() + "," + user.getDataNascita());
+            fw.write(user.getUserId() + "," + user.getName() + "," + user.getSurname() + "," + user.getEmail() + "," +
+                    user.getUsername() + "," + user.getPassword() + "," + user.getBirthDate());
             fw.close();
         } catch (IOException ioe) {
             System.err.println("IOException: " + ioe.getMessage());
         }
-
     }
 }

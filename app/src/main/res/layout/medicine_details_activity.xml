@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
-        android:text="@string/nome_medicina"
+        android:text="@string/medicine_name"
         android:textSize="48sp"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/descrizione_descrizione"
+                        android:text="@string/description_text"
                         android:textSize="20sp" />
 
                     <TextView
@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:paddingBottom="25dp"
-                        android:text="@string/esempio_dettagli"
+                        android:text="@string/details_exampe"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -108,7 +108,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/assunzione_e_dosaggio"
+                        android:text="@string/medicine_dosage_and_tips"
                         android:textSize="20sp" />
 
                     <TextView
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:paddingBottom="25dp"
-                        android:text="@string/esempio_dettagli"
+                        android:text="@string/details_exampe"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -155,7 +155,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/consigli_e_raccomandazioni"
+                        android:text="@string/tips_for_medicine"
                         android:textSize="20sp" />
 
                     <TextView
@@ -164,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="10dp"
                         android:paddingBottom="25dp"
-                        android:text="@string/esempio_dettagli"
+                        android:text="@string/details_exampe"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -202,7 +202,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/link_utili"
+                        android:text="@string/useful_links"
                         android:textSize="20sp" />
 
                     <TextView
@@ -212,7 +212,7 @@
                         android:autoLink="web"
                         android:paddingTop="10dp"
                         android:paddingBottom="25dp"
-                        android:text="@string/esempio_dettagli"
+                        android:text="@string/details_exampe"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -232,7 +232,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/dosaggio_corrente"
+                android:text="@string/current_dosage"
                 android:textSize="20sp" />
 
 

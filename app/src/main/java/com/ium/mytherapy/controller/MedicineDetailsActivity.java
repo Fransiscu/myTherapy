@@ -6,7 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
+import com.ium.mytherapy.model.Medicine;
 import com.ium.mytherapy.utils.DefaultValues;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,14 +16,14 @@ public class MedicineDetailsActivity extends AppCompatActivity {
 
     TextView pageTitle, medicineDetails, medicineDosage, medicineReccomandation, medicineLinks;
     MaterialSpinner spinnerNum, spinnerFreq;
-    Medicina medicine;
+    Medicine medicine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettagli_medicina);
+        setContentView(R.layout.medicine_details_activity);
 
-        /* Valori degli spinners */
+        /* Spinners' values */
         String[] itemsNumber = new String[]{"1", "2", "3"};
         String[] itemsString = new String[]{"Giorno", "Settimana", "Mese", ""};
 
@@ -35,29 +35,28 @@ public class MedicineDetailsActivity extends AppCompatActivity {
         spinnerNum = findViewById(R.id.spinnerInt);
         spinnerFreq = findViewById(R.id.spinnerString);
 
-        /* Prendo la medicina in input e setto i vari campi dell'activity */
+        /* Getting a medicine as input and filling the different fields */
         Intent medicineIntent = getIntent();
         if (medicineIntent != null) {
             Bundle bundle = medicineIntent.getExtras();
             if (bundle != null) {
                 medicine = bundle.getParcelable(DefaultValues.MEDICINA);
                 if (medicine != null) {
-                    pageTitle.setText(medicine.getNome());
-                    medicineDetails.setText(medicine.getDescrizione());
-                    medicineDosage.setText(medicine.getDosaggio());
-                    medicineReccomandation.setText(medicine.getConsigliSupervisore());
+                    pageTitle.setText(medicine.getName());
+                    medicineDetails.setText(medicine.getDescription());
+                    medicineDosage.setText(medicine.getDosage());
+                    medicineReccomandation.setText(medicine.getSupervisorTips());
                     medicineLinks.setText(medicine.getLink());
-                    /* Setto spinners con dettagli vari */
+                    /* Setting spinners' values */
                     ArrayAdapter<String> adapterInt = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsNumber);
                     ArrayAdapter<String> adapterString = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, itemsString);
                     spinnerNum.setAdapter(adapterInt);
                     spinnerFreq.setAdapter(adapterString);
                     spinnerNum.setEnabled(false);
                     spinnerFreq.setEnabled(false);
-                    /* Setto valore iniziale */
-                    spinnerNum.setSelection(medicine.getFrequenzaNum() - 1);
+                    spinnerNum.setSelection(medicine.getFrequencyNumber() - 1);    // initial value
 
-                    switch (medicine.getFrequenza()) {
+                    switch (medicine.getFrequency()) {
                         case "Giorno":
                             spinnerFreq.setSelection(0);
                             break;

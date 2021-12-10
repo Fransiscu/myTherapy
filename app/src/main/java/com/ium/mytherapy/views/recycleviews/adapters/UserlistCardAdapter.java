@@ -25,8 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder> {
 
-    private Context context;
-    private ArrayList<User> models;
+    private final Context context;
+    private final ArrayList<User> models;
     private User user;
 
     public UserlistCardAdapter(Context context, ArrayList<User> models) {
@@ -44,9 +44,9 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
     @Override
     public void onBindViewHolder(@NonNull UserlistCardHolder userlistCardHolder, int position) {
         File file = new File(DefaultValues.dir + "/avatar_" + models.get(position).getUserId() + ".jpeg");
-        userlistCardHolder.mTitle.setText(String.format("%s %s", models.get(position).getNome(), models.get(position).getCognome()));
+        userlistCardHolder.mTitle.setText(String.format("%s %s", models.get(position).getName(), models.get(position).getSurname()));
 
-        /* Aggiorno l'immagine in caso sia cambiata dalla default */
+        /* Updating picture if not default */
         if (!file.exists()) {
             userlistCardHolder.avatar.setImageDrawable(Drawable.createFromPath(models.get(position).getAvatar()));
         } else {
@@ -54,7 +54,7 @@ public class UserlistCardAdapter extends RecyclerView.Adapter<UserlistCardHolder
         }
 
         userlistCardHolder.setUserlistItemClickListener((v, position1) -> {
-            /* Mando a UserManagementActivity */
+            /* Sending to UserManagementActivity */
             user = models.get(position);
             Intent intent = new Intent(context, UserManagementActivity.class);
             Bundle bundle = new Bundle();

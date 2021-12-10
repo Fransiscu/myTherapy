@@ -33,15 +33,15 @@ public class SupervisorLoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_supervisore);
+        setContentView(R.layout.supervisor_login_activity);
 
-        signup = findViewById(R.id.registrati);
-        loginButton = findViewById(R.id.supervisore_login_button);
-        usernameInput = findViewById(R.id.supervisore_login_username);
-        passwordText = findViewById(R.id.supervisore_login_password);
-        passwordInputLayout = findViewById(R.id.supervisore_password_input_toggle);
+        signup = findViewById(R.id.signup);
+        loginButton = findViewById(R.id.supervisor_login_button);
+        usernameInput = findViewById(R.id.supervisor_login_username_input);
+        passwordText = findViewById(R.id.supervisor_login_password_input);
+        passwordInputLayout = findViewById(R.id.supervisor_password_input_toggle);
 
-        /* Listener tasto login */
+        /* login on click listener */
         loginButton.setOnClickListener(view -> {
             Log.d("loginSup", "click"); // ok
             try {
@@ -51,7 +51,7 @@ public class SupervisorLoginActivity extends AppCompatActivity {
             }
         });
 
-        /* Listener tasto signup */
+        /* signup on click listener */
         signup.setOnClickListener(view -> {
             Intent newActivity = new Intent(getApplicationContext(), SupervisorSignupActivity.class);
             startActivity(newActivity);
@@ -62,15 +62,15 @@ public class SupervisorLoginActivity extends AppCompatActivity {
 
     public void login() throws IOException {
         if (!validate()) {
-            onLoginFailed();    // chiamo se il login non va a buon fine
+            onLoginFailed();    // on login failed
             return;
         }
 
-        loginButton.setEnabled(false);  // disabilito tasto
+        loginButton.setEnabled(false);  // disable key
 
         Log.d("loginSup", "disabilitato button");
 
-        /* Mostro finestrella di caricamento giusto per scena */
+        /* show fake loading */
         final ProgressDialog progressDialog = new ProgressDialog(SupervisorLoginActivity.this,
                 R.style.AppCompatAlertDialogStyle);
         progressDialog.setIndeterminate(true);
@@ -84,12 +84,11 @@ public class SupervisorLoginActivity extends AppCompatActivity {
 
         Log.d("loginSup", "prima di validation");
 
-        Supervisor validation = SupervisorFactory.getInstance().verifySueprvisor(username, password); // verifico validità supervisore
+        Supervisor validation = SupervisorFactory.getInstance().verifySueprvisor(username, password); // check supervisor legitimacy
 
         Log.d("loginSup", "dopo validation");
 
-        /* Se non è valido */
-        if (validation == null) {
+        if (validation == null) {   // if not valid
             Toast.makeText(getBaseContext(), "Dati non validi", Toast.LENGTH_LONG).show();
             usernameInput.setError("Username o password non corretti");
             passwordText.setError("Username o password non corretti");
@@ -103,7 +102,7 @@ public class SupervisorLoginActivity extends AppCompatActivity {
                     .setPositiveButton("Ok", (dialogInterface, i) -> {
                     })
                     .show();
-            loginButton.setEnabled(true);   // riabilito tasto login
+            loginButton.setEnabled(true);   // enable login key
             return;
         } else {
             supervisorId = validation.getSupervisorId();
@@ -114,22 +113,21 @@ public class SupervisorLoginActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 () -> {
                     Log.d("loginSup", "primo");
-                    onLoginSuccess();   // chiamo se login OK
+                    onLoginSuccess();   // if login successful
                     Log.d("loginSup", "secondo");
-//                    onLoginFailed();
                     progressDialog.dismiss();
                     Intent supervisorHomeActivity = new Intent(getApplicationContext(), SupervisorHomeActivity.class);
                     supervisorHomeActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(DefaultValues.USER_TYPE, "supervisor"); // setto le sharedPreferences
+                    editor.putString(DefaultValues.USER_TYPE, "supervisor");
                     editor.apply();
                     finish();
                     startActivity(supervisorHomeActivity);
                 }, 1000);   // simulo un mini delay
     }
 
-    /* Controllo validità dei dati inseriti e trigger del segnale di errore */
+    /* Validate input and add errors */
     @SuppressWarnings("deprecation")
     public boolean validate() {
         boolean valid = true;
@@ -155,18 +153,18 @@ public class SupervisorLoginActivity extends AppCompatActivity {
         return valid;
     }
 
-    /* Da chiamare se il login va a buon fine */
+    /* Method for on login success */
     public void onLoginSuccess() {
         loginButton.setEnabled(true);
     }
 
-    /* Da chiamare se il login non va a buon fine */
+    /* Method for on login fail */
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Login fallito", Toast.LENGTH_LONG).show();
         loginButton.setEnabled(true);
     }
 
-    /* Override pressione tasto back per cambiare l'animazione */
+    /* Override on back pressed in order to change the animation */
     @Override
     public void onBackPressed() {
         super.onBackPressed();

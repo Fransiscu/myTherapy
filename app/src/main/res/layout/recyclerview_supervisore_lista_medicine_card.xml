@@ -24,7 +24,7 @@
             android:gravity="center"
             android:paddingStart="@dimen/padding_therapy_cards"
             android:paddingEnd="@dimen/padding_therapy_cards"
-            android:text="@string/nome_medicina_uno"
+            android:text="@string/medicine_one_name"
             android:textSize="20sp" />
 
         <View

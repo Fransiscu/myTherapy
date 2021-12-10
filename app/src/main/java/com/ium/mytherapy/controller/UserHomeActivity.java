@@ -16,8 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textview.MaterialTextView;
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.model.UserFactory;
 import com.ium.mytherapy.model.UserReport;
@@ -48,23 +48,24 @@ import androidx.recyclerview.widget.RecyclerView;
 @SuppressWarnings("ALL")
 public class UserHomeActivity extends AppCompatActivity implements HelpDialogFragment.HelpDialogListener {
 
-    RecyclerView userTimelineRecyclerView;
-    View topLine, bottomLine;
-    UserTimelineCardAdapter userTimelineCardAdapter;
-    MaterialButton logout, helpMe;
-    List<Medicina> therapy = null;
-    ArrayList<Medicina> medicineArrayList;
-    EditedScrollView scrollView;
-    MaterialTextView noMedicine, topMidnight, bottomMidnight;
     TextView todaysDate, notifTitolo, medName1, medName2, medName3, medTime1, medTime2, medTime3;
+    MaterialTextView noMedicine, topMidnight, bottomMidnight;
+    UserTimelineCardAdapter userTimelineCardAdapter;
+    RecyclerView userTimelineRecyclerView;
+    ArrayList<Medicine> medicineArrayList;
     SharedPreferences mPreferences;
+    MaterialButton logout, helpMe;
+    List<Medicine> therapy = null;
+    EditedScrollView scrollView;
+    View topLine, bottomLine;
+
     int userId;
 
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_utente);
+        setContentView(R.layout.user_home_activity);
 
         mPreferences = getSharedPreferences(DefaultValues.sharedPrefFile, MODE_PRIVATE);
         userId = mPreferences.getInt(DefaultValues.USER_ID, 0);
@@ -76,7 +77,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             e.printStackTrace();
         }
         try {
-            therapy = MedicinaFactory.getInstance().getMedicinesForUser(user);
+            therapy = MedicineFactory.getInstance().getMedicinesForUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,34 +85,34 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         topLine = findViewById(R.id.horizontal_top_line);
         bottomLine = findViewById(R.id.horizontal_bottom_line);
 
-        noMedicine = findViewById(R.id.nessuna_medicina);
+        noMedicine = findViewById(R.id.no_medicine);
         topMidnight = findViewById(R.id.mezzanotte_top);
         bottomMidnight = findViewById(R.id.mezzanotte_bottom);
 
-        // Per far si che la barra del titolo di sopra non scrolli con il resto
+        /* Making the top bar not scroll */
         scrollView = findViewById(R.id.scrollView);
         scrollView.setScrolling(false);
 
-        /* RecyclerView per le medicine */
+        /* RecyclerView for medicines */
         userTimelineRecyclerView = findViewById(R.id.userHomeTimelineRecyclerView);
         userTimelineRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         medicineArrayList = new ArrayList<>(therapy);
         userTimelineCardAdapter = new UserTimelineCardAdapter(this, medicineArrayList);
         userTimelineRecyclerView.setAdapter(userTimelineCardAdapter);
 
-        /* Setto le linee orizzontali a seconda dello stato della terapia */
+        /* Setting horizontal lines according to therapy*/
         if (!therapy.isEmpty() && therapy != null) {
-            if (therapy.get(0).isPresa()) {
+            if (therapy.get(0).isTaken()) {
                 topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
             } else {
                 topLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
             }
-            if (therapy.get(therapy.size() - 1).isPresa()) {
+            if (therapy.get(therapy.size() - 1).isTaken()) {
                 bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), android.R.color.holo_green_dark));
             } else {
                 bottomLine.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
             }
-        } else {        // eseguito se non ci sono terapie per evitare un crash & che non venga mostrato niente all'utente
+        } else {    // if no current therapies show this
             topLine.setVisibility(View.GONE);
             bottomLine.setVisibility(View.GONE);
             topMidnight.setVisibility(View.GONE);
@@ -119,16 +120,15 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             noMedicine.setVisibility(View.VISIBLE);
         }
 
-
-        notifTitolo = findViewById(R.id.titolo_home_utente);
+        notifTitolo = findViewById(R.id.user_home_title);
         logout = findViewById(R.id.user_logout_button);
         helpMe = findViewById(R.id.user_help);
 
-        /* Setto la data di oggi */
+        /* Setting today's date */
         todaysDate = findViewById(R.id.data_oggi);
         Date date = new Date();
         LocalDate localDate = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {     // controllo la versione di android perchè non compatibile prima di Oreo
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             int year = localDate.getYear();
             int month = localDate.getMonthValue();
@@ -139,7 +139,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             todaysDate.setText(String.format("%s %d %s %d", Giorni.values()[dayOfWeek - 1], day, Mesi.values()[month - 1].toString(), year));
         }
 
-        /* Setto listener per pulsante di logout */
+        /* logout button on click listener */
         logout.setOnClickListener(view -> {
             new MaterialAlertDialogBuilder(this)
                 .setTitle("LOGOUT")
@@ -159,7 +159,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                     .show();
         });
 
-        /* Listener per notifica test */
+        /* test notification on click listener */
         notifTitolo.setOnClickListener(view -> {
             Runnable notificationExample = () -> {
                 showNotificationExample();
@@ -167,7 +167,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                 notificationExample.run();
         });
 
-        /* Listener per helpMe button */
+        /* helpMe button on click listener*/
         helpMe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,14 +177,14 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
 
     }
 
-    /* Apre dialog di aiuto per mandare messaggio al supervisore */
+    /* Opens help dialog to send a message to the supervisor */
     public void openHelpDialog() {
         HelpDialogFragment helpDialogFragment = new HelpDialogFragment();
         Bundle bundle = new Bundle();
         helpDialogFragment.show(getSupportFragmentManager(), "help dialog");
     }
 
-    /* Creazione notification channel e parametri */
+    /* Setting up notification parameters */
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "myTherapy";
@@ -196,9 +196,9 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
         }
     }
 
-    /* Mostra notifica di esempio */
+    /* Show test notification */
     private void showNotificationExample() {
-        Medicina current;
+        Medicine current;
         int rand;
 
         try {
@@ -209,10 +209,10 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
                 return;
             }
 
-            do {        // voglio solo medicina non presa quindi ciclo finchè non la trovo
+            do {        // cycling until I find a medicine not taken yet
                 rand = (int) (Math.random() * therapy.size()) + 0;
                 current = therapy.get(rand);
-            } while (current.isPresa());
+            } while (current.isTaken());
 
             Intent landingIntent = new Intent(getApplicationContext(), MedicineStatusActivity.class);
             landingIntent.putExtra(DefaultValues.MEDICINA, current);
@@ -244,7 +244,7 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             builder.setSmallIcon(R.drawable.robot);
             builder.setContentTitle("Promemoria");
             builder.setAutoCancel(true);
-            builder.setContentText("Hey! Non dimenticare di prendere " + current.getNome() + " oggi alle " + current.getOra() + "!");
+            builder.setContentText("Hey! Non dimenticare di prendere " + current.getName() + " oggi alle " + current.getTimeHour() + "!");
             builder.setSubText("Promemoria");
             builder.addAction(R.drawable.notification, "Rimanda di 10 minuti", remindActionIntent);
             builder.addAction(R.drawable.notification, "Segna come presa", markDoneActionIntent);
@@ -254,14 +254,14 @@ public class UserHomeActivity extends AppCompatActivity implements HelpDialogFra
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
             notificationManagerCompat.notify(DefaultValues.EXAMPLE_NOTIFICATION_ID, builder.build());
         } catch (RuntimeException | IOException e) { //
-            throw new NoMedicinesFoundException(e, getApplicationContext());
+            throw new NoMedicinesFoundException(getApplicationContext());
         }
     }
 
-    /* Controllo se ci sono ancora medicine non prese, rendo false se ci sono o true se non ci sono */
-    private boolean noMoreUnfinishedTherapies(List<Medicina> therapy) {
-        for (Medicina medicina : therapy) {
-            if (!medicina.isPresa()) {
+    /* Checking if there is a non taken medicine */
+    private boolean noMoreUnfinishedTherapies(List<Medicine> therapy) {
+        for (Medicine medicine : therapy) {
+            if (!medicine.isTaken()) {
                 return false;
             }
         }

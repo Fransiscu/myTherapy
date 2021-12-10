@@ -33,7 +33,7 @@
                 android:layout_height="107dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
-                android:contentDescription="@string/descrizione_logo"
+                android:contentDescription="@string/logo_description"
                 android:src="@drawable/logo" />
 
             <Space
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/registrazione_titolo"
+                android:text="@string/signup_title"
                 android:textSize="36sp" />
 
             <Space
@@ -54,7 +54,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_nome">
+                android:hint="@string/name_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@"
@@ -73,7 +73,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_cognome">
+                android:hint="@string/surname_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@"
@@ -92,7 +92,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_email">
+                android:hint="@string/email_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
@@ -111,7 +111,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_username">
+                android:hint="@string/username_tip">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
@@ -132,7 +132,7 @@
                 app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_password">
+                android:hint="@string/password_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
@@ -153,7 +153,7 @@
                 app:passwordToggleEnabled="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_conferma_password">
+                android:hint="@string/password_confirmation_tip">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@."
@@ -172,7 +172,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_data">
+                android:hint="@string/date_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/signup_birthdate"
@@ -217,7 +217,7 @@
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/registrazione"
+                android:text="@string/signup"
                 android:textSize="18sp" />
 
         </GridLayout>

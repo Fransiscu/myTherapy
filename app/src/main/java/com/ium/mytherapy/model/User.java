@@ -6,24 +6,37 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class User implements Parcelable, Comparable<User> {
+
     private int userId;
-    private String nome;
-    private String cognome;
+    private String name;
+    private String surname;
     private String username;
     private String email;
     private String password;
-    private String dataNascita;
+    private String birthDate;
     private String avatar;
 
     public User(Parcel in) {
         userId = in.readInt();
-        nome = in.readString();
-        cognome = in.readString();
+        name = in.readString();
+        surname = in.readString();
         username = in.readString();
         email = in.readString();
         password = in.readString();
-        dataNascita = in.readString();
+        birthDate = in.readString();
         avatar = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(userId);
+        parcel.writeString(name);
+        parcel.writeString(surname);
+        parcel.writeString(username);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(birthDate);
+        parcel.writeString(avatar);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -41,25 +54,9 @@ public class User implements Parcelable, Comparable<User> {
     public User() {
     }
 
-    public static Creator<User> getCREATOR() {
-        return CREATOR;
-    }
-
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(userId);
-        parcel.writeString(nome);
-        parcel.writeString(cognome);
-        parcel.writeString(username);
-        parcel.writeString(email);
-        parcel.writeString(password);
-        parcel.writeString(dataNascita);
-        parcel.writeString(avatar);
     }
 
     public int getUserId() {
@@ -69,23 +66,23 @@ public class User implements Parcelable, Comparable<User> {
     @NonNull
     @Override
     public String toString() {
-        return userId + " - " + nome + " " + cognome;
+        return userId + " - " + name + " " + surname;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getCognome() {
-        return cognome;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setUserId(int userId) {
@@ -116,8 +113,8 @@ public class User implements Parcelable, Comparable<User> {
         this.email = email;
     }
 
-    public String getDataNascita() {
-        return dataNascita;
+    public String getBirthDate() {
+        return birthDate;
     }
 
     public String getAvatar() {
@@ -128,12 +125,12 @@ public class User implements Parcelable, Comparable<User> {
         this.avatar = avatar;
     }
 
-    public void setDataNascita(String dataNascita) {
-        this.dataNascita = dataNascita;
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override
     public int compareTo(User user) {
-        return this.getNome().equals(user.getNome()) ? this.getCognome().compareTo(user.getCognome()) : this.getNome().compareTo(user.getNome());
+        return this.getName().equals(user.getName()) ? this.getSurname().compareTo(user.getSurname()) : this.getName().compareTo(user.getName());
     }
 }

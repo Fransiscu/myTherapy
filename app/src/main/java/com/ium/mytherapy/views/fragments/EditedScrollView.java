@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
+// custom scrollview
 public class EditedScrollView extends ScrollView {
     private boolean enableScrolling = true;
 

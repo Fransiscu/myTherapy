@@ -28,8 +28,7 @@ public class MedicineTimelineCardHolder extends RecyclerView.ViewHolder implemen
 
     @Override
     public void onClick(View view) {
-//        do nothing
-//        this.medicineTimelineClickListener.onItemClickListener(view, getLayoutPosition());
+        // do nothing
     }
 
     void setMedicineListClickListener(MedicineTimelineClickListener itemClick) {

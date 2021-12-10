@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ium.mytherapy.R;
-import com.ium.mytherapy.model.Medicina;
-import com.ium.mytherapy.model.MedicinaFactory;
+import com.ium.mytherapy.model.Medicine;
+import com.ium.mytherapy.model.MedicineFactory;
 import com.ium.mytherapy.model.User;
 import com.ium.mytherapy.views.recycleviews.holders.MedicineTimelineCardHolder;
 
@@ -21,11 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 @SuppressWarnings("deprecation")
 public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTimelineCardHolder> {
 
-    private Context context;
-    private ArrayList<Medicina> models;
-    private User user;
+    private final Context context;
+    private final ArrayList<Medicine> models;
+    private final User user;
 
-    public MedicineTimelineCardAdapter(Context context, User user, ArrayList<Medicina> models) {
+    public MedicineTimelineCardAdapter(Context context, User user, ArrayList<Medicine> models) {
         this.context = context;
         this.models = models;
         this.user = user;
@@ -41,21 +41,20 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
     @Override
     public void onBindViewHolder(@NonNull MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
 
-        medicineTimelineCardHolder.medicineTime.setText(models.get(position).getOra());
-        medicineTimelineCardHolder.medicineName.setText(models.get(position).getNome());
+        medicineTimelineCardHolder.medicineTime.setText(models.get(position).getTimeHour());
+        medicineTimelineCardHolder.medicineName.setText(models.get(position).getName());
 
-        /* Setto le varie icone */
+        // icons
         setNotif(medicineTimelineCardHolder, position);
         setStatus(medicineTimelineCardHolder, position);
 
-        /* Listeners icone */
+        // icons' listeners
         medicineTimelineCardHolder.notif.setOnClickListener(view -> changeNotif(medicineTimelineCardHolder, position));
         medicineTimelineCardHolder.checks.setOnClickListener(view -> changeStatus(medicineTimelineCardHolder, position));
-
     }
 
     private void setStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
-        if (models.get(position).isPresa()) {
+        if (models.get(position).isTaken()) {
             medicineTimelineCardHolder.checks.setBackgroundResource(0);
             medicineTimelineCardHolder.checks.setImageDrawable(context.getResources().getDrawable(R.drawable.timeline_done));
         } else {
@@ -65,7 +64,7 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
     }
 
     private void setNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
-        if (models.get(position).isNotifEnabled()) {
+        if (models.get(position).isNotificationEnabled()) {
             medicineTimelineCardHolder.notif.setBackgroundResource(0);
             medicineTimelineCardHolder.notif.setImageDrawable(context.getResources().getDrawable(R.drawable.notification_active));
         } else {
@@ -75,16 +74,16 @@ public class MedicineTimelineCardAdapter extends RecyclerView.Adapter<MedicineTi
     }
 
     private void changeNotif(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
-        models.get(position).setNotifEnabled(!models.get(position).isNotifEnabled());   // toggle notifiche
+        models.get(position).setNotificationEnabled(!models.get(position).isNotificationEnabled());   // toggle notifications
         setNotif(medicineTimelineCardHolder, position);
-        MedicinaFactory.getInstance().changeNotif(models.get(position), user);
+        MedicineFactory.getInstance().changeNotif(models.get(position), user);
         Toast.makeText(context, "Notifiche modificate", Toast.LENGTH_SHORT).show();
     }
 
     private void changeStatus(MedicineTimelineCardHolder medicineTimelineCardHolder, int position) {
-        models.get(position).setPresa(!models.get(position).isPresa());     // toggle checks
+        models.get(position).setTaken(!models.get(position).isTaken());     // toggle checks
         setStatus(medicineTimelineCardHolder, position);
-        MedicinaFactory.getInstance().changePresa(models.get(position), user);
+        MedicineFactory.getInstance().changeTaken(models.get(position), user);
         Toast.makeText(context, "Stato modificato", Toast.LENGTH_SHORT).show();
     }
 

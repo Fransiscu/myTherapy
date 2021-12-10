@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<User> userList = new ArrayList<>();
@@ -33,29 +34,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /* Inizializzo sharedPreferences */
+        /* sharedPreferences initialization */
         mPreferences = getSharedPreferences(DefaultValues.sharedPrefFile, MODE_PRIVATE);
 
-        /* Riprendo stato passato dell'utente nell'app */
+        /* loading last user data */
         Runnable loadData = this::loadData;
         loadData.run();
 
-        /* Controllo i permessi */
+        /* Checking for app permissions */
         Runnable permissionsThread = this::permissions;
         permissionsThread.run();
 
-        /* Thread che recupera gli users dalle directory */
+        /* Gathering users from directories */
         Runnable getUsers = () -> {
             try {
                 userList = UserFactory.getInstance().getUsers();
-                Collections.sort(userList); // ordino alfabeticamente
+                Collections.sort(userList); // alphabetical order
             } catch (IOException e) {
                 e.printStackTrace();
             }
         };
         getUsers.run();
 
-        /* Reimposto utente al riavvio dell'app */
+        /* Setting user on app start */
         if (userValue.equals("user")) {
             Intent userIntent = new Intent(this, UserHomeActivity.class);
             startActivity(userIntent);
@@ -65,30 +66,28 @@ public class MainActivity extends AppCompatActivity {
             startActivity(supervisorIntent);
             finish();
         } else {
-            Intent loginActivity = new Intent(this, UserLoginActivity.class);    // cambio subito activity alla login se non c'è alcun utente salvata
+            Intent loginActivity = new Intent(this, UserLoginActivity.class);    // changing activity if no saved user
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(DefaultValues.USER_LIST, userList); // passo la lista di utenti in intent
+            bundle.putParcelableArrayList(DefaultValues.USER_LIST, userList); // users list through intent
             loginActivity.putExtras(bundle);
             startActivity(loginActivity);
             finish();
         }
     }
 
-    /* Metodo per il caricamento dei dati dalle sharedPreferences */
+    /* Method to load data from sharedPreferences */
     private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(DefaultValues.SHARED_PREFS, MODE_PRIVATE);
         userValue = sharedPreferences.getString(DefaultValues.USER_TYPE, "");
     }
 
-    /* Metodo di controllo dei permessi e aggiunta files di default */
+    /* Method to check for permissions */
     private void permissions() {
         if (!(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) ||
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
-            addDefaultItems();
-        } else {
-            addDefaultItems();
         }
+        addDefaultItems();
     }
 
     public void addDefaultItems() {
@@ -97,8 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
             try {
                 boolean wasSuccessful;
-//                noinspection ResultOfMethodCallIgnored
-                DefaultValues.dir.mkdirs();   // per evitare i warning zzz
+                DefaultValues.dir.mkdirs();
                 wasSuccessful = DefaultValues.usersDir.mkdirs();
                 if (!wasSuccessful) {
                     System.out.println("was not successful.");
@@ -109,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 final Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.avatardefault);
                 wasSuccessful = DefaultValues.defaultAvatar.createNewFile();
-                if (!wasSuccessful) {   // per evitare i warnings
+                if (!wasSuccessful) {
                     System.out.println("was not successful.");
                 }
                 wasSuccessful = DefaultValues.defaultReportFile.createNewFile();
-                if (!wasSuccessful) { // per evitare i warnings
+                if (!wasSuccessful) {
                     System.out.println("was not successful.");
                 }
                 FileOutputStream fos = new FileOutputStream(DefaultValues.defaultAvatar);
@@ -122,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {    // altrimenti richiedo i permessi e continuo ricorsivamente :) - fuck you utente
+        } else {    // recursively asking for permissions
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, DefaultValues.PERMISSION_REQUEST_CODE);
             addDefaultItems();
         }
     }
 
-    /* Controllo che i permessi siano stati accettati */
+    /* Checking if permissions have been granted */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == DefaultValues.PERMISSION_REQUEST_CODE) {

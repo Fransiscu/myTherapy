@@ -39,6 +39,8 @@ proguard/
 captures/
 
 # IntelliJ
+.idea
+.idea/*
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
@@ -204,6 +206,7 @@ fabric.properties
 hs_err_pid*
 
 ### Gradle ###
+*.gradle
 .gradle
 
 # Ignore Gradle GUI config

@@ -19,6 +19,7 @@
             android:orientation="vertical"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
+            android:paddingBottom="24dp"
             app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -26,13 +27,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="12sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/titolo_aggiunta_modifica_medicina"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10sp"
                 android:paddingBottom="0sp"
-                android:text="@string/titolo_aggiunta_modifica_medicina"
+                android:text="@string/add_edit_medicine_title"
                 android:textSize="@dimen/title_size" />
 
             <Space
@@ -43,7 +44,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_nome_medicina">
+                android:hint="@string/medicine_name_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_edit_medicine_name"
@@ -62,7 +63,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/suggerimento_descrizione_medicina">
+                android:hint="@string/medicine_description_hint">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_edit_medicine_details"
@@ -80,7 +81,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/assunzione_e_dosaggio_medicina">
+                android:hint="@string/medicine_dosage_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_edit_medicine_dosage"
@@ -98,12 +99,12 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/link_utili_medicina">
+                android:hint="@string/medicine_useful_links">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/link_utili"
-                    android:layout_width="match_parent"
                     android:autoLink="web"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine" />
 
@@ -117,7 +118,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/consigli_paziente">
+                android:hint="@string/tips_for_user">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/consigli_paziente"
@@ -129,8 +130,8 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
-                android:layout_width="wrap_content"
-                android:layout_height="20dp" />
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -141,10 +142,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="20sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/imposta_la_frequenza_per_la_terapia"
+                android:text="@string/set_medicine_dosage_text"
                 android:textSize="24sp" />
 
             <Space
@@ -193,7 +194,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:hint="@string/orario">
+                    android:hint="@string/time">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/orario_medicina"
@@ -207,7 +208,7 @@
             </LinearLayout>
 
             <Space
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp" />
 
             <LinearLayout
@@ -240,7 +241,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="@string/attiva_notifiche_terapia_checkbox"
+                    android:text="@string/enable_notifications_checkbox"
                     android:textSize="24sp" />
 
             </LinearLayout>
@@ -263,7 +264,6 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <GridLayout
-            android:id="@+id/login_button_grid"
             android:layout_width="match_parent"
             android:layout_height="100sp"
             android:layout_gravity="center"
@@ -275,11 +275,11 @@
             android:paddingRight="24dp">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/save_therapy_edits"
+                android:id="@+id/add_therapy_button"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:text="@string/salva_modifiche_utente"
+                android:text="@string/add_therapy"
                 android:textSize="18sp" />
 
         </GridLayout>

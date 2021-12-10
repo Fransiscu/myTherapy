@@ -15,35 +15,23 @@ import static java.util.Calendar.HOUR_OF_DAY;
 import static java.util.Calendar.MINUTE;
 import static java.util.Calendar.getInstance;
 
+// utility methods used throughout the implementation of the app
+// some are not used anymore, will keep them here in case I ever need
+// to use them again
+
 public class Utility {
-
-    /* Classe usata solo per creare funzioni di supporto e testarle */
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void main(String[] args) {
-        Date date = new Date();
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.setTime(date);
-        System.out.println(LocalDateTime.now().getHour());
-        System.out.println(LocalDateTime.now().getMinute());
-
-        Calendar now = getInstance();
-        System.out.println(now.get(HOUR_OF_DAY) + ":" + now.get(MINUTE));
-        // Tests qui
-    }
-
-    /* Controllo che la data sia in formato valido in modo molto rustico */
+    /* Check date validity */
     public static boolean isDateValid(String date) {
         String[] numbers = date.split("-");
-        /* Se ci sono lettere in mezzo rendo false */
+        // only digits allowed
         if (hasOnlyDigits(numbers[0]) || hasOnlyDigits(numbers[1]) || hasOnlyDigits(numbers[2])) {
             return false;
         }
-        /* Impongo la forma YYYY-MM-DD come segnato nel campo date del database */
+        /* Forcing YYYY-MM-DD date format */
         return (numbers[0].length() == 4) && (numbers[1].length() == 2 && Integer.parseInt(numbers[1]) < 13) && (numbers[2].length() == 2 && Integer.parseInt(numbers[2]) < 32);
     }
 
-    /* Controllo che nella stringa in ingresso ci siano solo numeri */
+    /* Check for only digits in string */
     private static boolean hasOnlyDigits(String input) {
         if (input == null || input.length() < 1) {
             return true;
@@ -57,29 +45,28 @@ public class Utility {
         }
     }
 
-    /* Prendo userId da sharedPreferences */
+    /* userId from sharedPreferences */
     public static int getUserIdFromSharedPreferences(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(DefaultValues.SHARED_PREFS, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(DefaultValues.USER_ID, 0);
     }
 
-    /* Controllo che url inserito sia valido */
+    /* Checking url validity */
     public static boolean isUrlValid(String url) {
         if (url.length() < 4) {
             return false;
         }
-        return (url.substring(0, 3).equals("www") || url.substring(0, 4).equals("http"));
+        return (url.startsWith("www") || url.startsWith("http://") || url.startsWith("https://"));
     }
 
-    /* Controllo che la stringa in input non sia null o vuota */
+    /* Check if string not empty */
     public static boolean isStringNullOrEmpty(String str) {
         return str == null || str.isEmpty();
     }
 
-    /* Divido la stringa in parole separate da spazio e rendo la prima */
+    /* Split string into words, return the first one */
     public static String splitIntoWords(String words) {
         String[] word = words.split("\\s");
         return word[0];
     }
-
 }
